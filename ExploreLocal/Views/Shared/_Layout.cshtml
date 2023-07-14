@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Template/css/vendors.css">
-    <link rel="stylesheet" href="Template/css/main.css">
+    @*<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&amp;display=swap" rel="stylesheet">*@
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/Template/css/vendors.css">
+    <link rel="stylesheet" href="/Template/css/main.css">
     <title>GoTrip</title>
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 </head>
 <body>
     <div class="preloader js-preloader">
@@ -34,7 +40,7 @@
     <main>
 
 
-        <header data-add-bg="-header-5-sticky" class="header -type-5 js-header" data-x="header" data-x-toggle="is-menu-opened">
+        <header data-add-bg="-header-5-sticky" class="header -type-5 js-header" data-x="header" data-x-toggle="is-menu-opened"  >
             <div data-anim="fade" class="header__container container">
                 <div class="row justify-between items-center">
 
@@ -44,9 +50,9 @@
                                 <button class="d-flex items-center icon-menu text-dark-1 text-20" data-x-click="desktopMenu"></button>
                             </div>
 
-                            <a href="index.html" class="header-logo mr-20" data-x="header-logo" data-x-toggle="is-logo-dark">
-                                <img src="Template/img/general/logo-dark.svg" alt="logo icon">
-                                <img src="Template/img/general/logo-dark.svg" alt="logo icon">
+                            <a href="@Url.Action("Index","ExploreLocal")" class="header-logo mr-20" data-x="header-logo" data-x-toggle="is-logo-dark">
+                                <img src="/Template/img/general/logo-dark.svg" alt="logo icon">
+                                <img src="/Template/img/general/logo-dark.svg" alt="logo icon">
                             </a>
 
 
@@ -60,7 +66,7 @@
                                         <ul class="menu__nav text-dark-1 -is-active">
 
                                             <li>
-                                                <a href="@Url.Action("Home","ExploreLocal")">
+                                                <a href="@Url.Action("Index","ExploreLocal")">
                                                     Home
                                                 </a>
                                             </li>
@@ -196,12 +202,23 @@
                         </div>
                     </div>
 
+                    <style>
+                        #thebtn {
+                            margin: 5px;
+                            border: 0.5px solid darkblue;
+                            border-radius: 6px;
+                        }
+
+                            #thebtn:hover {
+                                border: none;
+                            }
+                    </style>
 
                     <div class="col-auto">
                         <div class="d-flex items-center">
                             <div class="header__buttons d-flex items-center is-menu-opened-hide">
-                                <a href="become-expert.html" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none">Become An Expert</a>
-                                <a href="signup.html" class="button h-50 px-30 fw-400 text-14 -outline-white text-white ml-20 sm:ml-0">Sign In / Register</a>
+                                <a href="@Url.Action("Expert","ExploreLocal")" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none">Become An Expert</a>
+                                <a href="@Url.Action("Register","ExploreLocal")" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none" id="thebtn">Sign In / Register</a>
                             </div>
 
 
@@ -217,7 +234,7 @@
                 <div class="pt-60 pb-60">
                     <div class="row y-gap-40 justify-between xl:justify-start">
                         <div class="col-xl-4 col-lg-6">
-                            <img src="Template/img/general/logo-light.svg" alt="image" style="position: relative;right: 10px;">
+                            <img src="/Template/img/general/logo-light.svg" alt="image" style="position: relative;right: 10px;">
 
                             <div class="row y-gap-30 justify-between pt-30">
                                 <div class="col-sm-6">
@@ -1771,7 +1788,7 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM"></script>
     <script src="../../../unpkg.com/%40googlemaps/markerclusterer%402.3.1/dist/index.min.js"></script>
-    <script src="Template/js/vendors.js"></script>
-    <script src="Template/js/main.js"></script>
+    <script src="/Template/js/vendors.js"></script>
+    <script src="/Template/js/main.js"></script>
 </body>
 </html>

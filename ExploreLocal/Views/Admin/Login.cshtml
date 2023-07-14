@@ -1,0 +1,102 @@
+﻿﻿﻿@model ExploreLocal.Models.Tbl_Admin
+@{
+    ViewBag.Title = "Login";
+}
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <title>Login Into Admin Panel - FlavourFusion</title>
+    <style>
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        form {
+            padding-top: 40px;
+            padding-bottom: 30px;
+            padding-left: 100px;
+            padding-right: 100px;
+            margin-top: 50px;
+            border-radius: 25px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;
+        }
+
+        #thebutton {
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            font-size: 23px;
+            height: 50px;
+            margin-bottom: 5px;
+            margin-top: 15px;
+            background-color: #3554d0;
+            outline: none;
+            border: none;
+            color: white;
+            border-radius: 8px;
+        }
+
+            #thebutton:hover {
+                outline:none;
+                border:none;
+                background-color: darkblue;
+                box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+            }
+
+        input {
+            border-radius: 4.5px;
+            padding: 10px;
+            width: 100%;
+            box-shadow: rgba(149, 157, 165, 0.15) 0px 8px 24px;
+            transition: 0.3s;
+        }
+
+        #custom-input:focus {
+            outline: none;
+            box-shadow: none;
+            box-shadow: rgba(149, 157, 165, 0.05) 0px 8px 24px;
+        }
+    </style>
+</head>
+
+<div class="d-flex justify-content-center align-items-center" style="margin-top:50px;">
+    @using (Html.BeginForm())
+    {
+        <form method="post" class="border-5 theform">
+            <h4 class="mb-4 text-center" style="position:relative;top:17px;margin-bottom:5px;">Login Into Admin Panel</h4> <br />
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                @Html.TextBoxFor(x => x.Admmin_Username, new { @class = "form-control custom-input", @id = "custom-input", @placeholder = "Enter Your Username" })
+                <span style="color: red">@Html.ValidationMessageFor(x => x.Admmin_Username)</span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                @Html.TextBoxFor(x => x.Admin_Password, new { @class = "form-control custom-input", @id = "custom-input", @placeholder = "Enter Your Password", @type = "password" })
+                <span style="color: red">@Html.ValidationMessageFor(x => x.Admin_Password)</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="thebutton">
+                Login
+            </button>
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>@ViewBag.Error</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+        </form>
+    }
+</div>
