@@ -1,0 +1,104 @@
+﻿@model ExploreLocal.Models.Tbl_Venue
+
+@{
+    ViewBag.Title = "Edit Category";
+}
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <title>Edit Recipe Category - FlavourFusion</title>
+</head>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .thecontainer {
+        width: 500px;
+        padding: 25px;
+        box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;
+        border-radius: 12px;
+    }
+
+    input {
+        padding: 8px;
+        box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+        .btn-container button {
+            margin:10px;
+            padding: 10px 20px;
+            margin-left: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            border: none;
+        }
+
+        .btn-container .btn-save {
+            background-color: #3554D1;
+            color: #fff;
+        }
+
+        .btn-container .btn-cancel {
+            margin: 10px;
+            padding: 10px 20px;
+            margin-left: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            border: none;
+            background-color: #F76B6A;
+            color: #fff;
+        }
+</style>
+
+<div class="container" style="display:flex;justify-content:center;align-items:center;height:100vh;">
+    @using (Html.BeginForm("Save_Venue", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "signupform" }))
+    {
+        <div class="thecontainer">
+            @Html.HiddenFor(model => model.Venue_id)
+            <br />
+            <div class="form-group">
+                <label>Category Name: </label>
+                <br />
+                @Html.TextBoxFor(model => model.Venue_name, new { @class = "form-control" })
+            </div>
+            <br />
+            <div class="form-group">
+                <label>Update Category Image: </label>
+                <br />
+                <input type="file" name="imgfile" id="imgfile" class="form-control" />
+            </div>
+            <br />
+            <div class="btn-container">
+                <button type="submit" class="btn btn-save">Save</button>
+                <a href="@Url.Action("View_Venue")" class="btn btn-cancel">Cancel</a>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('signupform').addEventListener('submit', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            icon: 'success',
+            title: 'Congrats!',
+            text: 'Your Venue is Updated!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '@Url.Action("View_Category", "FlavourFusion")';
+                this.submit();
+            }
+        });
+    });
+</script>

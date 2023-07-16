@@ -1,0 +1,140 @@
+﻿﻿﻿@model ExploreLocal.Models.Tbl_Venue
+@{
+    ViewBag.Title = "Add_Category";
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/css/AdminPanel.css?v=@DateTime.Now.Ticks" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-Obk70ctfVTbq9JpzzvRtOqN7EtL3ivZ5GgswyjpuwFSuvMdtYPXOynan5yU9mEoyxO0UR6CZlwu3QvHJx62hQA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <title>Add New Recipe Category - FlavourFusion</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .nav-link {
+            display: inline-block;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: black;
+        }
+
+            .nav-link:hover {
+                background-color: #f9f9f9;
+            }
+
+        form {
+            padding-top: 40px;
+            padding-bottom: 30px;
+            padding-left: 100px;
+            padding-right: 100px;
+            margin-top: 50px;
+            border-radius: 25px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;
+        }
+
+        #thebutton {
+            border: none;
+            cursor: pointer;
+            width: 350px;
+            font-size: 23px;
+            height: 55px;
+            margin: auto;
+            margin-top: 5px;
+            background-color: #3554D1;
+            color: white;
+            outline: none;
+            border: none;
+            border-radius: 8px;
+        }
+
+            #thebutton:hover {
+                box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+            }
+
+        input {
+            border-radius: 4.5px;
+            padding: 10px;
+            width: 100%;
+            box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+            margin-bottom: 20px;
+            transition: 0.2s;
+        }
+
+        #custom-input:focus {
+            outline: none;
+            box-shadow: rgba(149, 157, 165, 0.07) 0px 8px 24px;
+            border: 1px solid #3554D1;
+        }
+    </style>
+</head>
+<div class="container" style="margin-top: 150px;">
+    @if (ViewBag.ToastMessage != null)
+    {
+        <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" id="toast">
+            <div class="toast-header">
+                <img src="~/Content/img/greentick-icon.png" height="23" width="23" class="rounded mr-2" alt="...">
+                <small>@DateTime.Now</small>
+                <button type="button" class="btn-close" onclick="hideToast()" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <p class="card-text">@ViewBag.ToastMessage</p>
+            </div>
+        </div>
+    }
+    <ul class="nav" style="box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;height:55px;">
+        <li class="nav-item"><a class="nav-link" href="@Url.Action("Admin_Panel")">Home</a></li>
+        <li class="nav-item">
+            <div class="dropdown">
+                <a class="nav-link" href="@Url.Action("Add_Venue")">Add Venues</a>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("View_Venue")">View Venues</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#">Add Tours</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Bookings</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
+    </ul>
+</div>
+<div class="d-flex justify-content-center align-items-center vh-100">
+    @using (Html.BeginForm("Add_Venue", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "signupform" }))
+    {
+        <form method="post">
+            <div class="form-group">
+                <label for="username">Venue Name:</label>
+                @Html.TextBoxFor(x => x.Venue_name, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Category Name" })
+                <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_name)</span>
+            </div>
+            <div class="form-group">
+                <label for="password">Venue Image:</label>
+                <input type="file" name="imgfile" id="imgfile" class="input" required />
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary" id="thebutton">Add</button>
+            </div>
+        </form>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+        document.getElementById('signupform').addEventListener('submit', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'success',
+                title: 'Congrats!',
+                text: 'Your Recipe Category Are Uploaded!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("Add_Recipe_Category", "FlavourFusion")';
+                    this.submit();
+                }
+            });
+        });
+</script>

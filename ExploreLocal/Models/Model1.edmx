@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ExploreLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ExploreLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Tbl_Admin">
           <Key>
             <PropertyRef Name="Admin_Id" />
@@ -14,11 +14,37 @@
           <Property Name="Admin_Password" Type="varchar" MaxLength="100" />
           <Property Name="Admin_Email" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Tbl_Venue">
+          <Key>
+            <PropertyRef Name="Venue_id" />
+          </Key>
+          <Property Name="Venue_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Venue_name" Type="varchar" MaxLength="100" />
+          <Property Name="Venue_img" Type="varchar(max)" />
+          <Property Name="Admin_id" Type="int" />
+          <Property Name="Venue_status" Type="int" />
+        </EntityType>
+        <Association Name="FK__Tbl_Venue__Admin__5CD6CB2B">
+          <End Role="Tbl_Admin" Type="Self.Tbl_Admin" Multiplicity="0..1" />
+          <End Role="Tbl_Venue" Type="Self.Tbl_Venue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Admin">
+              <PropertyRef Name="Admin_Id" />
+            </Principal>
+            <Dependent Role="Tbl_Venue">
+              <PropertyRef Name="Admin_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ExploreLocalModelStoreContainer">
           <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Venue" EntityType="Self.Tbl_Venue" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Tbl_Venue__Admin__5CD6CB2B" Association="Self.FK__Tbl_Venue__Admin__5CD6CB2B">
+            <End Role="Tbl_Admin" EntitySet="Tbl_Admin" />
+            <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ExploreLocalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -30,10 +56,39 @@
           <Property Name="Admmin_Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Admin_Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Admin_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tbl_Venue" Relationship="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B" FromRole="Tbl_Admin" ToRole="Tbl_Venue" />
         </EntityType>
         <EntityContainer Name="ExploreLocalEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" />
+          <EntitySet Name="Tbl_Venue" EntityType="ExploreLocalModel.Tbl_Venue" />
+          <AssociationSet Name="FK__Tbl_Venue__Admin__5CD6CB2B" Association="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B">
+            <End Role="Tbl_Admin" EntitySet="Tbl_Admin" />
+            <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Tbl_Venue">
+          <Key>
+            <PropertyRef Name="Venue_id" />
+          </Key>
+          <Property Name="Venue_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Venue_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Venue_img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Admin_id" Type="Int32" />
+          <NavigationProperty Name="Tbl_Admin" Relationship="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B" FromRole="Tbl_Venue" ToRole="Tbl_Admin" />
+          <Property Name="Venue_status" Type="Int32" />
+        </EntityType>
+        <Association Name="FK__Tbl_Venue__Admin__5CD6CB2B">
+          <End Type="ExploreLocalModel.Tbl_Admin" Role="Tbl_Admin" Multiplicity="0..1" />
+          <End Type="ExploreLocalModel.Tbl_Venue" Role="Tbl_Venue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Admin">
+              <PropertyRef Name="Admin_Id" />
+            </Principal>
+            <Dependent Role="Tbl_Venue">
+              <PropertyRef Name="Admin_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -47,6 +102,17 @@
                 <ScalarProperty Name="Admmin_Username" ColumnName="Admmin_Username" />
                 <ScalarProperty Name="Admin_Password" ColumnName="Admin_Password" />
                 <ScalarProperty Name="Admin_Email" ColumnName="Admin_Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Venue">
+            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Venue">
+              <MappingFragment StoreEntitySet="Tbl_Venue">
+                <ScalarProperty Name="Venue_status" ColumnName="Venue_status" />
+                <ScalarProperty Name="Admin_id" ColumnName="Admin_id" />
+                <ScalarProperty Name="Venue_img" ColumnName="Venue_img" />
+                <ScalarProperty Name="Venue_name" ColumnName="Venue_name" />
+                <ScalarProperty Name="Venue_id" ColumnName="Venue_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

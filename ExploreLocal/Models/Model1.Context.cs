@@ -26,5 +26,6 @@ namespace ExploreLocal.Models
         }
     
         public virtual DbSet<Tbl_Admin> Tbl_Admin { get; set; }
+        public virtual DbSet<Tbl_Venue> Tbl_Venue { get; set; }
     }
 }

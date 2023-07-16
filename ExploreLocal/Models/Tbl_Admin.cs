@@ -14,9 +14,18 @@ namespace ExploreLocal.Models
     
     public partial class Tbl_Admin
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tbl_Admin()
+        {
+            this.Tbl_Venue = new HashSet<Tbl_Venue>();
+        }
+    
         public int Admin_Id { get; set; }
         public string Admmin_Username { get; set; }
         public string Admin_Password { get; set; }
         public string Admin_Email { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Venue> Tbl_Venue { get; set; }
     }
 }

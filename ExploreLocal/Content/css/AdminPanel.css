@@ -1,0 +1,117 @@
+﻿h4 {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    width: 168px;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+ul.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 50px;
+    line-height: 50px;
+    background: white;
+    font-size: 13px;
+    box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;
+    color: black;
+    border-radius: 12px;
+}
+
+    ul.nav li {
+        display: inline-block;
+    }
+
+    ul.nav a {
+        font-weight: 500;
+        font-size: 17px;
+        display: block;
+        padding: 0 28px;
+        color: black;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+        ul.nav a:hover,
+        ul.nav li.current a {
+            box-shadow: #5E5DF0 0 5px 20px -10px;
+            border-radius: 3px;
+            padding-right: 15px;
+            padding-left: 15px;
+            color: white;
+            background: #3554D1;
+        }
+
+.toast {
+    position: fixed;
+    right: 20px;
+    z-index: 1;
+    margin-bottom: 120px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    display: none;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    padding: 10px;
+    opacity: 0.95;
+}
+
+.toast-body {
+    padding: 15px;
+}
+
+.toast-header {
+    padding-top: 5px;
+    padding-left: 5px;
+}
+
+.custom-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 0;
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: #000;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+    .custom-close:hover {
+        opacity: 1;
+    }
+
+@media (max-width: 768px) {
+    ul.nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+        ul.nav li {
+            float: left;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+}

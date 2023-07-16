@@ -6,6 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="fad12cc643b8438d9048ef941f5a5636" Name="Diagram1">
         <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Admin" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Venue" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
