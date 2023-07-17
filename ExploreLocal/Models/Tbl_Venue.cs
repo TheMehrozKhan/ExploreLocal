@@ -14,6 +14,12 @@ namespace ExploreLocal.Models
     
     public partial class Tbl_Venue
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tbl_Venue()
+        {
+            this.Tbl_Destination = new HashSet<Tbl_Destination>();
+        }
+    
         public int Venue_id { get; set; }
         public string Venue_name { get; set; }
         public string Venue_img { get; set; }
@@ -21,5 +27,7 @@ namespace ExploreLocal.Models
         public Nullable<int> Venue_status { get; set; }
     
         public virtual Tbl_Admin Tbl_Admin { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Destination> Tbl_Destination { get; set; }
     }
 }

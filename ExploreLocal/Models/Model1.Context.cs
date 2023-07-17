@@ -27,5 +27,10 @@ namespace ExploreLocal.Models
     
         public virtual DbSet<Tbl_Admin> Tbl_Admin { get; set; }
         public virtual DbSet<Tbl_Venue> Tbl_Venue { get; set; }
+        public virtual DbSet<Tbl_BookingHistory> Tbl_BookingHistory { get; set; }
+        public virtual DbSet<Tbl_Destination> Tbl_Destination { get; set; }
+        public virtual DbSet<Tbl_Reviews> Tbl_Reviews { get; set; }
+        public virtual DbSet<Tbl_SavedDestinations> Tbl_SavedDestinations { get; set; }
+        public virtual DbSet<Tbl_User> Tbl_User { get; set; }
     }
 }

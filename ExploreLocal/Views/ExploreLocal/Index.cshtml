@@ -1,4 +1,25 @@
-﻿<section data-anim-wrap class="masthead -type-5">
+﻿<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-Obk70ctfVTbq9JpzzvRtOqN7EtL3ivZ5GgswyjpuwFSuvMdtYPXOynan5yU9mEoyxO0UR6CZlwu3QvHJx62hQA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        function hideToast() {
+            $('#toast').toast('hide');
+        }
+    </script>
+</head>
+@if (ViewBag.ToastMessage != null)
+{
+    <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" id="toast">
+        <div class="toast-header">
+            <img src="~/Content/img/greentick-icon.png" height="23" width="23" class="rounded mr-2" alt="...">
+            <small>@DateTime.Now</small>
+            <button type="button" class="btn-close" onclick="hideToast()" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <p class="card-text">@ViewBag.ToastMessage</p>
+        </div>
+    </div>
+}
+<section data-anim-wrap class="masthead -type-5">
     <div class="container">
         <div class="row">
             <div class="col-xl-9">

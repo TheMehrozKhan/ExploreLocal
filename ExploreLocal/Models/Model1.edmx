@@ -14,6 +14,63 @@
           <Property Name="Admin_Password" Type="varchar" MaxLength="100" />
           <Property Name="Admin_Email" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Tbl_BookingHistory">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DestinationID" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Tbl_Destination">
+          <Key>
+            <PropertyRef Name="DestinationID" />
+          </Key>
+          <Property Name="DestinationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DestinationName" Type="varchar" MaxLength="100" />
+          <Property Name="Country" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="Image" Type="varchar" MaxLength="100" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="FK_Venue_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Tbl_Reviews">
+          <Key>
+            <PropertyRef Name="ReviewID" />
+          </Key>
+          <Property Name="ReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DestinationID" Type="int" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="Comment" Type="varchar" MaxLength="500" />
+          <Property Name="ReviewDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Tbl_SavedDestinations">
+          <Key>
+            <PropertyRef Name="SavedID" />
+          </Key>
+          <Property Name="SavedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DestinationID" Type="int" />
+          <Property Name="SaveDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Tbl_User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
+          <Property Name="Location" Type="varchar" MaxLength="100" />
+          <Property Name="ProfileImage" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="Tbl_Venue">
           <Key>
             <PropertyRef Name="Venue_id" />
@@ -24,6 +81,90 @@
           <Property Name="Admin_id" Type="int" />
           <Property Name="Venue_status" Type="int" />
         </EntityType>
+        <Association Name="FK__Tbl_Booki__Desti__75A278F5">
+          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
+          <End Role="Tbl_BookingHistory" Type="Self.Tbl_BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Destination">
+              <PropertyRef Name="DestinationID" />
+            </Principal>
+            <Dependent Role="Tbl_BookingHistory">
+              <PropertyRef Name="DestinationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Booki__UserI__74AE54BC">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
+          <End Role="Tbl_BookingHistory" Type="Self.Tbl_BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_BookingHistory">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Desti__FK_Ve__6FE99F9F">
+          <End Role="Tbl_Venue" Type="Self.Tbl_Venue" Multiplicity="0..1" />
+          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Venue">
+              <PropertyRef Name="Venue_id" />
+            </Principal>
+            <Dependent Role="Tbl_Destination">
+              <PropertyRef Name="FK_Venue_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Revie__Desti__7D439ABD">
+          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
+          <End Role="Tbl_Reviews" Type="Self.Tbl_Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Destination">
+              <PropertyRef Name="DestinationID" />
+            </Principal>
+            <Dependent Role="Tbl_Reviews">
+              <PropertyRef Name="DestinationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Revie__UserI__7C4F7684">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
+          <End Role="Tbl_Reviews" Type="Self.Tbl_Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_Reviews">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Saved__Desti__797309D9">
+          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
+          <End Role="Tbl_SavedDestinations" Type="Self.Tbl_SavedDestinations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Destination">
+              <PropertyRef Name="DestinationID" />
+            </Principal>
+            <Dependent Role="Tbl_SavedDestinations">
+              <PropertyRef Name="DestinationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Saved__UserI__787EE5A0">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
+          <End Role="Tbl_SavedDestinations" Type="Self.Tbl_SavedDestinations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_SavedDestinations">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Tbl_Venue__Admin__5CD6CB2B">
           <End Role="Tbl_Admin" Type="Self.Tbl_Admin" Multiplicity="0..1" />
           <End Role="Tbl_Venue" Type="Self.Tbl_Venue" Multiplicity="*" />
@@ -38,7 +179,40 @@
         </Association>
         <EntityContainer Name="ExploreLocalModelStoreContainer">
           <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_BookingHistory" EntityType="Self.Tbl_BookingHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Destination" EntityType="Self.Tbl_Destination" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Reviews" EntityType="Self.Tbl_Reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SavedDestinations" EntityType="Self.Tbl_SavedDestinations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_User" EntityType="Self.Tbl_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Venue" EntityType="Self.Tbl_Venue" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Tbl_Booki__Desti__75A278F5" Association="Self.FK__Tbl_Booki__Desti__75A278F5">
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+            <End Role="Tbl_BookingHistory" EntitySet="Tbl_BookingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Booki__UserI__74AE54BC" Association="Self.FK__Tbl_Booki__UserI__74AE54BC">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_BookingHistory" EntitySet="Tbl_BookingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Desti__FK_Ve__6FE99F9F" Association="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F">
+            <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Revie__Desti__7D439ABD" Association="Self.FK__Tbl_Revie__Desti__7D439ABD">
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+            <End Role="Tbl_Reviews" EntitySet="Tbl_Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Revie__UserI__7C4F7684" Association="Self.FK__Tbl_Revie__UserI__7C4F7684">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Reviews" EntitySet="Tbl_Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Saved__Desti__797309D9" Association="Self.FK__Tbl_Saved__Desti__797309D9">
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+            <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Saved__UserI__787EE5A0" Association="Self.FK__Tbl_Saved__UserI__787EE5A0">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
+          </AssociationSet>
           <AssociationSet Name="FK__Tbl_Venue__Admin__5CD6CB2B" Association="Self.FK__Tbl_Venue__Admin__5CD6CB2B">
             <End Role="Tbl_Admin" EntitySet="Tbl_Admin" />
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
@@ -65,6 +239,39 @@
             <End Role="Tbl_Admin" EntitySet="Tbl_Admin" />
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
           </AssociationSet>
+          <EntitySet Name="Tbl_BookingHistory" EntityType="ExploreLocalModel.Tbl_BookingHistory" />
+          <EntitySet Name="Tbl_Destination" EntityType="ExploreLocalModel.Tbl_Destination" />
+          <EntitySet Name="Tbl_Reviews" EntityType="ExploreLocalModel.Tbl_Reviews" />
+          <EntitySet Name="Tbl_SavedDestinations" EntityType="ExploreLocalModel.Tbl_SavedDestinations" />
+          <EntitySet Name="Tbl_User" EntityType="ExploreLocalModel.Tbl_User" />
+          <AssociationSet Name="FK__Tbl_Booki__Desti__75A278F5" Association="ExploreLocalModel.FK__Tbl_Booki__Desti__75A278F5">
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+            <End Role="Tbl_BookingHistory" EntitySet="Tbl_BookingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Booki__UserI__74AE54BC" Association="ExploreLocalModel.FK__Tbl_Booki__UserI__74AE54BC">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_BookingHistory" EntitySet="Tbl_BookingHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Desti__FK_Ve__6FE99F9F" Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ve__6FE99F9F">
+            <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Revie__Desti__7D439ABD" Association="ExploreLocalModel.FK__Tbl_Revie__Desti__7D439ABD">
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+            <End Role="Tbl_Reviews" EntitySet="Tbl_Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Saved__Desti__797309D9" Association="ExploreLocalModel.FK__Tbl_Saved__Desti__797309D9">
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+            <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Revie__UserI__7C4F7684" Association="ExploreLocalModel.FK__Tbl_Revie__UserI__7C4F7684">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Reviews" EntitySet="Tbl_Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Saved__UserI__787EE5A0" Association="ExploreLocalModel.FK__Tbl_Saved__UserI__787EE5A0">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Tbl_Venue">
           <Key>
@@ -76,6 +283,7 @@
           <Property Name="Admin_id" Type="Int32" />
           <NavigationProperty Name="Tbl_Admin" Relationship="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B" FromRole="Tbl_Venue" ToRole="Tbl_Admin" />
           <Property Name="Venue_status" Type="Int32" />
+          <NavigationProperty Name="Tbl_Destination" Relationship="ExploreLocalModel.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Venue" ToRole="Tbl_Destination" />
         </EntityType>
         <Association Name="FK__Tbl_Venue__Admin__5CD6CB2B">
           <End Type="ExploreLocalModel.Tbl_Admin" Role="Tbl_Admin" Multiplicity="0..1" />
@@ -86,6 +294,160 @@
             </Principal>
             <Dependent Role="Tbl_Venue">
               <PropertyRef Name="Admin_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tbl_BookingHistory">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DestinationID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tbl_Destination" Relationship="ExploreLocalModel.FK__Tbl_Booki__Desti__75A278F5" FromRole="Tbl_BookingHistory" ToRole="Tbl_Destination" />
+          <NavigationProperty Name="Tbl_User" Relationship="ExploreLocalModel.FK__Tbl_Booki__UserI__74AE54BC" FromRole="Tbl_BookingHistory" ToRole="Tbl_User" />
+        </EntityType>
+        <EntityType Name="Tbl_Destination">
+          <Key>
+            <PropertyRef Name="DestinationID" />
+          </Key>
+          <Property Name="DestinationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DestinationName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="FK_Venue_Id" Type="Int32" />
+          <NavigationProperty Name="Tbl_BookingHistory" Relationship="ExploreLocalModel.FK__Tbl_Booki__Desti__75A278F5" FromRole="Tbl_Destination" ToRole="Tbl_BookingHistory" />
+          <NavigationProperty Name="Tbl_Venue" Relationship="ExploreLocalModel.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Destination" ToRole="Tbl_Venue" />
+          <NavigationProperty Name="Tbl_Reviews" Relationship="ExploreLocalModel.FK__Tbl_Revie__Desti__7D439ABD" FromRole="Tbl_Destination" ToRole="Tbl_Reviews" />
+          <NavigationProperty Name="Tbl_SavedDestinations" Relationship="ExploreLocalModel.FK__Tbl_Saved__Desti__797309D9" FromRole="Tbl_Destination" ToRole="Tbl_SavedDestinations" />
+        </EntityType>
+        <EntityType Name="Tbl_Reviews">
+          <Key>
+            <PropertyRef Name="ReviewID" />
+          </Key>
+          <Property Name="ReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DestinationID" Type="Int32" />
+          <Property Name="Rating" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ReviewDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Tbl_Destination" Relationship="ExploreLocalModel.FK__Tbl_Revie__Desti__7D439ABD" FromRole="Tbl_Reviews" ToRole="Tbl_Destination" />
+          <NavigationProperty Name="Tbl_User" Relationship="ExploreLocalModel.FK__Tbl_Revie__UserI__7C4F7684" FromRole="Tbl_Reviews" ToRole="Tbl_User" />
+        </EntityType>
+        <EntityType Name="Tbl_SavedDestinations">
+          <Key>
+            <PropertyRef Name="SavedID" />
+          </Key>
+          <Property Name="SavedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DestinationID" Type="Int32" />
+          <Property Name="SaveDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Tbl_Destination" Relationship="ExploreLocalModel.FK__Tbl_Saved__Desti__797309D9" FromRole="Tbl_SavedDestinations" ToRole="Tbl_Destination" />
+          <NavigationProperty Name="Tbl_User" Relationship="ExploreLocalModel.FK__Tbl_Saved__UserI__787EE5A0" FromRole="Tbl_SavedDestinations" ToRole="Tbl_User" />
+        </EntityType>
+        <EntityType Name="Tbl_User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProfileImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Tbl_BookingHistory" Relationship="ExploreLocalModel.FK__Tbl_Booki__UserI__74AE54BC" FromRole="Tbl_User" ToRole="Tbl_BookingHistory" />
+          <NavigationProperty Name="Tbl_Reviews" Relationship="ExploreLocalModel.FK__Tbl_Revie__UserI__7C4F7684" FromRole="Tbl_User" ToRole="Tbl_Reviews" />
+          <NavigationProperty Name="Tbl_SavedDestinations" Relationship="ExploreLocalModel.FK__Tbl_Saved__UserI__787EE5A0" FromRole="Tbl_User" ToRole="Tbl_SavedDestinations" />
+        </EntityType>
+        <Association Name="FK__Tbl_Booki__Desti__75A278F5">
+          <End Type="ExploreLocalModel.Tbl_Destination" Role="Tbl_Destination" Multiplicity="0..1" />
+          <End Type="ExploreLocalModel.Tbl_BookingHistory" Role="Tbl_BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Destination">
+              <PropertyRef Name="DestinationID" />
+            </Principal>
+            <Dependent Role="Tbl_BookingHistory">
+              <PropertyRef Name="DestinationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Booki__UserI__74AE54BC">
+          <End Type="ExploreLocalModel.Tbl_User" Role="Tbl_User" Multiplicity="0..1" />
+          <End Type="ExploreLocalModel.Tbl_BookingHistory" Role="Tbl_BookingHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_BookingHistory">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Desti__FK_Ve__6FE99F9F">
+          <End Type="ExploreLocalModel.Tbl_Venue" Role="Tbl_Venue" Multiplicity="0..1" />
+          <End Type="ExploreLocalModel.Tbl_Destination" Role="Tbl_Destination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Venue">
+              <PropertyRef Name="Venue_id" />
+            </Principal>
+            <Dependent Role="Tbl_Destination">
+              <PropertyRef Name="FK_Venue_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Revie__Desti__7D439ABD">
+          <End Type="ExploreLocalModel.Tbl_Destination" Role="Tbl_Destination" Multiplicity="0..1" />
+          <End Type="ExploreLocalModel.Tbl_Reviews" Role="Tbl_Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Destination">
+              <PropertyRef Name="DestinationID" />
+            </Principal>
+            <Dependent Role="Tbl_Reviews">
+              <PropertyRef Name="DestinationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Saved__Desti__797309D9">
+          <End Type="ExploreLocalModel.Tbl_Destination" Role="Tbl_Destination" Multiplicity="0..1" />
+          <End Type="ExploreLocalModel.Tbl_SavedDestinations" Role="Tbl_SavedDestinations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Destination">
+              <PropertyRef Name="DestinationID" />
+            </Principal>
+            <Dependent Role="Tbl_SavedDestinations">
+              <PropertyRef Name="DestinationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Revie__UserI__7C4F7684">
+          <End Type="ExploreLocalModel.Tbl_User" Role="Tbl_User" Multiplicity="0..1" />
+          <End Type="ExploreLocalModel.Tbl_Reviews" Role="Tbl_Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_Reviews">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Saved__UserI__787EE5A0">
+          <End Type="ExploreLocalModel.Tbl_User" Role="Tbl_User" Multiplicity="0..1" />
+          <End Type="ExploreLocalModel.Tbl_SavedDestinations" Role="Tbl_SavedDestinations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_SavedDestinations">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -113,6 +475,68 @@
                 <ScalarProperty Name="Venue_img" ColumnName="Venue_img" />
                 <ScalarProperty Name="Venue_name" ColumnName="Venue_name" />
                 <ScalarProperty Name="Venue_id" ColumnName="Venue_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_BookingHistory">
+            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_BookingHistory">
+              <MappingFragment StoreEntitySet="Tbl_BookingHistory">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Destination">
+            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Destination">
+              <MappingFragment StoreEntitySet="Tbl_Destination">
+                <ScalarProperty Name="FK_Venue_Id" ColumnName="FK_Venue_Id" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="DestinationName" ColumnName="DestinationName" />
+                <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Reviews">
+            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Reviews">
+              <MappingFragment StoreEntitySet="Tbl_Reviews">
+                <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_SavedDestinations">
+            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_SavedDestinations">
+              <MappingFragment StoreEntitySet="Tbl_SavedDestinations">
+                <ScalarProperty Name="SaveDate" ColumnName="SaveDate" />
+                <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SavedID" ColumnName="SavedID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_User">
+            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_User">
+              <MappingFragment StoreEntitySet="Tbl_User">
+                <ScalarProperty Name="ProfileImage" ColumnName="ProfileImage" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
