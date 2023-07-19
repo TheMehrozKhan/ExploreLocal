@@ -216,7 +216,11 @@ namespace ExploreLocal.Controllers
 
             return View();
         }
-
+        public ActionResult RegisteredUser(int? id)
+        {
+            List<Tbl_User> userList = db.Tbl_User.ToList();
+            return View(userList);
+        }
 
         public string uploadimage(HttpPostedFileBase file)
         {

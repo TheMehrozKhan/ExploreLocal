@@ -243,6 +243,7 @@
     <Content Include="Views\Admin\View_Venue.cshtml" />
     <Content Include="Views\Admin\Edit_Venue.cshtml" />
     <Content Include="Views\Admin\Create_Destination.cshtml" />
+    <Content Include="Views\Admin\RegisteredUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

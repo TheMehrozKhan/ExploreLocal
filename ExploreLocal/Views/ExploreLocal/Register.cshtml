@@ -45,7 +45,11 @@
                                         <label class="lh-1 text-14 text-light-1">Your Location</label>
                                     </div>
                                     <br />
-
+                                    <div class="form-input">
+                                        <label>Profile Image:</label>
+                                        <input type="file" name="imgfile" id="imgfile" class="form-control-file" required style="margin-top:10px;margin-bottom:25px;" />
+                                        @Html.ValidationMessage("imgfile")
+                                    </div>
                                     <button type="submit" class="button py-20 -dark-1 bg-blue-1 text-white" style="width:100%;">
                                         Sign Up <div class="icon-arrow-top-right ml-15"></div>
                                     </button>

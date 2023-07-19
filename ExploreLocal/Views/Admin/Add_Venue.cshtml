@@ -86,20 +86,20 @@
             </div>
         </div>
     }
-<ul class="nav" style="box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;height:55px;">
-    <li class="nav-item"><a class="nav-link" href="@Url.Action("Admin_Panel")">Home</a></li>
-    <li class="nav-item">
-        <div class="dropdown">
-            <a class="nav-link" href="@Url.Action("Add_Venue")">Add Venues</a>
-            <div class="dropdown-content">
-                <a href="@Url.Action("View_Venue")">View Venues</a>
+    <ul class="nav" style="box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;height:55px;">
+        <li class="nav-item"><a class="nav-link" href="@Url.Action("Admin_Panel")">Home</a></li>
+        <li class="nav-item">
+            <div class="dropdown">
+                <a class="nav-link" href="@Url.Action("Add_Venue")">Add Venues</a>
+                <div class="dropdown-content">
+                    <a href="@Url.Action("View_Venue")">View Venues</a>
+                </div>
             </div>
-        </div>
-    </li>
-    <li class="nav-item"><a class="nav-link" href="@Url.Action("Create_Destination","Admin")">Add Tours</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Bookings</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
-</ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="@Url.Action("Create_Destination","Admin")">Add Tours</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Bookings</a></li>
+        <li class="nav-item"><a class="nav-link" href="@Url.Action("RegisteredUser","Admin")">Users</a></li>
+    </ul>
 </div>
 <div class="d-flex justify-content-center align-items-center vh-100">
     @using (Html.BeginForm("Add_Venue", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "signupform" }))
