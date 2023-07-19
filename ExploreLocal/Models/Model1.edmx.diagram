@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fad12cc643b8438d9048ef941f5a5636" Name="Diagram1" ZoomLevel="71">
+      <Diagram DiagramId="fad12cc643b8438d9048ef941f5a5636" Name="Diagram1" ZoomLevel="106">
         <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Admin" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Venue" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B" />
@@ -20,6 +20,7 @@
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Saved__Desti__797309D9" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Revie__UserI__7C4F7684" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Saved__UserI__787EE5A0" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__US_Id__01142BA1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

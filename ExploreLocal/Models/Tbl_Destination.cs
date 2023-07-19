@@ -25,13 +25,13 @@ namespace ExploreLocal.Models
         public int DestinationID { get; set; }
         public string DestinationName { get; set; }
         public string Country { get; set; }
-        public string City { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<int> FK_Venue_Id { get; set; }
+        public Nullable<int> US_Id_fk { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_BookingHistory> Tbl_BookingHistory { get; set; }
@@ -40,5 +40,6 @@ namespace ExploreLocal.Models
         public virtual ICollection<Tbl_Reviews> Tbl_Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_SavedDestinations> Tbl_SavedDestinations { get; set; }
+        public virtual Tbl_User Tbl_User { get; set; }
     }
 }

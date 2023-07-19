@@ -25,6 +25,7 @@ namespace ExploreLocal.Models
         public string Venue_img { get; set; }
         public Nullable<int> Admin_id { get; set; }
         public Nullable<int> Venue_status { get; set; }
+        public string Venue_Country { get; set; }
     
         public virtual Tbl_Admin Tbl_Admin { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

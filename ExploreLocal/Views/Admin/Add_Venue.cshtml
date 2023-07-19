@@ -5,9 +5,8 @@
 
 <head>
     <link rel="stylesheet" href="~/Content/css/AdminPanel.css?v=@DateTime.Now.Ticks" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-Obk70ctfVTbq9JpzzvRtOqN7EtL3ivZ5GgswyjpuwFSuvMdtYPXOynan5yU9mEoyxO0UR6CZlwu3QvHJx62hQA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
     <title>Add New Recipe Category - FlavourFusion</title>
     <style>
@@ -107,12 +106,17 @@
     {
         <form method="post">
             <div class="form-group">
-                <label for="username">Venue Name:</label>
-                @Html.TextBoxFor(x => x.Venue_name, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Category Name" })
+                <label for="venue_name">Venue Name:</label>
+                @Html.TextBoxFor(x => x.Venue_name, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Venue Name" })
                 <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_name)</span>
             </div>
             <div class="form-group">
-                <label for="password">Venue Image:</label>
+                <label for="venueCountry">Venue Country:</label>
+                @Html.TextBoxFor(x => x.Venue_Country, new { @class = "form-control", @id = "venueCountry", @placeholder = "Enter Venue Country" })
+                <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_Country)</span>
+            </div>
+            <div class="form-group">
+                <label for="venue_img">Venue Image:</label>
                 <input type="file" name="imgfile" id="imgfile" class="input" required />
             </div>
             <div class="d-flex justify-content-center">
@@ -121,20 +125,35 @@
         </form>
     }
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-aO94Frla0/8+uRjg9w5m8L9P3kW1zGCj+PI4KfXIAVc=" crossorigin="anonymous"></script>
 <script>
-        document.getElementById('signupform').addEventListener('submit', function(event) {
-            event.preventDefault();
-            Swal.fire({
-                icon: 'success',
-                title: 'Congrats!',
-                text: 'Your Recipe Category Are Uploaded!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '@Url.Action("Add_Recipe_Category", "FlavourFusion")';
-                    this.submit();
-                }
-            });
+    $(document).ready(function () {
+        // Array of countries for autocomplete
+        var countries = [
+            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+            "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain",
+            // Add more countries here...
+            "Zimbabwe"
+        ];
+
+        $("#venueCountry").autocomplete({
+            source: countries
         });
+    });
+
+    document.getElementById('signupform').addEventListener('submit', function (event) {
+        event.preventDefault();
+        Swal.fire({
+            icon: 'success',
+            title: 'Congrats!',
+            text: 'Your Recipe Category Are Uploaded!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '@Url.Action("View_Venue", "ExploreLocal")';
+                this.submit();
+            }
+        });
+    });
 </script>

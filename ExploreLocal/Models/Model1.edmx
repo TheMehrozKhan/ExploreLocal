@@ -31,13 +31,13 @@
           <Property Name="DestinationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DestinationName" Type="varchar" MaxLength="100" />
           <Property Name="Country" Type="varchar" MaxLength="100" />
-          <Property Name="City" Type="varchar" MaxLength="100" />
           <Property Name="Description" Type="varchar" MaxLength="500" />
           <Property Name="Image" Type="varchar" MaxLength="100" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
           <Property Name="FK_Venue_Id" Type="int" />
+          <Property Name="US_Id_fk" Type="int" />
         </EntityType>
         <EntityType Name="Tbl_Reviews">
           <Key>
@@ -80,6 +80,7 @@
           <Property Name="Venue_img" Type="varchar(max)" />
           <Property Name="Admin_id" Type="int" />
           <Property Name="Venue_status" Type="int" />
+          <Property Name="Venue_Country" Type="varchar" MaxLength="100" />
         </EntityType>
         <Association Name="FK__Tbl_Booki__Desti__75A278F5">
           <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
@@ -114,6 +115,18 @@
             </Principal>
             <Dependent Role="Tbl_Destination">
               <PropertyRef Name="FK_Venue_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Desti__US_Id__01142BA1">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
+          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_Destination">
+              <PropertyRef Name="US_Id_fk" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -197,6 +210,10 @@
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
           </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Desti__US_Id__01142BA1" Association="Self.FK__Tbl_Desti__US_Id__01142BA1">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+          </AssociationSet>
           <AssociationSet Name="FK__Tbl_Revie__Desti__7D439ABD" Association="Self.FK__Tbl_Revie__Desti__7D439ABD">
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
             <End Role="Tbl_Reviews" EntitySet="Tbl_Reviews" />
@@ -272,6 +289,10 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
           </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Desti__US_Id__01142BA1" Association="ExploreLocalModel.FK__Tbl_Desti__US_Id__01142BA1">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Tbl_Venue">
           <Key>
@@ -284,6 +305,7 @@
           <NavigationProperty Name="Tbl_Admin" Relationship="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B" FromRole="Tbl_Venue" ToRole="Tbl_Admin" />
           <Property Name="Venue_status" Type="Int32" />
           <NavigationProperty Name="Tbl_Destination" Relationship="ExploreLocalModel.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Venue" ToRole="Tbl_Destination" />
+          <Property Name="Venue_Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__Tbl_Venue__Admin__5CD6CB2B">
           <End Type="ExploreLocalModel.Tbl_Admin" Role="Tbl_Admin" Multiplicity="0..1" />
@@ -316,7 +338,6 @@
           <Property Name="DestinationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DestinationName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Price" Type="Decimal" Precision="10" Scale="2" />
@@ -327,6 +348,8 @@
           <NavigationProperty Name="Tbl_Venue" Relationship="ExploreLocalModel.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Destination" ToRole="Tbl_Venue" />
           <NavigationProperty Name="Tbl_Reviews" Relationship="ExploreLocalModel.FK__Tbl_Revie__Desti__7D439ABD" FromRole="Tbl_Destination" ToRole="Tbl_Reviews" />
           <NavigationProperty Name="Tbl_SavedDestinations" Relationship="ExploreLocalModel.FK__Tbl_Saved__Desti__797309D9" FromRole="Tbl_Destination" ToRole="Tbl_SavedDestinations" />
+          <Property Name="US_Id_fk" Type="Int32" />
+          <NavigationProperty Name="Tbl_User" Relationship="ExploreLocalModel.FK__Tbl_Desti__US_Id__01142BA1" FromRole="Tbl_Destination" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_Reviews">
           <Key>
@@ -366,6 +389,7 @@
           <NavigationProperty Name="Tbl_BookingHistory" Relationship="ExploreLocalModel.FK__Tbl_Booki__UserI__74AE54BC" FromRole="Tbl_User" ToRole="Tbl_BookingHistory" />
           <NavigationProperty Name="Tbl_Reviews" Relationship="ExploreLocalModel.FK__Tbl_Revie__UserI__7C4F7684" FromRole="Tbl_User" ToRole="Tbl_Reviews" />
           <NavigationProperty Name="Tbl_SavedDestinations" Relationship="ExploreLocalModel.FK__Tbl_Saved__UserI__787EE5A0" FromRole="Tbl_User" ToRole="Tbl_SavedDestinations" />
+          <NavigationProperty Name="Tbl_Destination" Relationship="ExploreLocalModel.FK__Tbl_Desti__US_Id__01142BA1" FromRole="Tbl_User" ToRole="Tbl_Destination" />
         </EntityType>
         <Association Name="FK__Tbl_Booki__Desti__75A278F5">
           <End Type="ExploreLocalModel.Tbl_Destination" Role="Tbl_Destination" Multiplicity="0..1" />
@@ -451,6 +475,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Tbl_Desti__US_Id__01142BA1">
+          <End Type="ExploreLocalModel.Tbl_User" Role="Tbl_User" Multiplicity="0..1" />
+          <End Type="ExploreLocalModel.Tbl_Destination" Role="Tbl_Destination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_Destination">
+              <PropertyRef Name="US_Id_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -470,6 +506,7 @@
           <EntitySetMapping Name="Tbl_Venue">
             <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Venue">
               <MappingFragment StoreEntitySet="Tbl_Venue">
+                <ScalarProperty Name="Venue_Country" ColumnName="Venue_Country" />
                 <ScalarProperty Name="Venue_status" ColumnName="Venue_status" />
                 <ScalarProperty Name="Admin_id" ColumnName="Admin_id" />
                 <ScalarProperty Name="Venue_img" ColumnName="Venue_img" />
@@ -492,13 +529,13 @@
           <EntitySetMapping Name="Tbl_Destination">
             <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Destination">
               <MappingFragment StoreEntitySet="Tbl_Destination">
+                <ScalarProperty Name="US_Id_fk" ColumnName="US_Id_fk" />
                 <ScalarProperty Name="FK_Venue_Id" ColumnName="FK_Venue_Id" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="DestinationName" ColumnName="DestinationName" />
                 <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />

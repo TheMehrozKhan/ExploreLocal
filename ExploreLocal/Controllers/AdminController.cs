@@ -75,6 +75,8 @@ namespace ExploreLocal.Controllers
             {
                 Tbl_Venue ca = new Tbl_Venue();
                 ca.Venue_name = cat.Venue_name;
+                ca.Venue_Country = cat.Venue_Country; // We'll set this value based on user input
+
                 ca.Venue_img = path;
                 ca.Admin_id = Convert.ToInt32(Session["ad_id"].ToString());
                 db.Tbl_Venue.Add(ca);
@@ -83,6 +85,8 @@ namespace ExploreLocal.Controllers
             }
             return View();
         }
+
+
 
         public ActionResult View_Venue(int? page)
         {
@@ -157,6 +161,60 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("View_Venue");
             }
             return View(category);
+        }
+
+        [HttpGet]
+        public ActionResult Create_Destination()
+        {
+            if (Session["ad_id"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            List<Tbl_Venue> li = db.Tbl_Venue.ToList();
+            ViewBag.categorylist = new SelectList(li, "Venue_id", "Venue_name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create_Destination(Tbl_Destination pr, HttpPostedFileBase[] imgfiles)
+        {
+            List<Tbl_Venue> li = db.Tbl_Venue.ToList();
+            ViewBag.categorylist = new SelectList(li, "Venue_id", "Venue_name");
+            List<string> imagePaths = new List<string>();
+
+            if (imgfiles != null && imgfiles.Length > 0)
+            {
+                foreach (HttpPostedFileBase imgfile in imgfiles)
+                {
+                    string path = uploadimage(imgfile);
+
+                    if (path.Equals(-1))
+                    {
+                        ViewBag.Error = "Image Couldn't Uploaded Try Again";
+                        return View();
+                    }
+
+                    imagePaths.Add(path);
+                }
+            }
+
+            Tbl_Destination pro = new Tbl_Destination();
+            pro.DestinationName = pr.DestinationName;
+            pro.Country = pr.Country;
+            pro.Description = pr.Description;
+            pro.Price = pr.Price;
+            pro.FK_Venue_Id = pr.FK_Venue_Id;
+            pro.US_Id_fk = Convert.ToInt32(Session["ad_id"].ToString());
+
+            if (imagePaths.Count > 0)
+            {
+                pro.Image = string.Join(",", imagePaths);
+            }
+
+            db.Tbl_Destination.Add(pro);
+            db.SaveChanges();
+
+            return View();
         }
 
 
