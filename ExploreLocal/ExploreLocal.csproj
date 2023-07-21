@@ -178,6 +178,7 @@
     <Compile Include="Models\Tbl_Venue.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ToursViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -244,6 +245,8 @@
     <Content Include="Views\Admin\Edit_Venue.cshtml" />
     <Content Include="Views\Admin\Create_Destination.cshtml" />
     <Content Include="Views\Admin\RegisteredUser.cshtml" />
+    <Content Include="Views\ExploreLocal\UserProfile.cshtml" />
+    <Content Include="Views\ExploreLocal\Venues.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

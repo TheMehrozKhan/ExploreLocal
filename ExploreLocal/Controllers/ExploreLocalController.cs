@@ -1,4 +1,5 @@
 ﻿using ExploreLocal.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,10 +19,54 @@ namespace ExploreLocal.Controllers
             return View();
         }
 
-        public ActionResult Destinations()
+        public ActionResult Destinations(int id)
         {
-            return View();
+            // Get the selected venue tours
+            var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id).ToList();
+
+            // Fetch most popular tours
+            var mostPopularTours = db.Tbl_Destination
+                .GroupJoin(
+                    db.Tbl_BookingHistory,
+                    destination => destination.DestinationID,
+                    booking => booking.DestinationID,
+                    (destination, bookings) => new
+                    {
+                        Destination = destination,
+                        BookingsCount = bookings.Count()
+                    })
+                .OrderByDescending(x => x.BookingsCount)
+                .Select(x => x.Destination)
+                .Take(4) // You can change the number as per your requirement
+                .ToList();
+
+            // Fetch trending tours
+            var trendingTours = db.Tbl_Destination
+                .GroupJoin(
+                    db.Tbl_BookingHistory,
+                    destination => destination.DestinationID,
+                    booking => booking.DestinationID,
+                    (destination, bookings) => new
+                    {
+                        Destination = destination,
+                        LatestBookingDate = bookings.Max(b => b.Date)
+                    })
+                .OrderByDescending(x => x.LatestBookingDate)
+                .Select(x => x.Destination)
+                .Take(4) // You can change the number as per your requirement
+                .ToList();
+
+            // Create a ViewModel to store both sets of tours
+            var viewModel = new ToursViewModel
+            {
+                SelectedVenueTours = selectedVenueTours,
+                MostPopularTours = mostPopularTours,
+                TrendingTours = trendingTours
+            };
+
+            return View(viewModel);
         }
+
 
         public ActionResult About()
         {
@@ -96,12 +141,38 @@ namespace ExploreLocal.Controllers
             return View();
         }
 
+        public ActionResult Venues(int? page)
+        {
+            int pageSize = 8;
+            int pageIndex = 1;
+
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+
+            var list = db.Tbl_Venue.Where(x => x.Venue_status == null).OrderByDescending(x => x.Venue_id).ToList();
+            IPagedList<Tbl_Venue> cateList = list.ToPagedList(pageIndex, pageSize);
+
+            return View(cateList);
+        }
+
         public ActionResult Logout()
         {
             Session.Clear();
             return RedirectToAction("Login");
         }
+        public ActionResult UserProfile(int? id)
+        {
+            int userId = Convert.ToInt32(Session["u_id"]);
 
+            if (id == null)
+            {
+                return RedirectToAction("UserProfile", new { id = userId });
+            }
+
+            Tbl_User profileUser = db.Tbl_User.FirstOrDefault(u => u.UserID == id);
+
+            ViewBag.ProfileNotFound = true;
+            return View();
+        }
 
         public string uploadimage(HttpPostedFileBase file)
         {

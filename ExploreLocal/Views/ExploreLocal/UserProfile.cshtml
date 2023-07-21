@@ -1,0 +1,149 @@
+﻿@model ExploreLocal.Models.Tbl_User
+<title> Your Profile - FlavourFusion</title>
+<style>
+    .circle-img {
+        width: 70px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .center-card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .profile-card {
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 40px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .left-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 20px;
+    }
+
+    .right-section {
+        flex-grow: 1;
+    }
+
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-left: 30px;
+        padding-right: 20px;
+        border-right: 1px solid #ddd;
+    }
+
+    .profile-picture {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .profile-username {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .profile-details {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .profile-details-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .profile-details-label {
+        font-size: 14px;
+    }
+
+    .profile-details-value {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .profile-input {
+        width: 100%;
+        padding: 5px;
+        border: none;
+        background-color: transparent;
+    }
+
+    .profile-actions {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    #thecontainer {
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+        padding: 25px;
+    }
+
+    #thefirsta {
+        color: black;
+    }
+
+        #thefirsta:hover {
+            color: #F76B6A;
+        }
+</style>
+<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;border-radius:15px;margin-top:50px;margin-bottom:50px;">
+    <div class="profile-card">
+        <div class="left-section">
+            <div class="profile-info">
+                <img class="profile-picture" src="@Url.Content(Model.ProfileImage)" alt="Profile Picture" />
+                <div class="profile-username">@Model.FirstName @Model.LastName</div>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="profile-details">
+                <div class="profile-details-item">
+                    <div class="profile-details-label">Password:</div>
+                    <div class="profile-details-value">
+                        <input type="password" class="profile-input" value="@Model.Password" readonly style="text-align:right;" />
+                    </div>
+                </div>
+                <div class="profile-details-item">
+                    <div class="profile-details-label">Email:</div>
+                    <div class="profile-details-value">
+                        <input type="email" class="profile-input" value="@Model.Email" readonly style="text-align:right;" />
+                    </div>
+                </div>
+            </div>
+            <div class="profile-actions">
+                @if (Convert.ToInt32(Session["u_id"]) == Model.UserID)  // Only show buttons for the logged-in user's own profile
+                {
+                    <div style="margin-top:20px;">
+                        <a href="@Url.Action("Edit_Profile", "FlavourFusion", new { id = Model.UserID })" class="btn btn-primary" style="background-color: rgb(255, 132, 0);outline:none;border:none">Edit</a>
+                        <a href="@Url.Action("Logout", "FlavourFusion", new { id = Model.UserID })" class="btn btn-dark">Logout</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

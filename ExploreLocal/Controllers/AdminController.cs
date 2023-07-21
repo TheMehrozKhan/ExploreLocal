@@ -205,6 +205,7 @@ namespace ExploreLocal.Controllers
             pro.Price = pr.Price;
             pro.FK_Venue_Id = pr.FK_Venue_Id;
             pro.US_Id_fk = Convert.ToInt32(Session["ad_id"].ToString());
+            pro.GoogleStreetViewURL = pr.GoogleStreetViewURL;
 
             if (imagePaths.Count > 0)
             {

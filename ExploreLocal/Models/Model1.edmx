@@ -38,6 +38,7 @@
           <Property Name="EndDate" Type="date" />
           <Property Name="FK_Venue_Id" Type="int" />
           <Property Name="US_Id_fk" Type="int" />
+          <Property Name="GoogleStreetViewURL" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Tbl_Reviews">
           <Key>
@@ -350,6 +351,7 @@
           <NavigationProperty Name="Tbl_SavedDestinations" Relationship="ExploreLocalModel.FK__Tbl_Saved__Desti__797309D9" FromRole="Tbl_Destination" ToRole="Tbl_SavedDestinations" />
           <Property Name="US_Id_fk" Type="Int32" />
           <NavigationProperty Name="Tbl_User" Relationship="ExploreLocalModel.FK__Tbl_Desti__US_Id__01142BA1" FromRole="Tbl_Destination" ToRole="Tbl_User" />
+          <Property Name="GoogleStreetViewURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tbl_Reviews">
           <Key>
@@ -529,6 +531,7 @@
           <EntitySetMapping Name="Tbl_Destination">
             <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Destination">
               <MappingFragment StoreEntitySet="Tbl_Destination">
+                <ScalarProperty Name="GoogleStreetViewURL" ColumnName="GoogleStreetViewURL" />
                 <ScalarProperty Name="US_Id_fk" ColumnName="US_Id_fk" />
                 <ScalarProperty Name="FK_Venue_Id" ColumnName="FK_Venue_Id" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
