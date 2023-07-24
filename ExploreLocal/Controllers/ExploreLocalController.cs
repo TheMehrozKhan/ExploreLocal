@@ -11,7 +11,7 @@ namespace ExploreLocal.Controllers
 {
     public class ExploreLocalController : Controller
     {
-        ExploreLocalEntities db = new ExploreLocalEntities();
+        ExploreLocalEntities1 db = new ExploreLocalEntities1();
         public ActionResult Index(Tbl_User us)
         {
             TempData["ToastMessage"] = "Hi, " + us.FirstName + " " +  us.LastName + " You Successfully Logged In!";
@@ -109,6 +109,46 @@ namespace ExploreLocal.Controllers
             return View(uvm);
         }
 
+        [HttpGet]
+        public ActionResult ExpertLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ExpertLogin(Tbl_Expert adm)
+        {
+            Tbl_Expert ad = db.Tbl_Expert
+                            .Where(x => x.ExpertEmail == adm.ExpertEmail && x.ExperPassword == adm.ExperPassword)
+                            .SingleOrDefault();
+
+            if (ad != null)
+            {
+                if (ad.ExpertStatus.HasValue && ad.ExpertStatus.Value == false)
+                {
+                    ViewBag.NeedsApproval = true;
+                    ViewBag.NeedsApproval = false;
+                    return View();
+                }
+
+                Session["ad_id"] = ad.ExpertId.ToString();
+                Session["ad_name"] = ad.ExpertName;
+                TempData["ToastMessage"] = "Hi, " + ad.ExpertName + " You Successfully Logged In!";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.Error = "Invalid Username or Password";
+                ViewBag.NeedsApproval = false;
+            }
+
+            return View();
+        }
+
+
+
+
+
 
         [HttpGet]
         public ActionResult Register()
@@ -138,6 +178,44 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Login");
             }
 
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult ExpertRegistration()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ExpertRegistration(ExpertViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Tbl_Expert expert = new Tbl_Expert
+                {
+                    ExpertName = model.ExpertName,
+                    ExpertEmail = model.ExpertEmail,
+                    ExpertBio = model.ExpertBio,
+                    ExperPassword = model.ExperPassword,
+                    ExpertLocation = model.ExpertLocation,
+                    ExpertStatus = Convert.ToBoolean(0)
+                };
+
+                using (var db = new ExploreLocalEntities1()) 
+                {
+                    db.Tbl_Expert.Add(expert);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("ExpertRegistrationSuccess");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult ExpertRegistrationSuccess()
+        {
             return View();
         }
 

@@ -4,23 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fad12cc643b8438d9048ef941f5a5636" Name="Diagram1" ZoomLevel="106">
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Admin" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Venue" Width="1.5" PointX="3" PointY="0.75" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_BookingHistory" Width="1.5" PointX="7.5" PointY="7.125" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Destination" Width="1.5" PointX="5.25" PointY="6.375" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Reviews" Width="1.5" PointX="10.5" PointY="7" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_SavedDestinations" Width="1.5" PointX="7.5" PointY="4.125" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_User" Width="1.5" PointX="5.25" PointY="1.75" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Booki__Desti__75A278F5" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Booki__UserI__74AE54BC" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ve__6FE99F9F" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Revie__Desti__7D439ABD" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Saved__Desti__797309D9" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Revie__UserI__7C4F7684" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Saved__UserI__787EE5A0" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__US_Id__01142BA1" />
+      <Diagram DiagramId="45c2135266eb4614afaddff1b04f9a9f" Name="Diagram1">
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Admin" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_BookingHistory" Width="1.5" PointX="7.5" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Destination" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Expert" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Reviews" Width="1.5" PointX="10.5" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_SavedDestinations" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_User" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Venue" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Booki__Desti__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Booki__UserI__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ve__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Revie__Desti__7D439ABD" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Saved__Desti__797309D9" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Revie__UserI__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Saved__UserI__787EE5A0" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

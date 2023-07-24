@@ -1,0 +1,120 @@
+﻿@model ExploreLocal.Models.Tbl_Expert
+
+@{
+    ViewBag.Title = "Login";
+}
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <style>
+        .thebackground {
+            display: none;
+            margin-top: 5px;
+            border-radius: 4px;
+            padding: 11px;
+            background-color: #fa4d67;
+            opacity: 0.8;
+        }
+
+        .error-message {
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            // Check if the error message is displayed and show the background accordingly
+            if ($(".error-message").is(":visible")) {
+                $(".thebackground").show();
+            }
+        });
+    </script>
+</head>
+<main>
+    <section class="layout-pt-lg layout-pb-lg bg-blue-2">
+        <div class="container">
+            <div class="row justify-center">
+                <div class="col-xl-6 col-lg-7 col-md-9">
+                    <div class="px-50 py-50 sm:px-20 sm:py-20 bg-white shadow-4 rounded-4">
+                        <div class="row y-gap-20">
+                            <div class="col-12">
+                                <h1 class="text-22 fw-500">Welcome back</h1>
+                                <p class="mt-10">Don't have an account yet? <a href="@Url.Action("ExpertRegistration","ExploreLocal")" class="text-blue-1">Sign up for free</a></p>
+                            </div>
+
+                            <div class="col-12">
+                                @if (ViewBag.NeedsApproval != null && ViewBag.NeedsApproval)
+                                {
+                                    <div class="alert alert-danger" role="alert" style="margin-bottom: 10px; border-radius: 4px; padding: 11px; background-color: darkorange; opacity: 0.8;">
+                                        <p style="color:white;line-height:21px;"> Your Request is Submitted For Approval. Please Wait Until Your Request is Approved To Log In. </p>
+                                    </div>
+                                }
+
+                                @using (Html.BeginForm("ExpertLogin", "ExploreLocal", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-input">
+                                        @Html.TextBoxFor(model => model.ExpertEmail, new { @class = "form-control", required = "required", name = "Email" })
+                                        <label class="lh-1 text-14 text-light-1">Email</label>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ExpertEmail, "", new { @class = "error-message" })
+                                    <br />
+                                    <div class="form-input">
+                                        @Html.PasswordFor(model => model.ExperPassword, new { @class = "form-control", required = "required", name = "Password" })
+                                        <label class="lh-1 text-14 text-light-1">Password</label>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ExperPassword, "", new { @class = "error-message" })
+                                    <br />
+                                    <button type="submit" class="button py-20 -dark-1 bg-blue-1 text-white" style="width:100%;">
+                                        Sign In <div class="icon-arrow-top-right ml-15"></div>
+                                    </button>
+                                    if (!string.IsNullOrEmpty(ViewBag.Error))
+                                    {
+                                        <div class="thebackground">
+                                            <h6 style="color:white;font-weight:500;text-align:center;">@ViewBag.Error</h6>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="layout-pt-md layout-pb-md bg-dark-2">
+        <div class="container">
+            <div class="row y-gap-30 justify-between items-center">
+                <div class="col-auto">
+                    <div class="row y-gap-20  flex-wrap items-center">
+                        <div class="col-auto">
+                            <div class="icon-newsletter text-60 sm:text-40 text-white"></div>
+                        </div>
+
+                        <div class="col-auto">
+                            <h4 class="text-26 text-white fw-600">Your Travel Journey Starts Here</h4>
+                            <div class="text-white">Sign up and we'll send the best deals to you</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-auto">
+                    <div class="single-field -w-410 d-flex x-gap-10 y-gap-20">
+                        <div>
+                            <input class="bg-white h-60" type="text" placeholder="Your Email">
+                        </div>
+
+                        <div>
+                            <button class="button -md h-60 bg-blue-1 text-white">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

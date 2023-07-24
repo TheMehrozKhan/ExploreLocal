@@ -1,4 +1,6 @@
 ﻿using ExploreLocal.Models;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ namespace ExploreLocal.Controllers
 {
     public class AdminController : Controller
     {
-        ExploreLocalEntities db = new ExploreLocalEntities();
+        ExploreLocalEntities1 db = new ExploreLocalEntities1();
         public ActionResult Index()
         {
             return View();
@@ -84,6 +86,75 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("View_Venue");
             }
             return View();
+        }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login");
+        }
+
+        public ActionResult ExpertRequests()
+        {
+            using (var db = new ExploreLocalEntities1())
+            {
+                var pendingExperts = db.Tbl_Expert.Where(e => e.ExpertStatus == false).ToList();
+                return View(pendingExperts);
+            }
+        }
+
+        public void SendExpertApprovalEmail(string recipientEmail)
+        {
+            string senderEmail = "khanmehroz245@gmail.com";
+            string apiKey = "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";
+            string subject = "Congratulations! You're Now an ExploreLocal Expert";
+            string body = "Dear expert, congratulations! Your request to become an ExploreLocal expert has been approved. You can now add your services at ExploreLocal.";
+
+
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(senderEmail);
+            var to = new EmailAddress(recipientEmail);
+            var plainTextContent = body;
+            var htmlContent = "<strong>" + body + "</strong>";
+
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = client.SendEmailAsync(msg).Result;
+
+            if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
+            {
+                Console.WriteLine($"Failed to send email: {response.StatusCode}");
+            }
+        }
+
+        public ActionResult ApproveExpert(int expertId)
+        {
+            using (var db = new ExploreLocalEntities1())
+            {
+                var expert = db.Tbl_Expert.Find(expertId);
+                if (expert != null)
+                {
+                    expert.ExpertStatus = true; 
+                    db.SaveChanges();
+                    SendExpertApprovalEmail(expert.ExpertEmail);
+                }
+            }
+
+            return RedirectToAction("ExpertRequests");
+        }
+
+
+        public ActionResult RejectExpert(int expertId)
+        {
+            using (var db = new ExploreLocalEntities1())
+            {
+                var expert = db.Tbl_Expert.Find(expertId);
+                if (expert != null)
+                {
+                    db.Tbl_Expert.Remove(expert);
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("ExpertRequests");
         }
 
 
@@ -204,7 +275,6 @@ namespace ExploreLocal.Controllers
             pro.Description = pr.Description;
             pro.Price = pr.Price;
             pro.FK_Venue_Id = pr.FK_Venue_Id;
-            pro.US_Id_fk = Convert.ToInt32(Session["ad_id"].ToString());
             pro.GoogleStreetViewURL = pr.GoogleStreetViewURL;
 
             if (imagePaths.Count > 0)

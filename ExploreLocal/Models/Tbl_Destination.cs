@@ -6,7 +6,7 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System.Web.Mvc;
+
 namespace ExploreLocal.Models
 {
     using System;
@@ -31,8 +31,6 @@ namespace ExploreLocal.Models
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<int> FK_Venue_Id { get; set; }
-        public Nullable<int> US_Id_fk { get; set; }
-        [AllowHtml]
         public string GoogleStreetViewURL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -42,6 +40,5 @@ namespace ExploreLocal.Models
         public virtual ICollection<Tbl_Reviews> Tbl_Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_SavedDestinations> Tbl_SavedDestinations { get; set; }
-        public virtual Tbl_User Tbl_User { get; set; }
     }
 }
