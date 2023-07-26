@@ -257,6 +257,8 @@ namespace ExploreLocal.Controllers
             pro.Language = pr.Language;
             pro.FK_Venue_Id = pr.FK_Venue_Id;
             pro.GoogleStreetViewURL = pr.GoogleStreetViewURL;
+            pro.StartDate = pr.StartDate;
+            pro.EndDate = pr.EndDate;
             pro.FK_Expert_Id = Convert.ToInt32(Session["expert_id"].ToString());
 
             if (imagePaths.Count > 0)

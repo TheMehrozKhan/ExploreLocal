@@ -1,7 +1,4 @@
 ﻿@model ExploreLocal.Models.Tbl_Destination
-@{
-    ViewBag.Title = "Create_Ad";
-}
 <head>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -9,132 +6,108 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
     <title>Create Your Ad - Shopio The Best Ecommerce Store in The Town</title>
-    <style>
-
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        form {
-            padding-top: 40px;
-            padding-bottom: 30px;
-            padding-left: 100px;
-            padding-right: 100px;
-            margin-top: 50px;
-            border-radius: 25px;
-            margin-top: 50px;
-            margin-bottom: 50px;
-            box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;
-        }
-
-        #thebutton {
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            font-size: 23px;
-            height: 55px;
-        }
-
-            #thebutton:hover {
-                box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
-            }
-
-        input {
-            border-radius: 4.5px;
-            padding: 10px;
-            width: 100%;
-            box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
-        }
-
-        select.form-control {
-            margin-bottom: 30px;
-        }
-
-        .theform input:focus,
-        .theform textarea:focus,
-        .theform select:focus {
-            outline: none;
-            box-shadow: rgba(149, 157, 165, 0.07) 0px 8px 24px;
-            border-color: #3554D1;
-        }
-
-        .theform .form-group {
-            margin-bottom: 25px;
-        }
-
-        textarea {
-            box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
-        }
-    </style>
 </head>
-<div class="d-flex justify-content-center align-items-center" style="margin-top:50px;">
-    @using (Html.BeginForm("Create_Tour", "ExploreLocal", FormMethod.Post, new { enctype = "multipart/form-data", @class = "theform" }))
-    {
-        <h3 class="text-center mb-4">Create Your Ad Now! 😃</h3>
+<section class="layout-pt-lg layout-pb-lg bg-blue-2">
+    <div class="container">
+        <div class="row justify-center">
+            <div class="col-xl-6 col-lg-7 col-md-9">
+                <div class="px-50 py-50 sm:px-20 sm:py-20 bg-white shadow-4 rounded-4">
+                    <div class="row y-gap-20">
+                        <div class="col-12">
+                            <h1 class="text-22 fw-500">Expert Registration</h1>
+                            <p class="mt-10">You're Already An Expert? <a href="@Url.Action("ExpertLogin","ExploreLocal")" class="text-blue-1">Log in</a></p>
+                        </div>
 
-        <div class="form-group" style="margin-top: 30px; position: relative; top: 23px; box-shadow: rgba(149, 157, 165, 0.07) 0px 8px 24px; ">
-            @Html.LabelFor(x => x.FK_Venue_Id, "Select Venue Category:")
-            @Html.DropDownListFor(x => x.FK_Venue_Id, ViewBag.categorylist as SelectList, new { @class = "form-control" })
+                        <div class="col-12">
+                            @using (Html.BeginForm("Create_Tour", "ExploreLocal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                <div class="form-input">
+                                    @Html.DropDownListFor(x => x.FK_Venue_Id, ViewBag.categorylist as SelectList, new { @class = "form-control" })
+                                </div>
+
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.DestinationName, new { @class = "form-control", required = "required" })
+                                    <label class="lh-1 text-14 text-light-1">Enter Your Destination Name</label>
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.Price, new { @class = "form-control", @type = "number", required = "required" })
+                                    <label class="lh-1 text-14 text-light-1">Destination Price</label>
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.Country, new { @class = "form-control", required = "required" })
+                                    <label class="lh-1 text-14 text-light-1">Destination Country</label>
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextAreaFor(x => x.Description, new { @class = "form-control", required = "required" })
+                                    <label class="lh-1 text-14 text-light-1">Country Description</label>
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.GoogleStreetViewURL, new { @class = "form-control", required = "required" })
+                                    <span style="color: red">@Html.ValidationMessageFor(x => x.GoogleStreetViewURL)</span>
+                                    <label class="lh-1 text-14 text-light-1">Google Street View URL</label>
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.MeetingPoint, new { @class = "form-control", required = "required" })
+                                    <span style="color: red">@Html.ValidationMessageFor(x => x.MeetingPoint)</span>
+                                    <label class="lh-1 text-14 text-light-1">Meeting Point Address</label>
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.Language, new { @class = "form-control", required = "required" })
+                                    <span style="color: red">@Html.ValidationMessageFor(x => x.Language)</span>
+                                    <label class="lh-1 text-14 text-light-1">Enter Your Language</label>
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <label for="datepicker">Start Date:</label>
+                                    <input class="form-control datepicker" type="text" id="datepicker" name="StartDate" style=" box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; padding: 15px;" />
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <label for="datepicker">End Date:</label>
+                                    <input class="form-control datepicker" type="text" id="datepicker" name="EndDate" style=" box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; padding:15px;" />
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    <input type="file" name="imgfiles" id="imgfiles" class="form-control-file" required multiple />
+                                </div>
+                                <br />
+
+                                <button type="submit" class="button py-20 -dark-1 bg-blue-1 text-white" style="width:100%;">
+                                    Create Tour
+                                </button>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row y-gap-20 pt-30">
+                        <div class="col-12">
+                            <div class="text-center px-30">I Agree To Terms of Use And Privacy Policy.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+</section>
 
-        <div class="form-group">
-            @Html.LabelFor(x => x.DestinationName, "Destination Name:")
-            @Html.TextBoxFor(x => x.DestinationName, new { @class = "form-control", @placeholder = "Enter Destination Name" })
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(x => x.Price, "Destination Price:")
-            @Html.TextBoxFor(x => x.Price, new { @class = "form-control", @type = "number", @placeholder = "Enter Destination Price" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.Country, "Destination Country:")
-            @Html.TextBoxFor(x => x.Country, new { @class = "form-control", @placeholder = "Enter Destination Country" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.Description, "Destination Country:")
-            @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @placeholder = "Enter Country Description" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.GoogleStreetViewURL, "Google Street View URL:")
-            @Html.TextBoxFor(x => x.GoogleStreetViewURL, new { @class = "form-control", @placeholder = "Enter Google Street View URL", @id = "custom-input" })
-            <span style="color: red">@Html.ValidationMessageFor(x => x.GoogleStreetViewURL)</span>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.MeetingPoint, "Meeting Point:")
-            @Html.TextBoxFor(x => x.MeetingPoint, new { @class = "form-control", @placeholder = "Enter Meeting Point Address", @id = "custom-input" })
-            <span style="color: red">@Html.ValidationMessageFor(x => x.MeetingPoint)</span>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => x.Language, "Language:")
-            @Html.TextBoxFor(x => x.Language, new { @class = "form-control", @placeholder = "Enter Your Language", @id = "custom-input" })
-            <span style="color: red">@Html.ValidationMessageFor(x => x.Language)</span>
-        </div>
-
-        <div class="form-group">
-            <label for="datepicker">Start Date:</label>
-            <input class="form-control datepicker" type="text" id="datepicker" name="StartDate" />
-        </div>
-
-        <div class="form-group">
-            <label for="datepicker">End Date:</label>
-            <input class="form-control datepicker" type="text" id="datepicker" name="EndDate" />
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Destination Images:")
-            <input type="file" name="imgfiles" id="imgfiles" class="form-control-file" required multiple />
-        </div>
-
-        <button type="submit" class="btn btn-primary" id="thebutton" style="background-color: #3554D1; outline: none; border: none; margin-top: 10px;color:white;">
-            Create Tour
-        </button>
-    }
-</div>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-QlVXO1++HQhCPtg63LOHm12RrLcRgtvP+/uFEC5G89bKmBCG02FDU1gJb+NKbxZX" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -144,16 +117,15 @@
         enableTime: false,
     });
     document.getElementById('signupform').addEventListener('submit', function(event) {
-            event.preventDefault();
-            Swal.fire({
-                icon: 'success',
-                title: 'Congrats!',
-                text: 'Your Contest is Created!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '@Url.Action("CreateContest", "FlavourFusion")';
-                    this.submit();
-                }
-            });
+        event.preventDefault();
+        Swal.fire({
+            icon: 'success',
+            title: 'Congrats Your Request Submitted!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = '@Url.Action("ExpertRegistrationSuccess", "ExploreLocal")';
+                this.submit();
+            }
         });
+    });
 </script>
