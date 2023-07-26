@@ -264,6 +264,11 @@
     <Content Include="Views\ExploreLocal\ExpertRegistrationSuccess.cshtml" />
     <Content Include="Views\Admin\ExpertRequests.cshtml" />
     <Content Include="Views\ExploreLocal\ExpertLogin.cshtml" />
+    <Content Include="Views\Admin\AllExperts.cshtml" />
+    <Content Include="Views\ExploreLocal\ExpertDashboard.cshtml" />
+    <Content Include="Views\ExploreLocal\Edit_Profile.cshtml" />
+    <Content Include="Views\ExploreLocal\Edit_Expert.cshtml" />
+    <Content Include="Views\ExploreLocal\Create_Tour.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

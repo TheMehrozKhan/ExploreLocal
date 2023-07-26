@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ExploreLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ExploreLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Tbl_Admin">
           <Key>
             <PropertyRef Name="Admin_Id" />
@@ -38,6 +38,9 @@
           <Property Name="EndDate" Type="date" />
           <Property Name="FK_Venue_Id" Type="int" />
           <Property Name="GoogleStreetViewURL" Type="nvarchar(max)" />
+          <Property Name="MeetingPoint" Type="varchar" MaxLength="100" />
+          <Property Name="Language" Type="varchar" MaxLength="100" />
+          <Property Name="FK_Expert_Id" Type="int" />
         </EntityType>
         <EntityType Name="Tbl_Expert">
           <Key>
@@ -116,6 +119,18 @@
             </Principal>
             <Dependent Role="Tbl_BookingHistory">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Desti__FK_Ex__2739D489">
+          <End Role="Tbl_Expert" Type="Self.Tbl_Expert" Multiplicity="0..1" />
+          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Expert">
+              <PropertyRef Name="ExpertId" />
+            </Principal>
+            <Dependent Role="Tbl_Destination">
+              <PropertyRef Name="FK_Expert_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -208,6 +223,10 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_BookingHistory" EntitySet="Tbl_BookingHistory" />
           </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Desti__FK_Ex__2739D489" Association="Self.FK__Tbl_Desti__FK_Ex__2739D489">
+            <End Role="Tbl_Expert" EntitySet="Tbl_Expert" />
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+          </AssociationSet>
           <AssociationSet Name="FK__Tbl_Desti__FK_Ve__6FE99F9F" Association="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F">
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
@@ -233,8 +252,7 @@
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ExploreLocalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -278,6 +296,10 @@
           <NavigationProperty Name="Tbl_Venue" Relationship="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Destination" ToRole="Tbl_Venue" />
           <NavigationProperty Name="Tbl_Reviews" Relationship="Self.FK__Tbl_Revie__Desti__7D439ABD" FromRole="Tbl_Destination" ToRole="Tbl_Reviews" />
           <NavigationProperty Name="Tbl_SavedDestinations" Relationship="Self.FK__Tbl_Saved__Desti__797309D9" FromRole="Tbl_Destination" ToRole="Tbl_SavedDestinations" />
+          <Property Name="MeetingPoint" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Language" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FK_Expert_Id" Type="Int32" />
+          <NavigationProperty Name="Tbl_Expert" Relationship="ExploreLocalModel.FK__Tbl_Desti__FK_Ex__2739D489" FromRole="Tbl_Destination" ToRole="Tbl_Expert" />
         </EntityType>
         <EntityType Name="Tbl_Expert">
           <Key>
@@ -291,6 +313,7 @@
           <Property Name="ExpertProfileImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ExpertLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ExperPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Tbl_Destination" Relationship="ExploreLocalModel.FK__Tbl_Desti__FK_Ex__2739D489" FromRole="Tbl_Expert" ToRole="Tbl_Destination" />
         </EntityType>
         <EntityType Name="Tbl_Reviews">
           <Key>
@@ -481,7 +504,23 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
           </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Desti__FK_Ex__2739D489" Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ex__2739D489">
+            <End Role="Tbl_Expert" EntitySet="Tbl_Expert" />
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK__Tbl_Desti__FK_Ex__2739D489">
+          <End Type="ExploreLocalModel.Tbl_Expert" Role="Tbl_Expert" Multiplicity="0..1" />
+          <End Type="ExploreLocalModel.Tbl_Destination" Role="Tbl_Destination" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Expert">
+              <PropertyRef Name="ExpertId" />
+            </Principal>
+            <Dependent Role="Tbl_Destination">
+              <PropertyRef Name="FK_Expert_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -512,6 +551,9 @@
           <EntitySetMapping Name="Tbl_Destination">
             <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Destination">
               <MappingFragment StoreEntitySet="Tbl_Destination">
+                <ScalarProperty Name="FK_Expert_Id" ColumnName="FK_Expert_Id" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="MeetingPoint" ColumnName="MeetingPoint" />
                 <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
                 <ScalarProperty Name="DestinationName" ColumnName="DestinationName" />
                 <ScalarProperty Name="Country" ColumnName="Country" />

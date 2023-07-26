@@ -127,12 +127,11 @@ namespace ExploreLocal.Controllers
                 if (ad.ExpertStatus.HasValue && ad.ExpertStatus.Value == false)
                 {
                     ViewBag.NeedsApproval = true;
-                    ViewBag.NeedsApproval = false;
                     return View();
                 }
 
-                Session["ad_id"] = ad.ExpertId.ToString();
-                Session["ad_name"] = ad.ExpertName;
+                Session["expert_id"] = ad.ExpertId.ToString();
+                Session["expert_name"] = ad.ExpertName;
                 TempData["ToastMessage"] = "Hi, " + ad.ExpertName + " You Successfully Logged In!";
                 return RedirectToAction("Index");
             }
@@ -144,11 +143,6 @@ namespace ExploreLocal.Controllers
 
             return View();
         }
-
-
-
-
-
 
         [HttpGet]
         public ActionResult Register()
@@ -219,6 +213,63 @@ namespace ExploreLocal.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Create_Tour()
+        {
+            if (Session["expert_id"] == null)
+            {
+                return RedirectToAction("ExpertLogin");
+            }
+            List<Tbl_Venue> li = db.Tbl_Venue.ToList();
+            ViewBag.categorylist = new SelectList(li, "Venue_id", "Venue_name");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create_Tour(Tbl_Destination pr, HttpPostedFileBase[] imgfiles)
+        {
+            List<Tbl_Venue> li = db.Tbl_Venue.ToList();
+            ViewBag.categorylist = new SelectList(li, "Venue_id", "Venue_name");
+            List<string> imagePaths = new List<string>();
+
+            if (imgfiles != null && imgfiles.Length > 0)
+            {
+                foreach (HttpPostedFileBase imgfile in imgfiles)
+                {
+                    string path = uploadimage(imgfile);
+
+                    if (path.Equals(-1))
+                    {
+                        ViewBag.Error = "Image Couldn't Uploaded Try Again";
+                        return View();
+                    }
+
+                    imagePaths.Add(path);
+                }
+            }
+
+            Tbl_Destination pro = new Tbl_Destination();
+            pro.DestinationName = pr.DestinationName;
+            pro.Country = pr.Country;
+            pro.Description = pr.Description;
+            pro.Price = pr.Price;
+            pro.MeetingPoint = pr.MeetingPoint;
+            pro.Language = pr.Language;
+            pro.FK_Venue_Id = pr.FK_Venue_Id;
+            pro.GoogleStreetViewURL = pr.GoogleStreetViewURL;
+            pro.FK_Expert_Id = Convert.ToInt32(Session["expert_id"].ToString());
+
+            if (imagePaths.Count > 0)
+            {
+                pro.Image = string.Join(",", imagePaths);
+            }
+
+            db.Tbl_Destination.Add(pro);
+            db.SaveChanges();
+
+            return View();
+        }
+
         public ActionResult Venues(int? page)
         {
             int pageSize = 8;
@@ -243,15 +294,129 @@ namespace ExploreLocal.Controllers
 
             if (id == null)
             {
-                return RedirectToAction("UserProfile", new { id = userId });
+                id = userId;
             }
 
             Tbl_User profileUser = db.Tbl_User.FirstOrDefault(u => u.UserID == id);
 
+            if (profileUser == null)
+            {
+                ViewBag.ProfileNotFound = true;
+                return View();
+            }
+
             ViewBag.ProfileNotFound = true;
-            return View();
+            return View(profileUser);
         }
 
+        [HttpGet]
+        public ActionResult Edit_Profile(int id)
+        {
+            Tbl_User user = db.Tbl_User.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult Save_Edit(Tbl_User user, HttpPostedFileBase imgfile)
+        {
+            string path = uploadimage(imgfile);
+            if (path.Equals(-1))
+            {
+                ViewBag.Error = "Image Couldn't be Uploaded. Please try again.";
+            }
+            else
+            {
+                Tbl_User us = db.Tbl_User.Find(user.UserID);
+                if (us != null)
+                {
+                    us.FirstName = user.FirstName;
+                    us.LastName = user.LastName;
+                    us.Email = user.Email;
+                    if (imgfile != null)
+                    {
+                        us.ProfileImage = path;
+                    }
+                    us.Location = user.Location;
+                    db.SaveChanges();
+                    return RedirectToAction("UserProfile");
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View(user);
+        }
+
+        public ActionResult ExpertDashboard(int? id)
+        {
+            int userId = Convert.ToInt32(Session["expert_id"]);
+
+            if (id == null)
+            {
+                id = userId;
+            }
+
+            Tbl_Expert profileUser = db.Tbl_Expert.FirstOrDefault(u => u.ExpertId == id);
+
+            if (profileUser == null)
+            {
+                ViewBag.ProfileNotFound = true;
+                return View();
+            }
+
+            ViewBag.ProfileNotFound = true;
+            return View(profileUser);
+        }
+
+        [HttpGet]
+        public ActionResult Edit_Expert(int id)
+        {
+            Tbl_Expert user = db.Tbl_Expert.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult Save_Expert(Tbl_Expert user, HttpPostedFileBase imgfile)
+        {
+            string path = uploadimage(imgfile);
+            if (path.Equals(-1))
+            {
+                ViewBag.Error = "Image Couldn't be Uploaded. Please try again.";
+            }
+            else
+            {
+                Tbl_Expert us = db.Tbl_Expert.Find(user.ExpertId);
+                if (us != null)
+                {
+                    us.ExpertName = user.ExpertName;
+                    us.ExpertEmail = user.ExpertEmail;
+                    us.ExperPassword = user.ExperPassword;
+                    us.ExpertBio = user.ExpertBio;
+                    if (imgfile != null)
+                    {
+                        us.ExpertProfileImage = path;
+                    }
+                    us.ExpertLocation = user.ExpertLocation;
+                    db.SaveChanges();
+                    return RedirectToAction("UserProfile");
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View(user);
+        }
+        
         public string uploadimage(HttpPostedFileBase file)
         {
             Random r = new Random();

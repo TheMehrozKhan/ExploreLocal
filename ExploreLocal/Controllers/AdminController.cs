@@ -141,7 +141,6 @@ namespace ExploreLocal.Controllers
             return RedirectToAction("ExpertRequests");
         }
 
-
         public ActionResult RejectExpert(int expertId)
         {
             using (var db = new ExploreLocalEntities1())
@@ -157,7 +156,25 @@ namespace ExploreLocal.Controllers
             return RedirectToAction("ExpertRequests");
         }
 
+        public ActionResult AllExperts()
+        {
+            List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
+            return View(ExpertList);
+        }
 
+        public ActionResult ExpertDelete(int expertId)
+        {
+            using (var db = new ExploreLocalEntities1())
+            {
+                var expert = db.Tbl_Expert.Find(expertId);
+                if (expert != null)
+                {
+                    db.Tbl_Expert.Remove(expert);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("AllExperts");
+        }
 
         public ActionResult View_Venue(int? page)
         {
@@ -287,7 +304,7 @@ namespace ExploreLocal.Controllers
 
             return View();
         }
-        public ActionResult RegisteredUser(int? id)
+        public ActionResult RegisteredUser()
         {
             List<Tbl_User> userList = db.Tbl_User.ToList();
             return View(userList);

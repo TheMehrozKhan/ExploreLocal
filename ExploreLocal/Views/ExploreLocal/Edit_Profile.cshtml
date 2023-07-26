@@ -1,0 +1,120 @@
+﻿﻿@model ExploreLocal.Models.Tbl_User
+<title>Edit Your Profile - FlavourFusion</title>
+<style>
+    form {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 100px;
+        padding-right: 100px;
+        box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px;
+        border-radius: 25px;
+        margin-top: 150px;
+        margin-bottom: 80px;
+    }
+
+    #thebutton {
+        border: none;
+        width: 100%;
+        font-size: 19px;
+        height: 40px;
+    }
+
+        #thebutton:hover {
+            box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+        }
+
+    #thesecondbtn {
+        border-radius: 8px;
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        padding: 12px;
+        text-align: center;
+        font-size: 19px;
+        box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+    }
+
+        #thesecondbtn:hover {
+            color: red;
+            box-shadow: rgba(149, 157, 165, 0.15) 0px 8px 24px;
+        }
+
+    input {
+        border: 1px solid black;
+        border-radius: 4.5px;
+        padding:15px;
+        width: 250px;
+        box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+    }
+
+    h4 {
+        text-align: center;
+    }
+
+    select.form-control {
+        margin-bottom: 20px;
+    }
+
+    .theform input:focus,
+    .theform textarea:focus,
+    .theform select:focus {
+        outline: none;
+        box-shadow: none;
+        border-color: #F76B6A;
+    }
+</style>
+<div class="d-flex justify-content-center align-items-center vh-100" style="margin-bottom:180px;margin-top:80px;">
+    @using (Html.BeginForm("Save_Edit", "ExploreLocal", FormMethod.Post, new { enctype = "multipart/form-data", id = "signupform" }))
+    {
+        @Html.HiddenFor(model => model.UserID)
+    <form method="post">
+        <h4 class="mb-4 text-center" style="position:relative;top:19px;font-size:27px;">Edit Your Profile</h4> <br />
+        <div class="form-group" style="margin-bottom:18px;">
+            <label>Your First Name: </label>
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+        </div>
+        <div class="form-group" style="margin-bottom:18px;">
+            <label>Your Last Name: </label>
+            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+        </div>
+        <div class="form-group" style="margin-bottom:18px;">
+            <label>Your Profile Image: </label>
+            <input type="file" name="imgfile" id="imgfile" class="form-control" />
+        </div>
+        <div class="form-group" style="margin-bottom:18px;">
+            <label>Your Password: </label>
+            @Html.TextBoxFor(model => model.Password, new { @class = "form-control" })
+        </div>
+        <div class="form-group" style="margin-bottom:18px;">
+            <label>Your Email: </label>
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+        </div>
+        <div class="form-group" style="margin-bottom:18px;">
+            <label>Your Location: </label>
+            @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="thebutton" style="background-color: darkblue; border-radius: 8px; margin-top: 10px;color:white;height:55px;font-size:20px;">
+                Save
+            </button>
+        </div>
+        <a href="@Url.Action("UserProfile" , new { id = Convert.ToInt32(Session["u_id"]) }))" id="thesecondbtn">Cancel</a>
+    </form>
+    }
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+        document.getElementById('signupform').addEventListener('submit', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'success',
+                title: 'Congrats!',
+                text: 'Your Profile Has Been Updated!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("UserProfile", "FlavourFusion")';
+                    this.submit();
+                }
+            });
+        });
+</script>

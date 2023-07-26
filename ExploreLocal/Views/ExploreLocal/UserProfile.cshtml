@@ -111,8 +111,56 @@
         #thefirsta:hover {
             color: #F76B6A;
         }
+
+
+    .button-5 {
+        align-items: center;
+        background-clip: padding-box;
+        background-color: darkblue;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 16px;
+        font-weight: 500;
+        justify-content: center;
+        line-height: 1.25;
+        margin: 0;
+        min-height: 3rem;
+        padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+        position: relative;
+        text-decoration: none;
+        transition: all 250ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: baseline;
+        width: auto;
+    }
+
+        .button-5:hover,
+        .button-5:focus {
+            color: white;
+            background-color: darkblue;
+            box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+        }
+
+        .button-5:hover {
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .button-5:active {
+            color: white;
+            background-color: darkblue;
+            box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+            transform: translateY(0);
+        }
 </style>
-<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;border-radius:15px;margin-top:50px;margin-bottom:50px;">
+<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;border-radius:15px;margin-top:150px;margin-bottom:50px;">
     <div class="profile-card">
         <div class="left-section">
             <div class="profile-info">
@@ -134,13 +182,19 @@
                         <input type="email" class="profile-input" value="@Model.Email" readonly style="text-align:right;" />
                     </div>
                 </div>
+                <div class="profile-details-item">
+                    <div class="profile-details-label">Location:</div>
+                    <div class="profile-details-value">
+                        <input type="email" class="profile-input" value="@Model.Location" readonly style="text-align:right;" />
+                    </div>
+                </div>
             </div>
             <div class="profile-actions">
-                @if (Convert.ToInt32(Session["u_id"]) == Model.UserID)  // Only show buttons for the logged-in user's own profile
+                @if (Convert.ToInt32(Session["u_id"]) == Model.UserID) 
                 {
                     <div style="margin-top:20px;">
-                        <a href="@Url.Action("Edit_Profile", "FlavourFusion", new { id = Model.UserID })" class="btn btn-primary" style="background-color: rgb(255, 132, 0);outline:none;border:none">Edit</a>
-                        <a href="@Url.Action("Logout", "FlavourFusion", new { id = Model.UserID })" class="btn btn-dark">Logout</a>
+                        <a href="@Url.Action("Edit_Profile", "ExploreLocal", new { id = Model.UserID })" class="button-5">Edit</a>
+                        <a href="@Url.Action("Logout", "ExploreLocal", new { id = Model.UserID })" class="button-5" style="background-color:darkorange">Logout</a>
                     </div>
                 }
             </div>
