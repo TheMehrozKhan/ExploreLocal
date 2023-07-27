@@ -148,6 +148,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DestinationDetailsViewModel.cs" />
     <Compile Include="Models\ExpertViewModel.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
@@ -269,6 +270,7 @@
     <Content Include="Views\ExploreLocal\Edit_Profile.cshtml" />
     <Content Include="Views\ExploreLocal\Edit_Expert.cshtml" />
     <Content Include="Views\ExploreLocal\Create_Tour.cshtml" />
+    <Content Include="Views\ExploreLocal\DestinationDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

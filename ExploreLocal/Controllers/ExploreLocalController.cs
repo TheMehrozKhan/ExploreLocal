@@ -67,6 +67,27 @@ namespace ExploreLocal.Controllers
             return View(viewModel);
         }
 
+        public ActionResult DestinationDetails(int?id)
+        {
+            DestinationDetailsViewModel pr = new DestinationDetailsViewModel();
+
+            Tbl_Destination p = db.Tbl_Destination.Where(x => x.DestinationID == id).SingleOrDefault();
+            pr.DestinationID = p.DestinationID;
+            pr.DestinationName = p.DestinationName;
+            pr.Country = p.Country;
+            pr.Description = p.Description;
+            pr.Image = p.Image;
+            pr.Price = p.Price;
+            pr.StartDate = p.StartDate;
+            pr.EndDate = p.EndDate;
+            p.GoogleStreetViewURL = p.GoogleStreetViewURL;
+            pr.MeetingPoint = p.MeetingPoint;
+            pr.Language = p.Language;
+            Tbl_Venue cat = db.Tbl_Venue.Where(x => x.Venue_id == p.FK_Venue_Id).SingleOrDefault();
+            Tbl_Expert exp = db.Tbl_Expert.Where(x => x.ExpertId == p.FK_Expert_Id).SingleOrDefault();
+            return View(pr);
+        }
+
 
         public ActionResult About()
         {

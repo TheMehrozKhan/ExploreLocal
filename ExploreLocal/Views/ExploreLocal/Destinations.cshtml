@@ -118,7 +118,7 @@
                     foreach (var tour in Model.SelectedVenueTours)
                     {
                         <div class="col-xl-3 col-lg-3 col-sm-6">
-                            <a href="@Url.Action("TourDetails", "Tour", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
+                            <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
                                 <div class="hotelsCard__image">
                                     <div class="cardImage ratio ratio-1:1">
                                         <div class="cardImage__content">

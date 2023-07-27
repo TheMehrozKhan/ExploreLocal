@@ -27,6 +27,7 @@ namespace ExploreLocal.Models
         public string Country { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+
         public Nullable<decimal> Price { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }

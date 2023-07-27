@@ -1,0 +1,162 @@
+﻿@model ExploreLocal.Models.DestinationDetailsViewModel
+
+<section class="pt-40">
+    <div class="container">
+        <div class="row y-gap-15 justify-between items-end">
+            <div class="col-auto">
+                <h1 class="text-30 fw-600">@Model.DestinationName</h1>
+
+                <div class="row x-gap-20 y-gap-20 items-center pt-10">
+                    <!-- Display other details here, e.g., rating, group size, location, etc. -->
+                </div>
+            </div>
+
+            <!-- Add buttons here, e.g., Share and Save -->
+        </div>
+    </div>
+</section>
+
+<section class="pt-40 js-pin-container">
+    <div class="container">
+        <div class="row y-gap-30">
+            <div class="col-lg-8">
+                <!-- Display images here, use a slider if needed -->
+                <div class="relative d-flex justify-center overflow-hidden js-section-slider swiper-initialized swiper-horizontal swiper-pointer-events swiper-autoheight swiper-watch-progress swiper-backface-hidden" data-slider-cols="base-1" data-nav-prev="js-img-prev" data-nav-next="js-img-next">
+                    <div class="swiper-wrapper" id="swiper-wrapper-104221f61051fab688" aria-live="polite" style="height: 430px;">
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var imagePath in imagePaths)
+                            {
+                                var imageUrl = Url.Content(imagePath);
+                                <div class="swiper-slide">
+                                    <img class="rounded-4 col-12 h-full object-cover" src="@imageUrl" style="box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px; border-radius: 8px;" />
+                                </div>
+                            }
+                        }
+                    </div>
+                    <div class="absolute h-full col-11">
+
+                        <button class="section-slider-nav -prev flex-center button -blue-1 bg-white shadow-1 size-40 rounded-full sm:d-none js-img-prev swiper-button-disabled" disabled="" tabindex="-1" aria-label="Previous slide" aria-controls="swiper-wrapper-104221f61051fab688" aria-disabled="true">
+                            <i class="icon icon-chevron-left text-12"></i>
+                        </button>
+
+                        <button class="section-slider-nav -next flex-center button -blue-1 bg-white shadow-1 size-40 rounded-full sm:d-none js-img-next" tabindex="0" aria-label="Next slide" aria-controls="swiper-wrapper-104221f61051fab688" aria-disabled="false">
+                            <i class="icon icon-chevron-right text-12"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="absolute h-full col-12 z-2 px-20 py-20 d-flex justify-end items-end">
+                        <div class="absolute h-full col-12 z-2 px-20 py-20 d-flex justify-end items-end">
+                            @if (!string.IsNullOrEmpty(Model.Image))
+                            {
+                                var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                var imageUrl = Url.Content(imagePaths[0]);
+                                <a href="@imageUrl" class="button -blue-1 px-24 py-15 bg-white text-dark-1 js-gallery" data-gallery="gallery2">
+                                    See All 90 Photos
+                                </a>
+                            }
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var imagePath in imagePaths)
+                            {
+                                var imageUrl = Url.Content(imagePath);
+                                <a href="@imageUrl" class="js-gallery" data-gallery="gallery2"></a>
+                            }
+                        }
+                    </div>
+                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                </div>
+
+                <h3 class="text-22 fw-500 mt-30">
+                    Tour snapshot
+                </h3>
+
+                <div class="border-top-light mt-40 mb-40"></div>
+
+
+                <div class="row y-gap-30 justify-between pt-20">
+                    <div class="col-12">
+                        <h3 class="text-22 fw-500 mt-30">Street View</h3>
+                        @if (!string.IsNullOrEmpty(Model.GoogleStreetViewURL))
+                        {
+                            <div class="video-container">
+                                <iframe src="@Model.GoogleStreetViewURL" width="100%" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>No street view for this tour!</p>
+                        }
+                    </div>
+                </div>
+
+                <div class="border-top-light mt-40 mb-40"></div>
+
+                <div class="row x-gap-40 y-gap-40">
+                    <div class="col-12">
+                        <h3 class="text-22 fw-500">Overview</h3>
+                        <p class="text-dark-1 text-15 mt-20">@Model.Description</p>
+                        <!-- If the description is too long, consider using a "Show More" link -->
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5 class="text-16 fw-500">Available languages</h5>
+                        <div class="text-15 mt-10">@Model.Language</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5 class="text-16 fw-500">Cancellation policy</h5>
+                        <div class="text-15 mt-10">For a full refund, cancel at least 24 hours in advance of the start date of the experience.</div>
+                    </div>
+
+                    <div class="col-12">
+                        <h5 class="text-16 fw-500">Highlights</h5>
+                        <ul class="list-disc text-15 mt-10">
+                            <!-- Display highlights of the destination here -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-40 border-top-light">
+                    <div class="row x-gap-40 y-gap-40 pt-40">
+                        <div class="col-12">
+                            <h3 class="text-22 fw-500">What's Included</h3>
+
+                            <div class="row x-gap-40 y-gap-40 pt-20">
+                                <div class="col-md-6">
+                                    <div class="text-dark-1 text-15">
+                                        <i class="icon-check text-10 mr-10"></i> Entry ticket to Harry Potter Warner Bros Studio Tour London
+                                    </div>
+                                    <div class="text-dark-1 text-15">
+                                        <i class="icon-check text-10 mr-10"></i> Return transfers in air-conditioned coach
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="text-dark-1 text-15">
+                                        <i class="icon-close text-green-2 text-10 mr-10"></i> Food and drinks
+                                    </div>
+                                    <div class="text-dark-1 text-15">
+                                        <i class="icon-close text-green-2 text-10 mr-10"></i> Gratuities
+                                    </div>
+                                    <div class="text-dark-1 text-15">
+                                        <i class="icon-close text-green-2 text-10 mr-10"></i> Digital guide available in 10 different languages at additional cost
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Add booking details and other information here -->
+            </div>
+        </div>
+    </div>
+</section>
