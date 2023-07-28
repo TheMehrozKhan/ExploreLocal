@@ -21,11 +21,9 @@ namespace ExploreLocal.Controllers
 
         public ActionResult Destinations(int id)
         {
-            // Get the selected venue tours
             var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id).ToList();
             var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
 
-            // Fetch most popular tours
             var mostPopularTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_BookingHistory,
@@ -38,10 +36,9 @@ namespace ExploreLocal.Controllers
                     })
                 .OrderByDescending(x => x.BookingsCount)
                 .Select(x => x.Destination)
-                .Take(4) // You can change the number as per your requirement
+                .Take(4) 
                 .ToList();
 
-            // Fetch trending tours
             var trendingTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_BookingHistory,
@@ -54,10 +51,9 @@ namespace ExploreLocal.Controllers
                     })
                 .OrderByDescending(x => x.LatestBookingDate)
                 .Select(x => x.Destination)
-                .Take(4) // You can change the number as per your requirement
+                .Take(4) 
                 .ToList();
 
-            // Create a ViewModel to store both sets of tours
             var viewModel = new ToursViewModel
             {
                 SelectedVenueTours = selectedVenueTours,
@@ -89,7 +85,6 @@ namespace ExploreLocal.Controllers
                 Language = p.Language
             };
 
-            // Assuming that the Tbl_Destination has a foreign key to Tbl_Expert table, you can get the expert's name and profile image like this:
             Tbl_Expert expert = db.Tbl_Expert.Where(e => e.ExpertId == p.FK_Expert_Id).SingleOrDefault();
             if (expert != null)
             {
@@ -99,9 +94,8 @@ namespace ExploreLocal.Controllers
             }
             else
             {
-                // Set default values or handle the case when the expert is not found.
                 pr.ExpertName = "No Expert Found";
-                pr.ExpertProfileImage = "./Content/img/Default.png"; // Replace this with the path to your default expert image
+                pr.ExpertProfileImage = "./Content/img/Default.png"; 
             }
 
             Tbl_Venue venue = db.Tbl_Venue.Where(x => x.Venue_id == p.FK_Venue_Id).SingleOrDefault();
