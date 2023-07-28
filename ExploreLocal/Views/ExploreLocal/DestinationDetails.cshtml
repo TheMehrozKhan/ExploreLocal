@@ -1,17 +1,69 @@
 ﻿@model ExploreLocal.Models.DestinationDetailsViewModel
+<head>
+    <script src="https://kit.fontawesome.com/90a0d7efa7.js" crossorigin="anonymous"></script>
+</head>
 
-<section class="pt-40">
+<section class="pt-40" style="margin-top:90px;">
     <div class="container">
         <div class="row y-gap-15 justify-between items-end">
             <div class="col-auto">
                 <h1 class="text-30 fw-600">@Model.DestinationName</h1>
 
                 <div class="row x-gap-20 y-gap-20 items-center pt-10">
-                    <!-- Display other details here, e.g., rating, group size, location, etc. -->
+                    <div class="col-auto">
+                        <div class="d-flex items-center">
+                            <div class="d-flex x-gap-5 items-center">
+
+                                <i class="icon-star text-10 text-yellow-1"></i>
+
+                                <i class="icon-star text-10 text-yellow-1"></i>
+
+                                <i class="icon-star text-10 text-yellow-1"></i>
+
+                                <i class="icon-star text-10 text-yellow-1"></i>
+
+                                <i class="icon-star text-10 text-yellow-1"></i>
+
+                            </div>
+
+                            <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
+                        </div>
+                    </div>
+
+                    <div class="col-auto">
+                        <div class="row x-gap-10 items-center">
+                            <div class="col-auto">
+                                <div class="d-flex x-gap-5 items-center">
+                                    <i class="icon-placeholder text-16 text-light-1"></i>
+                                    <div class="text-15 text-light-1">@Model.Country, @Model.Venue_name</div>
+                                </div>
+                            </div>
+
+                            <div class="col-auto">
+                                    <button data-x-click="mapFilter" class="text-blue-1 text-15 underline">Show on map</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Add buttons here, e.g., Share and Save -->
+            <div class="col-auto">
+                <div class="row x-gap-10 y-gap-10">
+                    <div class="col-auto">
+                        <button class="button px-15 py-10 -blue-1">
+                            <i class="icon-share mr-10"></i>
+                            Share
+                        </button>
+                    </div>
+
+                    <div class="col-auto">
+                        <button class="button px-15 py-10 -blue-1 bg-light-2">
+                            <i class="icon-heart mr-10"></i>
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -30,7 +82,9 @@
                             {
                                 var imageUrl = Url.Content(imagePath);
                                 <div class="swiper-slide">
-                                    <img class="rounded-4 col-12 h-full object-cover" src="@imageUrl" style="box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px; border-radius: 8px;" />
+                                    <a href="@Url.Action("ExpertDashboard","ExploreLocal", new { Model.ExpertId } )">
+                                        <img class="rounded-4 col-12 h-full object-cover" src="@imageUrl" style="box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px; border-radius: 8px;" />
+                                    </a>
                                 </div>
                             }
                         }
@@ -54,7 +108,7 @@
                                 var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                                 var imageUrl = Url.Content(imagePaths[0]);
                                 <a href="@imageUrl" class="button -blue-1 px-24 py-15 bg-white text-dark-1 js-gallery" data-gallery="gallery2">
-                                    See All 90 Photos
+                                    See All @Model.Image.Count()
                                 </a>
                             }
                         </div>
@@ -75,17 +129,28 @@
                 <h3 class="text-22 fw-500 mt-30">
                     Tour snapshot
                 </h3>
+                <div class="row y-gap-30 justify-between pt-20">
+                    <div class="col-12">
+                        <div class="d-flex align-items-center">
+                            <img src="@Url.Content(Model.ExpertProfileImage)" height="50" width="50" alt="Expert Profile Image" style="border-radius:50%;" />
+                            <a href="@Url.Action("ExpertDashboard","ExploreLocal", new { id = Model.ExpertId } )">
+                                <h8 class="ml-10" style="font-weight:500">Uploaded By @Model.ExpertName</h8>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="border-top-light mt-40 mb-40"></div>
 
 
                 <div class="row y-gap-30 justify-between pt-20">
                     <div class="col-12">
-                        <h3 class="text-22 fw-500 mt-30">Street View</h3>
+                        <h3 class="text-22 fw-500 mt-30 mb-20">Street View</h3>
                         @if (!string.IsNullOrEmpty(Model.GoogleStreetViewURL))
                         {
-                            <div class="video-container">
-                                <iframe src="@Model.GoogleStreetViewURL" width="100%" height="400" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                            <div class="video-container" style="width:100%;">
+                                @Html.Raw(Model.GoogleStreetViewURL) <!-- Use Html.Raw to render the raw HTML -->
                             </div>
                         }
                         else
@@ -114,38 +179,34 @@
                         <div class="text-15 mt-10">For a full refund, cancel at least 24 hours in advance of the start date of the experience.</div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-md-6">
                         <h5 class="text-16 fw-500">Highlights</h5>
                         <ul class="list-disc text-15 mt-10">
                             <!-- Display highlights of the destination here -->
                         </ul>
                     </div>
+
+                    <div class="col-md-6">
+                        <h5 class="text-16 fw-500">Meeting Point</h5>
+                        <div class="text-15 mt-10">@Model.MeetingPoint</div>
+                    </div>
+
                 </div>
 
                 <div class="mt-40 border-top-light">
                     <div class="row x-gap-40 y-gap-40 pt-40">
                         <div class="col-12">
-                            <h3 class="text-22 fw-500">What's Included</h3>
+                            <h3 class="text-22 fw-500">Tour's Schedule</h3>
 
                             <div class="row x-gap-40 y-gap-40 pt-20">
                                 <div class="col-md-6">
                                     <div class="text-dark-1 text-15">
-                                        <i class="icon-check text-10 mr-10"></i> Entry ticket to Harry Potter Warner Bros Studio Tour London
-                                    </div>
-                                    <div class="text-dark-1 text-15">
-                                        <i class="icon-check text-10 mr-10"></i> Return transfers in air-conditioned coach
+                                        <h6 style="font-weight:500;"><i class="fa-sharp fa-solid fa-play" style="color: #0f67ff; margin-right: 10px; text-shadow: rgba(100, 100, 111, 10) 0px 7px 29px 0px;"></i> Tour Start Date: @Model.StartDate </h6>
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="text-dark-1 text-15">
-                                        <i class="icon-close text-green-2 text-10 mr-10"></i> Food and drinks
-                                    </div>
-                                    <div class="text-dark-1 text-15">
-                                        <i class="icon-close text-green-2 text-10 mr-10"></i> Gratuities
-                                    </div>
-                                    <div class="text-dark-1 text-15">
-                                        <i class="icon-close text-green-2 text-10 mr-10"></i> Digital guide available in 10 different languages at additional cost
+                                        <h6 style="font-weight:500;"><i class="fa-solid fa-check" style="color: #0f67ff; margin-right: 10px; "></i> Tour End Date: @Model.EndDate </h6>
                                     </div>
                                 </div>
                             </div>
@@ -153,9 +214,33 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-4" style="">
+                <div data-scrollmagic-pin-spacer="" class="scrollmagic-pin-spacer" style="inset: auto; margin: 0px; display: flex; position: relative; box-sizing: content-box; min-height: 333px; height: auto; padding-top: 0px; padding-bottom: 1147px;">
+                    <div class="d-flex justify-end js-pin-content" style="position: relative; margin: auto; inset: auto; box-sizing: border-box; width: 100%;">
+                        <div class="w-360 lg:w-full d-flex flex-column items-center">
+                            <div class="px-30 py-30 rounded-4 border-light bg-white shadow-4">
+                                <div class="text-14 text-light-1">
+                                    From <span class="text-20 fw-500 text-dark-1 ml-5">PKR @Model.Price</span>
+                                </div>
+                                <div class="col-12">
+                                    <button class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
+                                        Book Now
+                                    </button>
+                                </div>
+                                <div class="d-flex items-center pt-20">
+                                    <div class="size-40 flex-center bg-light-2 rounded-full">
+                                        <i class="icon-heart text-16 text-green-2"></i>
+                                    </div>
+                                    <div class="text-14 lh-16 ml-10">94% of travelers recommend this experience</div>
+                                </div>
+                            </div>
 
-            <div class="col-lg-4">
-                <!-- Add booking details and other information here -->
+                            <div class="px-30">
+                                <div class="text-14 text-light-1 mt-30">Not sure? You can cancel this reservation up to 24 hours in advance for a full refund.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.Web.Mvc;
 namespace ExploreLocal.Models
 {
     public class DestinationDetailsViewModel
@@ -15,9 +15,13 @@ namespace ExploreLocal.Models
         public Nullable<decimal> Price { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
+        [AllowHtml]
         public string GoogleStreetViewURL { get; set; }
         public string MeetingPoint { get; set; }
         public string Language { get; set; }
         public string Venue_name { get; set; }
+        public string ExpertName { get; set; }
+        public string ExpertProfileImage { get; set; }
+        public int ExpertId { get; set; }
     }
 }

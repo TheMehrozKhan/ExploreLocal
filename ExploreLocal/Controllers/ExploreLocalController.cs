@@ -23,6 +23,7 @@ namespace ExploreLocal.Controllers
         {
             // Get the selected venue tours
             var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id).ToList();
+            var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
 
             // Fetch most popular tours
             var mostPopularTours = db.Tbl_Destination
@@ -61,33 +62,60 @@ namespace ExploreLocal.Controllers
             {
                 SelectedVenueTours = selectedVenueTours,
                 MostPopularTours = mostPopularTours,
-                TrendingTours = trendingTours
+                TrendingTours = trendingTours,
+                SelectedVenueName = selectedVenue?.Venue_name,
+                SelectedVenueDescription = selectedVenue?.Venue_Description
             };
 
             return View(viewModel);
         }
 
-        public ActionResult DestinationDetails(int?id)
+        public ActionResult DestinationDetails(int id)
         {
-            DestinationDetailsViewModel pr = new DestinationDetailsViewModel();
-
             Tbl_Destination p = db.Tbl_Destination.Where(x => x.DestinationID == id).SingleOrDefault();
-            pr.DestinationID = p.DestinationID;
-            pr.DestinationName = p.DestinationName;
-            pr.Country = p.Country;
-            pr.Description = p.Description;
-            pr.Image = p.Image;
-            pr.Price = p.Price;
-            pr.StartDate = p.StartDate;
-            pr.EndDate = p.EndDate;
-            p.GoogleStreetViewURL = p.GoogleStreetViewURL;
-            pr.MeetingPoint = p.MeetingPoint;
-            pr.Language = p.Language;
-            Tbl_Venue cat = db.Tbl_Venue.Where(x => x.Venue_id == p.FK_Venue_Id).SingleOrDefault();
-            Tbl_Expert exp = db.Tbl_Expert.Where(x => x.ExpertId == p.FK_Expert_Id).SingleOrDefault();
+
+            var pr = new DestinationDetailsViewModel
+            {
+                DestinationID = p.DestinationID,
+                DestinationName = p.DestinationName,
+                Country = p.Country,
+                Description = p.Description,
+                Image = p.Image,
+                Price = p.Price,
+                StartDate = p.StartDate,
+                EndDate = p.EndDate,
+                GoogleStreetViewURL = p.GoogleStreetViewURL,
+                MeetingPoint = p.MeetingPoint,
+                Language = p.Language
+            };
+
+            // Assuming that the Tbl_Destination has a foreign key to Tbl_Expert table, you can get the expert's name and profile image like this:
+            Tbl_Expert expert = db.Tbl_Expert.Where(e => e.ExpertId == p.FK_Expert_Id).SingleOrDefault();
+            if (expert != null)
+            {
+                pr.ExpertName = expert.ExpertName;
+                pr.ExpertProfileImage = expert.ExpertProfileImage;
+                pr.ExpertId = expert.ExpertId;
+            }
+            else
+            {
+                // Set default values or handle the case when the expert is not found.
+                pr.ExpertName = "No Expert Found";
+                pr.ExpertProfileImage = "./Content/img/Default.png"; // Replace this with the path to your default expert image
+            }
+
+            Tbl_Venue venue = db.Tbl_Venue.Where(x => x.Venue_id == p.FK_Venue_Id).SingleOrDefault();
+            if (venue != null)
+            {
+                pr.Venue_name = venue.Venue_name;
+            }
+            else
+            {
+                pr.ExpertName = "No Expert Found"; 
+            }
+
             return View(pr);
         }
-
 
         public ActionResult About()
         {
@@ -365,7 +393,7 @@ namespace ExploreLocal.Controllers
                     }
                     us.Location = user.Location;
                     db.SaveChanges();
-                    return RedirectToAction("UserProfile");
+                    return RedirectToAction("UserProfile", new { us.UserID });
                 }
                 else
                 {
@@ -430,7 +458,7 @@ namespace ExploreLocal.Controllers
                     }
                     us.ExpertLocation = user.ExpertLocation;
                     db.SaveChanges();
-                    return RedirectToAction("UserProfile");
+                    return RedirectToAction("ExpertDashboard", new { us.ExpertId });
                 }
                 else
                 {

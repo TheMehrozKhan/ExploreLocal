@@ -6,77 +6,18 @@
                 <div class="col-12">
                     <div class="relative d-flex">
                         <img src="/Template/img/pages/destinations/theend1.png" alt="image" class="col-12 rounded-4">
-
-                        <div class="absolute d-flex justify-end items-end col-12 h-full z-1 px-10 py-10">
-                            <button class="button -md -blue-1 bg-white text-dark-1 text-14 fw-500">See All 90 Photos</button>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row x-gap-20 y-gap-20 items-center pt-20">
-
-                <div class="col">
-                    <button class="d-flex flex-column justify-center px-20 py-15 rounded-4 border-light text-16 lh-14 fw-500 col-12">
-                        <i class="icon-bed text-25 mb-10"></i>
-                        Hotel
-                    </button>
-                </div>
-
-                <div class="col">
-                    <button class="d-flex flex-column justify-center px-20 py-15 rounded-4 border-light text-16 lh-14 fw-500 col-12">
-                        <i class="icon-destination text-25 mb-10"></i>
-                        Tour
-                    </button>
-                </div>
-
-                <div class="col">
-                    <button class="d-flex flex-column justify-center px-20 py-15 rounded-4 border-light text-16 lh-14 fw-500 col-12">
-                        <i class="icon-ski text-25 mb-10"></i>
-                        Activity
-                    </button>
-                </div>
-
-                <div class="col">
-                    <button class="d-flex flex-column justify-center px-20 py-15 rounded-4 border-light text-16 lh-14 fw-500 col-12">
-                        <i class="icon-home text-25 mb-10"></i>
-                        Holiday Rentals
-                    </button>
-                </div>
-
-                <div class="col">
-                    <button class="d-flex flex-column justify-center px-20 py-15 rounded-4 border-light text-16 lh-14 fw-500 col-12">
-                        <i class="icon-car text-25 mb-10"></i>
-                        Car
-                    </button>
-                </div>
-
-                <div class="col">
-                    <button class="d-flex flex-column justify-center px-20 py-15 rounded-4 border-light text-16 lh-14 fw-500 col-12">
-                        <i class="icon-yatch text-25 mb-10"></i>
-                        Cruise
-                    </button>
-                </div>
-
-                <div class="col">
-                    <button class="d-flex flex-column justify-center px-20 py-15 rounded-4 border-light text-16 lh-14 fw-500 col-12">
-                        <i class="icon-tickets text-25 mb-10"></i>
-                        Flights
-                    </button>
-                </div>
-
-            </div>
-
             <div class="row y-gap-20 pt-40">
                 <div class="col-auto">
-                    <h2 class="">What to Know Before Visiting This Venue</h2>
+                    <h2 class="">What to Know Before Visiting @Model.SelectedVenueName</h2>
                 </div>
 
                 <div class="col-xl-8">
                     <p class="text-15 text-dark-1">
-                        Before you visit this venue, there are some exciting tours and activities that you can explore. Immerse yourself in the unique experiences this destination has to offer. Discover local culture, landmarks, and hidden gems that will make your visit truly memorable.
-                        <br><br>
-                        Whether you're interested in history, art, nature, or adventure, there's something for everyone. Don't miss the chance to make the most of your trip and create wonderful memories at this venue.
+                        @Model.SelectedVenueDescription
                     </p>
                 </div>
 
@@ -85,14 +26,17 @@
                         <img src="/Template/img/pages/destinations/map.png" alt="image" class="col-12 rounded-4">
 
                         <div class="absolute d-flex justify-center items-end col-12 h-full z-1 px-35 py-20">
-                            <button class="button h-50 px-25 -blue-1 bg-white text-dark-1 text-14 fw-500 col-12">
-                                <i class="icon-eye text-18 mr-10"></i>
-                                See popular activities on the map
-                            </button>
+                            <a href="https://maps.google.com/">
+                                <button class="button h-50 px-25 -blue-1 bg-white text-dark-1 text-14 fw-500 col-12" style="font-size:16px;padding:15px;">
+                                    <i class="icon-eye text-18 mr-10"></i>
+                                    See More In Depth In Map
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="mt-30 border-top-light"></div>
         </div>
     </section>
@@ -121,9 +65,17 @@
                             <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
                                 <div class="hotelsCard__image">
                                     <div class="cardImage ratio ratio-1:1">
-                                        <div class="cardImage__content">
-                                            <img class="rounded-4 col-12" src="@Url.Content(tour.Image)" alt="Tour Image">
-                                        </div>
+                                        @if (!string.IsNullOrEmpty(tour.Image))
+                                        {
+                                            var imagePaths = tour.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                            foreach (var imagePath in imagePaths)
+                                            {
+                                                var imageUrl = Url.Content(imagePath);
+                                                <div class="cardImage__content">
+                                                    <img class="rounded-4 col-12" src="@imageUrl" alt="Tour Image">
+                                                </div>
+                                            }
+                                        }
                                     </div>
                                 </div>
                                 <div class="hotelsCard__content mt-10">
@@ -135,7 +87,7 @@
                                     </div>
                                     <div class="mt-5">
                                         <div class="fw-500">
-                                            Starting from <span class="text-blue-1">@tour.Price/PKR </span>
+                                            Starting from <span class="text-blue-1">@string.Format("{0:N0}", tour.Price) PKR</span>
                                         </div>
                                     </div>
                                 </div>
@@ -169,16 +121,24 @@
                         <a href="@Url.Action("TourDetails", "Tour", new { id = tour.DestinationID })" class="tourCard -type-1 rounded-4 ">
                             <div class="tourCard__image">
                                 <div class="cardImage ratio ratio-1:1">
-                                    <div class="cardImage__content">
-                                        <img class="rounded-4 col-12" src="@Url.Content(tour.Image)" alt="image">
-                                    </div>
-                                    <div class="cardImage__wishlist">
-                                        <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                            <i class="icon-heart text-12"></i>
-                                        </button>
-                                    </div>
-                                    @* Add any additional badges or labels here based on tour properties *@
-                                </div>
+                                    @if (!string.IsNullOrEmpty(tour.Image))
+                                    {
+                                        var imagePaths = tour.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                        foreach (var imagePath in imagePaths)
+                                        {
+                                            var imageUrl = Url.Content(imagePath);
+                                            <div class="cardImage__content">
+                                                <img class="rounded-4 col-12" src="@imageUrl" alt="image">
+                                            </div>
+                                        }
+                                    }
+                                            <div class="cardImage__wishlist">
+                                                <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                                    <i class="icon-heart text-12"></i>
+                                                </button>
+                                            </div>
+                                            @* Add any additional badges or labels here based on tour properties *@
+                                        </div>
                             </div>
                             <div class="tourCard__content mt-10">
                                 <div class="d-flex items-center lh-14 mb-5">
@@ -206,7 +166,7 @@
                                     <div class="col-auto">
                                         <div class="text-14 text-light-1">
                                             From
-                                            <span class="text-16 fw-500 text-dark-1">US$72</span>
+                                            <span class="text-16 fw-500 text-dark-1">@string.Format("{0:N0}", tour.Price) PKR</span>
                                         </div>
                                     </div>
                                 </div>
@@ -241,16 +201,24 @@
                         <a href="@Url.Action("ActivityDetails", "Activity", new { id = activity.DestinationID })" class="activityCard -type-1 rounded-4 ">
                             <div class="activityCard__image">
                                 <div class="cardImage ratio ratio-1:1">
-                                    <div class="cardImage__content">
-                                        <img class="rounded-4 col-12" src="@Url.Content(activity.Image)" alt="image">
-                                    </div>
-                                    <div class="cardImage__wishlist">
-                                        <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                            <i class="icon-heart text-12"></i>
-                                        </button>
-                                    </div>
-                                    @* Add any additional badges or labels here based on activity properties *@
-                                </div>
+                                    @if (!string.IsNullOrEmpty(activity.Image))
+                                    {
+                                        var imagePaths = activity.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                        foreach (var imagePath in imagePaths)
+                                        {
+                                            var imageUrl = Url.Content(imagePath);
+                                            <div class="cardImage__content">
+                                                <img class="rounded-4 col-12" src="@imageUrl" alt="image">
+                                            </div>
+                                        }
+                                    }
+                                            <div class="cardImage__wishlist">
+                                                <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                                    <i class="icon-heart text-12"></i>
+                                                </button>
+                                            </div>
+                                            @* Add any additional badges or labels here based on activity properties *@
+                                        </div>
                             </div>
                             <div class="activityCard__content mt-10">
                                 <div class="text-14 lh-14 text-light-1 mb-5">6+ hours</div>
@@ -270,7 +238,7 @@
                                     </div>
                                     <div class="col-auto">
                                         <div class="text-14 text-light-1">
-                                            From <span class="text-16 fw-500 text-dark-1">US$72</span>
+                                            From <span class="text-16 fw-500 text-dark-1">@string.Format("{0:N0}", activity.Price) PKR</span>
                                         </div>
                                     </div>
                                 </div>

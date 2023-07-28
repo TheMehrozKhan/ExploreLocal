@@ -77,25 +77,30 @@
         <div class="thecontainer" style="box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;padding:60px;border-radius:20px;">
             @using (Html.BeginForm("Add_Venue", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "signupform" }))
             {
-                <form method="post">
-                    <div class="form-group">
-                        <label for="venue_name">Venue Name:</label>
-                        @Html.TextBoxFor(x => x.Venue_name, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Venue Name" })
-                        <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_name)</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="venueCountry">Venue Country:</label>
-                        <select class="selectpicker countrypicker" data-live-search="true" name="Venue_Country" data-flag="true" data-flag-theme="borderless"></select>
-                        <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_Country)</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="venue_img">Venue Image:</label>
-                        <input type="file" name="imgfile" id="imgfile" class="input" required />
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary w-100" id="thebutton" style="font-size:22px;margin-top:10px;height:50px;">Add</button>
-                    </div>
-                </form>
+            <form method="post">
+                <div class="form-group">
+                    <label for="venue_name">Venue Name:</label>
+                    @Html.TextBoxFor(x => x.Venue_name, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Venue Name" })
+                    <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_name)</span>
+                </div>
+                <div class="form-group">
+                    <label for="venueCountry">Venue Country:</label>
+                    @Html.TextBoxFor(x => x.Venue_Country, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Venue Country" })
+                    <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_Country)</span>
+                </div>
+                <div class="form-group">
+                    <label for="venueCountry">Venue Description:</label>
+                    @Html.TextAreaFor(x => x.Venue_Description, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Venue Description", @style = "padding:15px;" })
+                    <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_Description)</span>
+                </div>
+                <div class="form-group">
+                    <label for="venue_img">Venue Image:</label>
+                    <input type="file" name="imgfile" id="imgfile" class="input" required />
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary w-100" id="thebutton" style="font-size:22px;margin-top:10px;height:50px;">Add</button>
+                </div>
+            </form>
             }
         </div>
     </div>

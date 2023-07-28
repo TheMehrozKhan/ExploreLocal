@@ -207,11 +207,14 @@
         <div class="right-section">
             <div class="profile-details">
                 <div class="profile-details-item">
-                    <div class="profile-details-label">Password:</div>
-                    <div class="profile-details-value">
-                        <input type="password" class="profile-input" value="@Model.ExperPassword" readonly style="text-align:right;" />
+                    @if (Convert.ToInt32(Session["expert_id"]) == Model.ExpertId)
+                    {
+                        <div class="profile-details-label">Password:</div>
+                        <div class="profile-details-value">
+                            <input type="password" class="profile-input" value="@Model.ExperPassword" readonly style="text-align:right;" />
+                        </div>
+                    }
                     </div>
-                </div>
                 <div class="profile-details-item">
                     <div class="profile-details-label">Email:</div>
                     <div class="profile-details-value">

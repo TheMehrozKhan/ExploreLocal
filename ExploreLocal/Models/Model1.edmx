@@ -97,6 +97,7 @@
           <Property Name="Admin_id" Type="int" />
           <Property Name="Venue_status" Type="int" />
           <Property Name="Venue_Country" Type="varchar" MaxLength="100" />
+          <Property Name="Venue_Description" Type="varchar(max)" />
         </EntityType>
         <Association Name="FK__Tbl_Booki__Desti__75A278F5">
           <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
@@ -366,6 +367,7 @@
           <Property Name="Venue_Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Tbl_Admin" Relationship="Self.FK__Tbl_Venue__Admin__5CD6CB2B" FromRole="Tbl_Venue" ToRole="Tbl_Admin" />
           <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Venue" ToRole="Tbl_Destination" />
+          <Property Name="Venue_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__Tbl_Venue__Admin__5CD6CB2B">
           <End Role="Tbl_Admin" Type="Self.Tbl_Admin" Multiplicity="0..1" />
@@ -619,6 +621,7 @@
           <EntitySetMapping Name="Tbl_Venue">
             <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Venue">
               <MappingFragment StoreEntitySet="Tbl_Venue">
+                <ScalarProperty Name="Venue_Description" ColumnName="Venue_Description" />
                 <ScalarProperty Name="Venue_id" ColumnName="Venue_id" />
                 <ScalarProperty Name="Venue_name" ColumnName="Venue_name" />
                 <ScalarProperty Name="Venue_img" ColumnName="Venue_img" />

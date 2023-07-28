@@ -111,26 +111,38 @@
 <div class="container" style="display:flex;justify-content:center;align-items:center;height:100vh;">
     @using (Html.BeginForm("Save_Venue", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "signupform" }))
     {
-        <div class="thecontainer">
-            @Html.HiddenFor(model => model.Venue_id)
+    <div class="thecontainer">
+        @Html.HiddenFor(model => model.Venue_id)
+        <br />
+        <div class="form-group">
+            <label>Venue Name: </label>
             <br />
-            <div class="form-group">
-                <label>Category Name: </label>
-                <br />
-                @Html.TextBoxFor(model => model.Venue_name, new { @class = "form-control", @id = "custom-input" })
-            </div>
-            <br />
-            <div class="form-group">
-                <label>Update Category Image: </label>
-                <br />
-                <input type="file" name="imgfile" id="imgfile" style="height: 50px; box-shadow: rgba(17, 12, 46, 0.12) 0px 48px 100px 0px; background-color: white; width: 60vh; border-color: white; padding-top: 10px; padding-bottom: 5px;padding-left:10px;" />
-            </div>
-            <br />
-            <div class="btn-container">
-                <button type="submit" class="btn btn-save">Save</button>
-                <a href="@Url.Action("View_Venue")" class="btn btn-cancel">Cancel</a>
-            </div>
+            @Html.TextBoxFor(model => model.Venue_name, new { @class = "form-control", @id = "custom-input" })
         </div>
+        <br />
+        <div class="form-group">
+            <label>Venue Country: </label>
+            <br />
+            @Html.TextBoxFor(model => model.Venue_Country, new { @class = "form-control", @id = "custom-input" })
+        </div>
+        <br />
+        <div class="form-group">
+            <label>Venue Description: </label>
+            <br />
+            @Html.TextBoxFor(model => model.Venue_Description, new { @class = "form-control", @id = "custom-input" })
+        </div>
+        <br />
+        <div class="form-group">
+            <label>Venue Image: </label>
+            <br />
+            <input type="file" name="imgfile" id="imgfile" style="height: 50px; box-shadow: rgba(17, 12, 46, 0.12) 0px 48px 100px 0px; background-color: white; width: 60vh; border-color: white; padding-top: 10px; padding-bottom: 5px;padding-left:10px;" />
+        </div>
+        <br />
+        <div class="btn-container">
+            <button type="submit" class="btn btn-save">Save</button>
+            <a href="@Url.Action("View_Venue")" class="btn btn-cancel">Cancel</a>
+        </div>
+    </div>
     }
 </div>
 

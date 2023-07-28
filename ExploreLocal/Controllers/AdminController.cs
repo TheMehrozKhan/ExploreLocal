@@ -80,6 +80,7 @@ namespace ExploreLocal.Controllers
                 ca.Venue_Country = cat.Venue_Country; // We'll set this value based on user input
 
                 ca.Venue_img = path;
+                ca.Venue_Description = cat.Venue_Description;
                 ca.Admin_id = Convert.ToInt32(Session["ad_id"].ToString());
                 db.Tbl_Venue.Add(ca);
                 db.SaveChanges();
@@ -241,6 +242,8 @@ namespace ExploreLocal.Controllers
             {
                 Tbl_Venue ca = db.Tbl_Venue.Find(category.Venue_id);
                 ca.Venue_name = category.Venue_name;
+                ca.Venue_Country = category.Venue_Country;
+                ca.Venue_Description = category.Venue_Description;
                 if (imgfile != null)
                 {
                     ca.Venue_img = path;
