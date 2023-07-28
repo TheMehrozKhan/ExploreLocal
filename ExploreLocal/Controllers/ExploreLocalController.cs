@@ -108,6 +108,9 @@ namespace ExploreLocal.Controllers
                 pr.ExpertName = "No Expert Found"; 
             }
 
+            var randomTours = db.Tbl_Destination.Where(x => x.DestinationID != id).OrderBy(x => Guid.NewGuid()).Take(4).ToList();
+            ViewBag.RandomTours = randomTours;
+
             return View(pr);
         }
 
