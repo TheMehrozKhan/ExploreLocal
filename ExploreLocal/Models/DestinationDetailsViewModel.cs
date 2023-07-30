@@ -23,5 +23,7 @@ namespace ExploreLocal.Models
         public string ExpertName { get; set; }
         public string ExpertProfileImage { get; set; }
         public int ExpertId { get; set; }
+        public string Destination_Duration { get; set; }
+        public string Destination_Highlights { get; set; }
     }
 }

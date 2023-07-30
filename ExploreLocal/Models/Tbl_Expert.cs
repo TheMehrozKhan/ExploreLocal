@@ -17,6 +17,7 @@ namespace ExploreLocal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Expert()
         {
+            this.Tbl_Bookings = new HashSet<Tbl_Bookings>();
             this.Tbl_Destination = new HashSet<Tbl_Destination>();
         }
     
@@ -29,6 +30,8 @@ namespace ExploreLocal.Models
         public string ExpertLocation { get; set; }
         public string ExperPassword { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Bookings> Tbl_Bookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Destination> Tbl_Destination { get; set; }
     }

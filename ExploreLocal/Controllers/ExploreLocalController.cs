@@ -6,15 +6,17 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using iText.Kernel.Pdf;
+using iText.Html2pdf;
 
 namespace ExploreLocal.Controllers
 {
     public class ExploreLocalController : Controller
     {
-        ExploreLocalEntities1 db = new ExploreLocalEntities1();
+        ExploreLocalEntities5 db = new ExploreLocalEntities5();
         public ActionResult Index(Tbl_User us)
         {
-            TempData["ToastMessage"] = "Hi, " + us.FirstName + " " +  us.LastName + " You Successfully Logged In!";
+            TempData["ToastMessage"] = "Hi, " + us.FirstName + " " + us.LastName + " You Successfully Logged In!";
             ViewBag.ToastMessage = TempData["ToastMessage"];
             return View();
         }
@@ -28,7 +30,7 @@ namespace ExploreLocal.Controllers
                 .GroupJoin(
                     db.Tbl_BookingHistory,
                     destination => destination.DestinationID,
-                    booking => booking.DestinationID,
+                    booking => booking.DestinationId,
                     (destination, bookings) => new
                     {
                         Destination = destination,
@@ -36,22 +38,22 @@ namespace ExploreLocal.Controllers
                     })
                 .OrderByDescending(x => x.BookingsCount)
                 .Select(x => x.Destination)
-                .Take(4) 
+                .Take(4)
                 .ToList();
 
             var trendingTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_BookingHistory,
                     destination => destination.DestinationID,
-                    booking => booking.DestinationID,
+                    booking => booking.DestinationId,
                     (destination, bookings) => new
                     {
                         Destination = destination,
-                        LatestBookingDate = bookings.Max(b => b.Date)
+                        LatestBookingDate = bookings.Max(b => b.BookingDate)
                     })
                 .OrderByDescending(x => x.LatestBookingDate)
                 .Select(x => x.Destination)
-                .Take(4) 
+                .Take(4)
                 .ToList();
 
             var viewModel = new ToursViewModel
@@ -68,9 +70,10 @@ namespace ExploreLocal.Controllers
 
         public ActionResult DestinationDetails(int id)
         {
+            // Retrieve destination details
             Tbl_Destination p = db.Tbl_Destination.Where(x => x.DestinationID == id).SingleOrDefault();
 
-            var pr = new DestinationDetailsViewModel
+            var destinationDetailsViewModel = new DestinationDetailsViewModel
             {
                 DestinationID = p.DestinationID,
                 DestinationName = p.DestinationName,
@@ -82,37 +85,263 @@ namespace ExploreLocal.Controllers
                 EndDate = p.EndDate,
                 GoogleStreetViewURL = p.GoogleStreetViewURL,
                 MeetingPoint = p.MeetingPoint,
-                Language = p.Language
+                Language = p.Language,
+                Destination_Duration = p.Destination_Duration,
+                Destination_Highlights = p.Destination_Highlights
             };
 
+            // Retrieve expert details
             Tbl_Expert expert = db.Tbl_Expert.Where(e => e.ExpertId == p.FK_Expert_Id).SingleOrDefault();
             if (expert != null)
             {
-                pr.ExpertName = expert.ExpertName;
-                pr.ExpertProfileImage = expert.ExpertProfileImage;
-                pr.ExpertId = expert.ExpertId;
+                destinationDetailsViewModel.ExpertName = expert.ExpertName;
+                destinationDetailsViewModel.ExpertProfileImage = expert.ExpertProfileImage;
+                destinationDetailsViewModel.ExpertId = expert.ExpertId;
             }
             else
             {
-                pr.ExpertName = "No Expert Found";
-                pr.ExpertProfileImage = "./Content/img/Default.png"; 
+                destinationDetailsViewModel.ExpertName = "No Expert Found";
+                destinationDetailsViewModel.ExpertProfileImage = "./Content/img/Default.png";
             }
 
+            // Retrieve venue details
             Tbl_Venue venue = db.Tbl_Venue.Where(x => x.Venue_id == p.FK_Venue_Id).SingleOrDefault();
             if (venue != null)
             {
-                pr.Venue_name = venue.Venue_name;
+                destinationDetailsViewModel.Venue_name = venue.Venue_name;
             }
             else
             {
-                pr.ExpertName = "No Expert Found"; 
+                destinationDetailsViewModel.Venue_name = "No Venue Found";
             }
 
             var randomTours = db.Tbl_Destination.Where(x => x.DestinationID != id).OrderBy(x => Guid.NewGuid()).Take(4).ToList();
             ViewBag.RandomTours = randomTours;
 
-            return View(pr);
+            // Pass the view model to the view
+            return View(destinationDetailsViewModel);
         }
+
+        [HttpGet]
+        public ActionResult BookingForm(int destinationId, int expertId, int userId)
+        {
+            // Check if the user is logged in
+            if (Session["u_id"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            // Create the BookingViewModel with the destinationId, expertId, and userId
+            var viewModel = new BookingViewModel
+            {
+                DestinationId = destinationId,
+                ExpertID = expertId,
+                UserId = userId
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult SubmitBooking(BookingViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (var db = new ExploreLocalEntities5())
+                    {
+                        // Create a new instance of the Tbl_Bookings model and set the BookingId
+                        var booking = new Tbl_Bookings
+                        {
+                            DestinationId = viewModel.DestinationId,
+                            ExpertID = viewModel.ExpertID,
+                            UserId = viewModel.UserId,
+                            NumberOfAdults = viewModel.NumberOfAdults,
+                            NumberOfChildren = viewModel.NumberOfChildren,
+                            BookingDate = viewModel.BookingDate,
+                            CreditCardNumber = viewModel.CreditCardNumber,
+                            PIN = viewModel.PIN,
+                            CVV = viewModel.CVV,
+                            CardHolderName = viewModel.CardHolderName,
+                            FullName = viewModel.FullName,
+                            Email = viewModel.Email,
+                            ContactNumber = viewModel.ContactNumber
+                        };
+
+                        // Save the booking to the database
+                        db.Tbl_Bookings.Add(booking);
+                        db.SaveChanges();
+
+                        // Redirect the user to the BookingSuccess view
+                        return RedirectToAction("BookingSuccess", new { id = booking.BookingId });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // If there's an error, you can handle it here or display an error message to the user
+                    ViewBag.Error = "An error occurred while submitting the booking: " + ex.Message;
+                }
+            }
+
+            // If the model is not valid or there's an error, return the BookingForm view with the provided data so the user can correct any issues
+            return View("BookingForm", viewModel);
+        }
+
+        public ActionResult BookingSuccess(int? id)
+        {
+            if (id == null)
+            {
+                // If the booking ID is not provided, return a redirect to an error page or handle it as you prefer
+                return RedirectToAction("Error");
+            }
+
+            using (var db = new ExploreLocalEntities5())
+            {
+                var booking = db.Tbl_Bookings.Find(id);
+                if (booking != null)
+                {
+                    // Retrieve the user's information based on the UserId associated with the booking
+                    var user = db.Tbl_User.Find(booking.UserId);
+
+                    // Retrieve the destination information based on the DestinationId associated with the booking
+                    var destination = db.Tbl_Destination.Find(booking.DestinationId);
+
+                    // Retrieve the expert information based on the ExpertID associated with the booking
+                    var expert = db.Tbl_Expert.Find(booking.ExpertID);
+
+                    // Controller code
+                    if (user != null && destination != null && expert != null)
+                    {
+                        ViewBag.Booking = booking;
+                        string bookingDateStr = ((DateTime)booking.BookingDate).ToString("yyyy-MM-dd");
+                        ViewBag.BookingDateStr = bookingDateStr;
+                        ViewBag.User = user;
+                        ViewBag.Destination = destination;
+                        ViewBag.Expert = expert;
+                    }
+                }
+            }
+
+            return View();
+        }
+
+        public ActionResult DownloadInvoice(int? bookingId)
+        {
+            if (bookingId == null)
+            {
+                // If the booking ID is not provided, return a redirect to an error page or handle it as you prefer
+                return RedirectToAction("Error");
+            }
+
+            // Retrieve the booking details and associated data from the database
+            using (var db = new ExploreLocalEntities5())
+            {
+                var booking = db.Tbl_Bookings.Find(bookingId);
+                if (booking == null)
+                {
+                    // If the booking is not found, return a redirect to an error page or handle it as you prefer
+                    return RedirectToAction("Error");
+                }
+
+                // Retrieve the user's information based on the UserId associated with the booking
+                var user = db.Tbl_User.Find(booking.UserId);
+
+                // Retrieve the destination information based on the DestinationId associated with the booking
+                var destination = db.Tbl_Destination.Find(booking.DestinationId);
+
+                // Retrieve the expert information based on the ExpertID associated with the booking
+                var expert = db.Tbl_Expert.Find(booking.ExpertID);
+
+                // Controller code
+                if (user != null && destination != null && expert != null)
+                {
+                    ViewBag.Booking = booking;
+                    ViewBag.User = user;
+                    ViewBag.Destination = destination;
+                    ViewBag.Expert = expert;
+
+                    // Render the view to a string
+                    string htmlContent = RenderViewToString("InvoiceTemplate");
+
+                    // Generate the PDF from the HTML content
+                    byte[] invoicePdf = GenerateInvoicePdf(htmlContent);
+                    return File(invoicePdf, "application/pdf", "Invoice.pdf");
+                }
+            }
+
+            return RedirectToAction("Error"); // If something went wrong, redirect to an error page or handle it as you prefer
+        }
+
+
+        // Helper method to generate the invoice PDF
+        private byte[] GenerateInvoicePdf(string htmlContent)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                ConverterProperties converterProperties = new ConverterProperties();
+                PdfWriter writer = new PdfWriter(ms);
+                PdfDocument pdfDoc = new PdfDocument(writer);
+                HtmlConverter.ConvertToPdf(htmlContent, pdfDoc, converterProperties);
+
+                // Close the document after converting the HTML content
+                pdfDoc.Close();
+
+                // Return the contents of the MemoryStream
+                return ms.ToArray();
+            }
+        }
+
+
+        private string RenderViewToString(string viewName)
+        {
+            ViewData.Model = this.ViewData.Model;
+            using (var sw = new StringWriter())
+            {
+                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+
+        public ActionResult InvoiceTemplate(int? bookingId)
+        {
+            if (bookingId == null)
+            {
+                // If the booking ID is not provided, return a redirect to an error page or handle it as you prefer
+                return RedirectToAction("Error");
+            }
+
+            using (var db = new ExploreLocalEntities5())
+            {
+                var booking = db.Tbl_Bookings.Find(bookingId);
+                if (booking != null)
+                {
+                    // Retrieve the user's information based on the UserId associated with the booking
+                    var user = db.Tbl_User.Find(booking.UserId);
+
+                    // Retrieve the destination information based on the DestinationId associated with the booking
+                    var destination = db.Tbl_Destination.Find(booking.DestinationId);
+
+                    // Retrieve the expert information based on the ExpertID associated with the booking
+                    var expert = db.Tbl_Expert.Find(booking.ExpertID);
+
+                    // Controller code
+                    if (user != null && destination != null && expert != null)
+                    {
+                        ViewBag.Booking = booking;
+                        ViewBag.User = user;
+                        ViewBag.Destination = destination;
+                        ViewBag.Expert = expert;
+                    }
+                }
+            }
+
+            return View();
+        }
+
 
         public ActionResult About()
         {
@@ -242,7 +471,7 @@ namespace ExploreLocal.Controllers
                     ExpertStatus = Convert.ToBoolean(0)
                 };
 
-                using (var db = new ExploreLocalEntities1()) 
+                using (var db = new ExploreLocalEntities5()) 
                 {
                     db.Tbl_Expert.Add(expert);
                     db.SaveChanges();
@@ -305,6 +534,8 @@ namespace ExploreLocal.Controllers
             pro.GoogleStreetViewURL = pr.GoogleStreetViewURL;
             pro.StartDate = pr.StartDate;
             pro.EndDate = pr.EndDate;
+            pro.Destination_Duration = pr.Destination_Duration;
+            pro.Destination_Highlights = pr.Destination_Highlights;
             pro.FK_Expert_Id = Convert.ToInt32(Session["expert_id"].ToString());
 
             if (imagePaths.Count > 0)

@@ -13,10 +13,10 @@ namespace ExploreLocal.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ExploreLocalEntities1 : DbContext
+    public partial class ExploreLocalEntities5 : DbContext
     {
-        public ExploreLocalEntities1()
-            : base("name=ExploreLocalEntities1")
+        public ExploreLocalEntities5()
+            : base("name=ExploreLocalEntities5")
         {
         }
     
@@ -27,6 +27,7 @@ namespace ExploreLocal.Models
     
         public virtual DbSet<Tbl_Admin> Tbl_Admin { get; set; }
         public virtual DbSet<Tbl_BookingHistory> Tbl_BookingHistory { get; set; }
+        public virtual DbSet<Tbl_Bookings> Tbl_Bookings { get; set; }
         public virtual DbSet<Tbl_Destination> Tbl_Destination { get; set; }
         public virtual DbSet<Tbl_Expert> Tbl_Expert { get; set; }
         public virtual DbSet<Tbl_Reviews> Tbl_Reviews { get; set; }

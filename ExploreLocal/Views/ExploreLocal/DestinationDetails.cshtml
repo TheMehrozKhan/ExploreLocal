@@ -1,457 +1,666 @@
 ﻿@model ExploreLocal.Models.DestinationDetailsViewModel
 <head>
+    <meta property="og:image" content="https://snipboard.io/zmAiMD.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://snipboard.io/zmAiMD.jpg">
     <script src="https://kit.fontawesome.com/90a0d7efa7.js" crossorigin="anonymous"></script>
     <style>
         .w-360 {
             margin-left: 30px;
         }
+
+        /* Social Share Popup Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+        }
+
+        .modal__content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding-left: 0px;
+            padding-right: 0px;
+            padding-top: 120px;
+            padding-bottom: 120px;
+        }
+
+        .socialButton {
+            display: block;
+            justify-content: center;
+            align-items: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            margin-bottom: 10px;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+            /* Add your custom styles for social sharing buttons */
+            .socialButton.-facebook {
+                background-color: #3b5998;
+                margin-bottom: 20px;
+                transition: 0.2s ease-in-out;
+                box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;
+            }
+
+                .socialButton.-facebook:hover {
+                    font-size: 18px;
+                }
+
+            .socialButton.-twitter {
+                background-color: #1da1f2;
+                margin-bottom: 20px;
+                transition: 0.2s ease-in-out;
+                box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;
+            }
+
+                .socialButton.-twitter:hover {
+                    font-size: 18px;
+                }
+
+            .socialButton.-linkedin {
+                background-color: #0077b5;
+                margin-bottom: 20px;
+                transition: 0.2s ease-in-out;
+                box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;
+            }
+
+                .socialButton.-linkedin:hover {
+                    font-size: 18px;
+                }
+
+            .socialButton:hover {
+                color: white;
+            }
+
+        .closeButtonWrapper {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 45px;
+            width: 45px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+        }
+
+        .closeButton {
+            font-size: 30px;
+            font-weight: 100;
+            cursor: pointer;
+            color: #1c1c1b;
+        }
     </style>
 </head>
+<body>
+    <section class="pt-40" style="margin-top:90px;">
+        <div class="container">
+            <div class="row y-gap-15 justify-between items-end">
+                <div class="col-auto">
+                    <h1 class="text-30 fw-600">@Model.DestinationName</h1>
 
-<section class="pt-40" style="margin-top:90px;">
-    <div class="container">
-        <div class="row y-gap-15 justify-between items-end">
-            <div class="col-auto">
-                <h1 class="text-30 fw-600">@Model.DestinationName</h1>
-
-                <div class="row x-gap-20 y-gap-20 items-center pt-10">
-                    <div class="col-auto">
-                        <div class="d-flex items-center">
-                            <div class="d-flex x-gap-5 items-center">
-
-                                <i class="icon-star text-10 text-yellow-1"></i>
-
-                                <i class="icon-star text-10 text-yellow-1"></i>
-
-                                <i class="icon-star text-10 text-yellow-1"></i>
-
-                                <i class="icon-star text-10 text-yellow-1"></i>
-
-                                <i class="icon-star text-10 text-yellow-1"></i>
-
-                            </div>
-
-                            <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
-                        </div>
-                    </div>
-
-                    <div class="col-auto">
-                        <div class="row x-gap-10 items-center">
-                            <div class="col-auto">
+                    <div class="row x-gap-20 y-gap-20 items-center pt-10">
+                        <div class="col-auto">
+                            <div class="d-flex items-center">
                                 <div class="d-flex x-gap-5 items-center">
-                                    <i class="icon-placeholder text-16 text-light-1"></i>
-                                    <div class="text-15 text-light-1">@Model.Country, @Model.Venue_name</div>
-                                </div>
-                            </div>
 
-                            <div class="col-auto">
-                                <a href="https://www.google.com/maps" target="_blank">
-                                    <button @*data-x-click="mapFilter"*@ class="text-blue-1 text-15">Show on map</button>
-                                </a>
+                                    <i class="icon-star text-10 text-yellow-1"></i>
+
+                                    <i class="icon-star text-10 text-yellow-1"></i>
+
+                                    <i class="icon-star text-10 text-yellow-1"></i>
+
+                                    <i class="icon-star text-10 text-yellow-1"></i>
+
+                                    <i class="icon-star text-10 text-yellow-1"></i>
+
+                                </div>
+
+                                <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="row x-gap-10 items-center">
+                                <div class="col-auto">
+                                    <div class="d-flex x-gap-5 items-center">
+                                        <i class="icon-placeholder text-16 text-light-1"></i>
+                                        <div class="text-15 text-light-1">@Model.Country, @Model.Venue_name</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-auto">
+                                    <a href="https://www.google.com/maps" target="_blank">
+                                        <button @*data-x-click="mapFilter"*@ class="text-blue-1 text-15">Show on map</button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-auto">
-                <div class="row x-gap-10 y-gap-10">
-                    <div class="col-auto">
-                        <button class="button px-15 py-10 -blue-1">
-                            <i class="icon-share mr-10"></i>
-                            Share
-                        </button>
-                    </div>
+                <div class="col-auto">
+                    <div class="row x-gap-10 y-gap-10">
+                        <!-- Add a hidden input to store the share URL -->
+                        <input type="hidden" id="shareUrl" value="Checkout This New @Model.Venue_name, @Model.DestinationName Tour I Really Like It And Also Recommend To Your To Travel With ExploreLocal 🔥" />
+                        <input type="hidden" id="shareImageUrl" value="https://snipboard.io/zmAiMD.jpg" />
 
-                    <div class="col-auto">
-                        <button class="button px-15 py-10 -blue-1 bg-light-2">
-                            <i class="icon-heart mr-10"></i>
-                            Save
-                        </button>
+                        <div class="col-auto">
+                            <button class="button px-15 py-10 -blue-1" id="shareButton">
+                                <i class="icon-share mr-10"></i>
+                                Share
+                            </button>
+                        </div>
+                        <!-- Social Share Popup -->
+                        <div id="sharePopup" class="modal">
+                            <div class="modal__content" style=" border-radius: 1.5rem">
+                                <div class="closeButtonWrapper">
+                                    <button class="closeButton" id="closePopup">
+                                        &times;
+                                    </button>
+                                </div>
+                                <div class="container" style="margin-bottom:10px;text-align:center;">
+                                    <h4 style="font-size:21px;font-weight:500;"> Share Our Amazing @Model.DestinationName Tour 🔥 </h4>
+                                </div>
+                                <div class="container">
+                                    <div class="mt-50 border-top-light"></div>
+                                </div>
+                                <div class="container">
+                                    <a href="#" class="socialButton -facebook">
+                                        <i class="icon-facebook"></i>
+                                        Share on Facebook
+                                    </a>
+                                    <a href="#" class="socialButton -twitter">
+                                        <i class="icon-twitter"></i>
+                                        Share on Twitter
+                                    </a>
+                                    <a href="#" class="socialButton -linkedin">
+                                        <i class="icon-linkedin"></i>
+                                        Share on LinkedIn
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            document.getElementById('shareButton').addEventListener('click', function () {
+                                // Show the social share popup
+                                document.getElementById('sharePopup').style.display = 'block';
+                            });
+
+                            // JavaScript to handle social sharing
+                            const socialButtons = document.querySelectorAll('.socialButton');
+                            const shareUrlInput = document.getElementById('shareUrl').value;
+
+                            socialButtons.forEach(function (button) {
+                                button.addEventListener('click', function (event) {
+                                    event.preventDefault();
+                                    const socialMedia = button.className.split(' ')[1].substring(1); // Extract the social media platform
+                                    const shareUrl = encodeURIComponent(shareUrlInput);
+                                    const shareImageUrl = encodeURIComponent(document.getElementById('shareImageUrl').value); // Get the promotional image URL
+
+                                    // Define the share URL based on the selected social media platform and include the image URL
+                                    let url = '';
+                                    switch (socialMedia) {
+                                        case 'facebook':
+                                            url = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}&picture=${shareImageUrl}`;
+                                            break;
+                                        case 'twitter':
+                                            url = `https://twitter.com/intent/tweet?url=${shareUrl}&media=${shareImageUrl}`;
+                                            break;
+                                        case 'linkedin':
+                                            url = `https://www.linkedin.com/shareArticle?url=${shareUrl}&media=${shareImageUrl}`;
+                                            break;
+                                        // Add more cases for other social media platforms if needed
+                                    }
+
+                                    // Open the share URL in a new tab
+                                    window.open(url, '_blank');
+                                });
+                            });
+
+                            // JavaScript to close the share popup when clicked outside the content area
+                            window.onclick = function (event) {
+                                var sharePopup = document.getElementById('sharePopup');
+                                if (event.target == sharePopup) {
+                                    sharePopup.style.display = 'none';
+                                }
+                            };
+
+                            document.getElementById('closePopup').addEventListener('click', function () {
+                                document.getElementById('sharePopup').style.display = 'none';
+                            });
+                        </script>
+
+
+
+                        <div class="col-auto">
+                            <button class="button px-15 py-10 -blue-1 bg-light-2">
+                                <i class="icon-heart mr-10"></i>
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="pt-40 js-pin-container">
-    <div class="container">
-        <div class="row y-gap-30">
-            <div class="col-lg-8">
-                <div class="relative d-flex justify-center overflow-hidden js-section-slider swiper-initialized swiper-horizontal swiper-pointer-events swiper-autoheight swiper-watch-progress swiper-backface-hidden" data-slider-cols="base-1" data-nav-prev="js-img-prev" data-nav-next="js-img-next">
-                    <div class="swiper-wrapper" id="swiper-wrapper-104221f61051fab688" aria-live="polite" style="height: 430px;">
-                        @if (!string.IsNullOrEmpty(Model.Image))
-                        {
-                            var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                            foreach (var imagePath in imagePaths)
-                            {
-                                var imageUrl = Url.Content(imagePath);
-                                <div class="swiper-slide">
-                                    <a href="@Url.Action("ExpertDashboard","ExploreLocal", new { Model.ExpertId } )">
-                                        <img class="rounded-4 col-12 h-full object-cover" src="@imageUrl" style="box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px; border-radius: 8px;" />
-                                    </a>
-                                </div>
-                            }
-                        }
-                    </div>
-                    <div class="absolute h-full col-11">
-
-                        <button class="section-slider-nav -prev flex-center button -blue-1 bg-white shadow-1 size-40 rounded-full sm:d-none js-img-prev swiper-button-disabled" disabled="" tabindex="-1" aria-label="Previous slide" aria-controls="swiper-wrapper-104221f61051fab688" aria-disabled="true">
-                            <i class="icon icon-chevron-left text-12"></i>
-                        </button>
-
-                        <button class="section-slider-nav -next flex-center button -blue-1 bg-white shadow-1 size-40 rounded-full sm:d-none js-img-next" tabindex="0" aria-label="Next slide" aria-controls="swiper-wrapper-104221f61051fab688" aria-disabled="false">
-                            <i class="icon icon-chevron-right text-12"></i>
-                        </button>
-
-                    </div>
-
-                    <div class="absolute h-full col-12 z-2 px-20 py-20 d-flex justify-end items-end">
-                        <div class="absolute h-full col-12 z-2 px-20 py-20 d-flex justify-end items-end">
+    <section class="pt-40 js-pin-container">
+        <div class="container">
+            <div class="row y-gap-30">
+                <div class="col-lg-8">
+                    <div class="relative d-flex justify-center overflow-hidden js-section-slider swiper-initialized swiper-horizontal swiper-pointer-events swiper-autoheight swiper-watch-progress swiper-backface-hidden" data-slider-cols="base-1" data-nav-prev="js-img-prev" data-nav-next="js-img-next">
+                        <div class="swiper-wrapper" id="swiper-wrapper-104221f61051fab688" aria-live="polite" style="height: 430px;">
                             @if (!string.IsNullOrEmpty(Model.Image))
                             {
                                 var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                                var imageUrl = Url.Content(imagePaths[0]);
-                                <a href="@imageUrl" class="button -blue-1 px-24 py-15 bg-white text-dark-1 js-gallery" data-gallery="gallery2">
-                                    See All @imagePaths.Length
-                                </a>
+                                foreach (var imagePath in imagePaths)
+                                {
+                                    var imageUrl = Url.Content(imagePath);
+                                    <div class="swiper-slide">
+                                        <a href="@Url.Action("ExpertDashboard","ExploreLocal", new { Model.ExpertId } )">
+                                            <img class="rounded-4 col-12 h-full object-cover" src="@imageUrl" style="box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px; border-radius: 8px;" />
+                                        </a>
+                                    </div>
+                                }
                             }
                         </div>
+                        <div class="absolute h-full col-11">
 
-                        @if (!string.IsNullOrEmpty(Model.Image))
-                        {
-                            var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                            foreach (var imagePath in imagePaths)
+                            <button class="section-slider-nav -prev flex-center button -blue-1 bg-white shadow-1 size-40 rounded-full sm:d-none js-img-prev swiper-button-disabled" disabled="" tabindex="-1" aria-label="Previous slide" aria-controls="swiper-wrapper-104221f61051fab688" aria-disabled="true">
+                                <i class="icon icon-chevron-left text-12"></i>
+                            </button>
+
+                            <button class="section-slider-nav -next flex-center button -blue-1 bg-white shadow-1 size-40 rounded-full sm:d-none js-img-next" tabindex="0" aria-label="Next slide" aria-controls="swiper-wrapper-104221f61051fab688" aria-disabled="false">
+                                <i class="icon icon-chevron-right text-12"></i>
+                            </button>
+
+                        </div>
+
+                        <div class="absolute h-full col-12 z-2 px-20 py-20 d-flex justify-end items-end">
+                            <div class="absolute h-full col-12 z-2 px-20 py-20 d-flex justify-end items-end">
+                                @if (!string.IsNullOrEmpty(Model.Image))
+                                {
+                                    var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                    var imageUrl = Url.Content(imagePaths[0]);
+                                    <a href="@imageUrl" class="button -blue-1 px-24 py-15 bg-white text-dark-1 js-gallery" data-gallery="gallery2">
+                                        See All @imagePaths.Length
+                                    </a>
+                                }
+                            </div>
+
+                            @if (!string.IsNullOrEmpty(Model.Image))
                             {
-                                var imageUrl = Url.Content(imagePath);
-                                <a href="@imageUrl" class="js-gallery" data-gallery="gallery2"></a>
+                                var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                foreach (var imagePath in imagePaths)
+                                {
+                                    var imageUrl = Url.Content(imagePath);
+                                    <a href="@imageUrl" class="js-gallery" data-gallery="gallery2"></a>
+                                }
                             }
-                        }
+                        </div>
+                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
                     </div>
-                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+
+                    <h3 class="text-22 fw-500 mt-30">
+                        Tour snapshot
+                    </h3>
+                    <div class="row y-gap-30 justify-between pt-20">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center">
+                                <img src="@Url.Content(Model.ExpertProfileImage)" height="50" width="50" alt="Expert Profile Image" style="border-radius:50%;" />
+                                <a href="@Url.Action("ExpertDashboard","ExploreLocal", new { id = Model.ExpertId } )">
+                                    <h8 class="ml-10" style="font-weight:500">Uploaded By @Model.ExpertName</h8>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="border-top-light mt-40 mb-40"></div>
+
+
+                    <div class="row y-gap-30 justify-between pt-20">
+                        <div class="col-12">
+                            <h3 class="text-22 fw-500 mt-30 mb-20">Street View</h3>
+                            @if (!string.IsNullOrEmpty(Model.GoogleStreetViewURL))
+                            {
+                                <div class="video-container" style="width:100%;">
+                                    @Html.Raw(Model.GoogleStreetViewURL)
+                                </div>
+                            }
+                            else
+                            {
+                                <p>No street view for this tour!</p>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="border-top-light mt-40 mb-40"></div>
+
+                    <div class="row x-gap-40 y-gap-40">
+                        <div class="col-12">
+                            <h3 class="text-22 fw-500">Overview</h3>
+                            <p class="text-dark-1 text-15 mt-20">@Html.Raw(Model.Description)</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 class="text-16 fw-500">Available languages</h5>
+                            <div class="text-15 mt-10">@Model.Language</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 class="text-16 fw-500">Cancellation policy</h5>
+                            <div class="text-15 mt-10">For a full refund, cancel at least 24 hours in advance of the start date of the experience.</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 class="text-16 fw-500">Highlights</h5>
+                            <ul class="list-disc text-15 mt-10">
+                                @Html.Raw(@Model.Destination_Highlights)
+                            </ul>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 class="text-16 fw-500">Meeting Point</h5>
+                            <div class="text-15 mt-10">@Model.MeetingPoint</div>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-40 border-top-light">
+                        <div class="row x-gap-40 y-gap-40 pt-40">
+                            <div class="col-12">
+                                <h3 class="text-22 fw-500">Tour's Schedule</h3>
+                                <div class="row x-gap-40 y-gap-40 pt-20">
+                                    <div class="col-md-6">
+                                        <div class="text-dark-1 text-15">
+                                            <h6 style="font-weight:500;"><i class="fa-sharp fa-solid fa-play" style="color: #0f67ff; margin-right: 10px; text-shadow: rgba(100, 100, 111, 10) 0px 7px 29px 0px;"></i> Tour Start Date: @Model.StartDate </h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="text-dark-1 text-15">
+                                            <h6 style="font-weight:500;"><i class="fa-solid fa-check" style="color: #0f67ff; margin-right: 10px; "></i> Tour End Date: @Model.EndDate </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h3 class="text-22 fw-500">Tour's Duration</h3>
+                                <div class="row x-gap-40 y-gap-40 pt-20">
+                                    <div class="col-md-6">
+                                        <div class="text-dark-1 text-15">
+                                            <h6 style="font-weight:500;">Tour Duration is: @Model.Destination_Duration </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-360 lg:w-full d-flex flex-column items-center">
+                    <div class="px-30 py-30 rounded-4 border-light bg-white shadow-4">
+                        <div class="text-14 text-light-1">
+                            From <span class="text-20 fw-500 text-dark-1 ml-5">PKR @string.Format("{0:N0}", Model.Price) PKR</span>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-12">
+                                <div class="col-12">
+                                    <div class="col-12">
+                                        @{
+                                            int expertId = Model.ExpertId;
+                                            int destinationId = Model.DestinationID;
+                                            int userId = Convert.ToInt32(Session["u_id"]);
+                                        }
+                                        @using (Html.BeginForm("BookingForm", "ExploreLocal", FormMethod.Get))
+                                        {
+                                            @Html.Hidden("expertId", expertId)
+                                            @Html.Hidden("destinationId", destinationId)
+                                            @Html.Hidden("userId", userId)
+                                            <button type="submit" class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white" id="bookNowButton">Book Now</button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex items-center pt-20">
+                            <div class="size-40 flex-center bg-light-2 rounded-full">
+                                <i class="icon-heart text-16 text-green-2"></i>
+                            </div>
+                            <div class="text-14 lh-16 ml-10">94% of travelers recommend this experience</div>
+                        </div>
+                    </div>
+                    <div class="px-30">
+                        <div class="text-14 text-light-1 mt-30">Not sure? You can cancel this reservation up to 24 hours in advance for a full refund.</div>
+                    </div>
+                </div>
+                <div class="container mt-40 mb-40">
+                    <div class="border-top-light" style="width:100%;"></div>
+                </div>
+                <section>
+                    <div class="container">
+                        <div class="row y-gap-20">
+                            <div class="col-lg-4">
+                                <h2 class="text-22 fw-500">FAQs About<br> Visting Our Tours</h2>
+                            </div>
+
+                            <div class="col-lg-8">
+                                <div class="accordion -simple row y-gap-20 js-accordion">
+
+                                    <div class="col-12">
+                                        <div class="accordion__item px-20 py-20 border-light rounded-4">
+                                            <div class="accordion__button d-flex items-center">
+                                                <div class="accordion__icon size-40 flex-center bg-light-2 rounded-full mr-20">
+                                                    <i class="icon-plus"></i>
+                                                    <i class="icon-minus"></i>
+                                                </div>
+
+                                                <div class="button text-dark-1">What do I need to hire a car?</div>
+                                            </div>
+
+                                            <div class="accordion__content">
+                                                <div class="pt-20 pl-60">
+                                                    <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="accordion__item px-20 py-20 border-light rounded-4">
+                                            <div class="accordion__button d-flex items-center">
+                                                <div class="accordion__icon size-40 flex-center bg-light-2 rounded-full mr-20">
+                                                    <i class="icon-plus"></i>
+                                                    <i class="icon-minus"></i>
+                                                </div>
+
+                                                <div class="button text-dark-1">How old do I have to be to rent a car?</div>
+                                            </div>
+
+                                            <div class="accordion__content">
+                                                <div class="pt-20 pl-60">
+                                                    <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="accordion__item px-20 py-20 border-light rounded-4">
+                                            <div class="accordion__button d-flex items-center">
+                                                <div class="accordion__icon size-40 flex-center bg-light-2 rounded-full mr-20">
+                                                    <i class="icon-plus"></i>
+                                                    <i class="icon-minus"></i>
+                                                </div>
+
+                                                <div class="button text-dark-1">Can I book a hire car for someone else?</div>
+                                            </div>
+
+                                            <div class="accordion__content">
+                                                <div class="pt-20 pl-60">
+                                                    <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="accordion__item px-20 py-20 border-light rounded-4">
+                                            <div class="accordion__button d-flex items-center">
+                                                <div class="accordion__icon size-40 flex-center bg-light-2 rounded-full mr-20">
+                                                    <i class="icon-plus"></i>
+                                                    <i class="icon-minus"></i>
+                                                </div>
+
+                                                <div class="button text-dark-1">How do I find the cheapest car hire deal?</div>
+                                            </div>
+
+                                            <div class="accordion__content">
+                                                <div class="pt-20 pl-60">
+                                                    <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="accordion__item px-20 py-20 border-light rounded-4">
+                                            <div class="accordion__button d-flex items-center">
+                                                <div class="accordion__icon size-40 flex-center bg-light-2 rounded-full mr-20">
+                                                    <i class="icon-plus"></i>
+                                                    <i class="icon-minus"></i>
+                                                </div>
+
+                                                <div class="button text-dark-1">What should I look for when I'm choosing a car?</div>
+                                            </div>
+
+                                            <div class="accordion__content">
+                                                <div class="pt-20 pl-60">
+                                                    <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+    </section>
+    <div class="container">
+        <div class="mt-50 border-top-light"></div>
+    </div>
+    <section class="layout-pt-lg layout-pb-lg">
+        <div class="container">
+            <div class="row justify-between items-end">
+                <div class="col-auto">
+                    <div class="sectionTitle -md">
+                        <h2 class="sectionTitle__title">Similar Experiences</h2>
+                        <p class=" sectionTitle__text mt-5 sm:mt-0">Our More Best Tours Like This & Capture Your Life Moments With Us!</p>
+                    </div>
                 </div>
 
-                <h3 class="text-22 fw-500 mt-30">
-                    Tour snapshot
-                </h3>
-                <div class="row y-gap-30 justify-between pt-20">
-                    <div class="col-12">
-                        <div class="d-flex align-items-center">
-                            <img src="@Url.Content(Model.ExpertProfileImage)" height="50" width="50" alt="Expert Profile Image" style="border-radius:50%;" />
-                            <a href="@Url.Action("ExpertDashboard","ExploreLocal", new { id = Model.ExpertId } )">
-                                <h8 class="ml-10" style="font-weight:500">Uploaded By @Model.ExpertName</h8>
+                <div class="col-auto">
+
+                    <a href="#" class="button h-50 px-24 -blue-1 bg-blue-1-05 text-blue-1">
+                        See All <div class="icon-arrow-top-right ml-15"></div>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="row y-gap-30 pt-40 sm:pt-20">
+                @if (ViewBag.RandomTours != null && ViewBag.RandomTours.Count > 0)
+                {
+                    foreach (var tour in ViewBag.RandomTours)
+                    {
+                        <div class="col-xl-3 col-lg-3 col-sm-6">
+                            <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="tourCard -type-1 rounded-4">
+                                <div class="tourCard__image">
+                                    <div class="cardImage ratio ratio-1:1">
+                                        @if (!string.IsNullOrEmpty(tour.Image))
+                                        {
+                                            var imagePaths = tour.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                            foreach (var imagePath in imagePaths)
+                                            {
+                                                var imageUrl = Url.Content(imagePath);
+                                                <div class="cardImage__content">
+                                                    <img class="rounded-4 col-12" src="@imageUrl" alt="image">
+                                                </div>
+                                            }
+                                        }
+                                        <div class="cardImage__wishlist">
+                                            <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                                <i class="icon-heart text-12"></i>
+                                            </button>
+                                        </div>
+                                        <div class="cardImage__leftBadge">
+                                            <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-dark-1 text-white">
+                                                LIKELY TO SELL OUT*
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tourCard__content mt-10">
+                                    <div class="d-flex items-center lh-14 mb-5">
+                                        <div class="text-14 text-light-1">16+ hours</div>
+                                        <div class="size-3 bg-light-1 rounded-full ml-10 mr-10"></div>
+                                        <div class="text-14 text-light-1">Full-day Tours</div>
+                                    </div>
+                                    <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
+                                        <span>@tour.DestinationName</span>
+                                    </h4>
+                                    <p class="text-light-1 lh-14 text-14 mt-5">@tour.Country</p>
+                                    <div class="row justify-between items-center pt-15">
+                                        <div class="col-auto">
+                                            <div class="d-flex items-center">
+                                                <div class="d-flex items-center x-gap-5">
+                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                    <div class="icon-star text-yellow-1 text-10"></div>
+                                                </div>
+                                                <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="text-14 text-light-1">
+                                                From
+                                                <span class="text-16 fw-500 text-dark-1">@string.Format("{0:N0}", tour.Price) PKR</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </a>
                         </div>
-                    </div>
-                </div>
-
-
-                <div class="border-top-light mt-40 mb-40"></div>
-
-
-                <div class="row y-gap-30 justify-between pt-20">
-                    <div class="col-12">
-                        <h3 class="text-22 fw-500 mt-30 mb-20">Street View</h3>
-                        @if (!string.IsNullOrEmpty(Model.GoogleStreetViewURL))
-                        {
-                            <div class="video-container" style="width:100%;">
-                                @Html.Raw(Model.GoogleStreetViewURL)
-                            </div>
-                        }
-                        else
-                        {
-                            <p>No street view for this tour!</p>
-                        }
-                    </div>
-                </div>
-
-                <div class="border-top-light mt-40 mb-40"></div>
-
-                <div class="row x-gap-40 y-gap-40">
-                    <div class="col-12">
-                        <h3 class="text-22 fw-500">Overview</h3>
-                        <p class="text-dark-1 text-15 mt-20">@Model.Description</p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <h5 class="text-16 fw-500">Available languages</h5>
-                        <div class="text-15 mt-10">@Model.Language</div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <h5 class="text-16 fw-500">Cancellation policy</h5>
-                        <div class="text-15 mt-10">For a full refund, cancel at least 24 hours in advance of the start date of the experience.</div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <h5 class="text-16 fw-500">Highlights</h5>
-                        <ul class="list-disc text-15 mt-10">
-                        </ul>
-                    </div>
-
-                    <div class="col-md-6">
-                        <h5 class="text-16 fw-500">Meeting Point</h5>
-                        <div class="text-15 mt-10">@Model.MeetingPoint</div>
-                    </div>
-
-                </div>
-
-                <div class="mt-40 border-top-light">
-                    <div class="row x-gap-40 y-gap-40 pt-40">
-                        <div class="col-12">
-                            <h3 class="text-22 fw-500">Tour's Schedule</h3>
-
-                            <div class="row x-gap-40 y-gap-40 pt-20">
-                                <div class="col-md-6">
-                                    <div class="text-dark-1 text-15">
-                                        <h6 style="font-weight:500;"><i class="fa-sharp fa-solid fa-play" style="color: #0f67ff; margin-right: 10px; text-shadow: rgba(100, 100, 111, 10) 0px 7px 29px 0px;"></i> Tour Start Date: @Model.StartDate </h6>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-dark-1 text-15">
-                                        <h6 style="font-weight:500;"><i class="fa-solid fa-check" style="color: #0f67ff; margin-right: 10px; "></i> Tour End Date: @Model.EndDate </h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="w-360 lg:w-full d-flex flex-column items-center">
-                <div class="px-30 py-30 rounded-4 border-light bg-white shadow-4">
-                    <div class="text-14 text-light-1">
-                        From <span class="text-20 fw-500 text-dark-1 ml-5">PKR @string.Format("{0:N0}", Model.Price) PKR</span>
-                    </div>
-                    <div class="col-12">
-                        <button class="button -dark-1 py-15 px-35 h-60 col-12 rounded-4 bg-blue-1 text-white">
-                            Book Now
-                        </button>
-                    </div>
-                    <div class="d-flex items-center pt-20">
-                        <div class="size-40 flex-center bg-light-2 rounded-full">
-                            <i class="icon-heart text-16 text-green-2"></i>
-                        </div>
-                        <div class="text-14 lh-16 ml-10">94% of travelers recommend this experience</div>
-                    </div>
-                </div>
-
-                <div class="px-30">
-                    <div class="text-14 text-light-1 mt-30">Not sure? You can cancel this reservation up to 24 hours in advance for a full refund.</div>
-                </div>
-            </div>
-            <div class="container mt-40 mb-40">
-                <div class="border-top-light" style="width:100%;"></div>
-            </div>
-            <section>
-                <div class="container">
-                    <div class="row y-gap-20">
-                        <div class="col-lg-4">
-                            <h2 class="text-22 fw-500">FAQs about<br> The Crown Hotel</h2>
-                        </div>
-
-                        <div class="col-lg-8">
-                            <div class="accordion -simple row y-gap-20 js-accordion">
-
-                                <div class="col-12">
-                                    <div class="accordion__item px-20 py-20 border-light rounded-4">
-                                        <div class="accordion__button d-flex items-center">
-                                            <div class="accordion__icon size-40 flex-center bg-light-2 rounded-full mr-20">
-                                                <i class="icon-plus"></i>
-                                                <i class="icon-minus"></i>
-                                            </div>
-
-                                            <div class="button text-dark-1">What do I need to hire a car?</div>
-                                        </div>
-
-                                        <div class="accordion__content">
-                                            <div class="pt-20 pl-60">
-                                                <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="accordion__item px-20 py-20 border-light rounded-4">
-                                        <div class="accordion__button d-flex items-center">
-                                            <div class="accordion__icon size-40 flex-center bg-light-2 rounded-full mr-20">
-                                                <i class="icon-plus"></i>
-                                                <i class="icon-minus"></i>
-                                            </div>
-
-                                            <div class="button text-dark-1">How old do I have to be to rent a car?</div>
-                                        </div>
-
-                                        <div class="accordion__content">
-                                            <div class="pt-20 pl-60">
-                                                <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="accordion__item px-20 py-20 border-light rounded-4">
-                                        <div class="accordion__button d-flex items-center">
-                                            <div class="accordion__icon size-40 flex-center bg-light-2 rounded-full mr-20">
-                                                <i class="icon-plus"></i>
-                                                <i class="icon-minus"></i>
-                                            </div>
-
-                                            <div class="button text-dark-1">Can I book a hire car for someone else?</div>
-                                        </div>
-
-                                        <div class="accordion__content">
-                                            <div class="pt-20 pl-60">
-                                                <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="accordion__item px-20 py-20 border-light rounded-4">
-                                        <div class="accordion__button d-flex items-center">
-                                            <div class="accordion__icon size-40 flex-center bg-light-2 rounded-full mr-20">
-                                                <i class="icon-plus"></i>
-                                                <i class="icon-minus"></i>
-                                            </div>
-
-                                            <div class="button text-dark-1">How do I find the cheapest car hire deal?</div>
-                                        </div>
-
-                                        <div class="accordion__content">
-                                            <div class="pt-20 pl-60">
-                                                <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="accordion__item px-20 py-20 border-light rounded-4">
-                                        <div class="accordion__button d-flex items-center">
-                                            <div class="accordion__icon size-40 flex-center bg-light-2 rounded-full mr-20">
-                                                <i class="icon-plus"></i>
-                                                <i class="icon-minus"></i>
-                                            </div>
-
-                                            <div class="button text-dark-1">What should I look for when I'm choosing a car?</div>
-                                        </div>
-
-                                        <div class="accordion__content">
-                                            <div class="pt-20 pl-60">
-                                                <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-</section>
-<div class="container">
-    <div class="mt-50 border-top-light"></div>
-</div>
-<section class="layout-pt-lg layout-pb-lg">
-    <div class="container">
-        <div class="row justify-between items-end">
-            <div class="col-auto">
-                <div class="sectionTitle -md">
-                    <h2 class="sectionTitle__title">Similar Experiences</h2>
-                    <p class=" sectionTitle__text mt-5 sm:mt-0">Our More Best Tours Like This & Capture Your Life Moments With Us!</p>
-                </div>
-            </div>
-
-            <div class="col-auto">
-
-                <a href="#" class="button h-50 px-24 -blue-1 bg-blue-1-05 text-blue-1">
-                    See All <div class="icon-arrow-top-right ml-15"></div>
-                </a>
-
-            </div>
-        </div>
-
-        <div class="row y-gap-30 pt-40 sm:pt-20">
-            @if (ViewBag.RandomTours != null && ViewBag.RandomTours.Count > 0)
-            {
-                foreach (var tour in ViewBag.RandomTours)
+                    }
+                }
+                else
                 {
-                    <div class="col-xl-3 col-lg-3 col-sm-6">
-                        <a href="@Url.Action("DestinationDetails", "ControllerName", new { id = tour.DestinationID })" class="tourCard -type-1 rounded-4">
-                            <div class="tourCard__image">
-                                <div class="cardImage ratio ratio-1:1">
-                                    @if (!string.IsNullOrEmpty(tour.Image))
-                                    {
-                                        var imagePaths = tour.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                                        foreach (var imagePath in imagePaths)
-                                        {
-                                            var imageUrl = Url.Content(imagePath);
-                                            <div class="cardImage__content">
-                                                <img class="rounded-4 col-12" src="@imageUrl" alt="image">
-                                            </div>
-                                        }
-                                    }
-                                    <div class="cardImage__wishlist">
-                                        <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                            <i class="icon-heart text-12"></i>
-                                        </button>
-                                    </div>
-                                    <div class="cardImage__leftBadge">
-                                        <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-dark-1 text-white">
-                                            LIKELY TO SELL OUT*
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tourCard__content mt-10">
-                                <div class="d-flex items-center lh-14 mb-5">
-                                    <div class="text-14 text-light-1">16+ hours</div>
-                                    <div class="size-3 bg-light-1 rounded-full ml-10 mr-10"></div>
-                                    <div class="text-14 text-light-1">Full-day Tours</div>
-                                </div>
-                                <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
-                                    <span>@tour.DestinationName</span>
-                                </h4>
-                                <p class="text-light-1 lh-14 text-14 mt-5">@tour.Country</p>
-                                <div class="row justify-between items-center pt-15">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="d-flex items-center x-gap-5">
-                                                <div class="icon-star text-yellow-1 text-10"></div>
-                                                <div class="icon-star text-yellow-1 text-10"></div>
-                                                <div class="icon-star text-yellow-1 text-10"></div>
-                                                <div class="icon-star text-yellow-1 text-10"></div>
-                                                <div class="icon-star text-yellow-1 text-10"></div>
-                                            </div>
-                                            <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="text-14 text-light-1">
-                                            From
-                                            <span class="text-16 fw-500 text-dark-1">@string.Format("{0:N0}", tour.Price) PKR</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                    <div class="col">
+                        <p>No More Tours Available.</p>
                     </div>
                 }
-            }
-            else
-            {
-                <div class="col">
-                    <p>No More Tours Available.</p>
-                </div>
-            }
+            </div>
         </div>
-
-
-    </div>
-</section>
+    </section>
+</body>

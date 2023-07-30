@@ -4,24 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="45c2135266eb4614afaddff1b04f9a9f" Name="Diagram1" ZoomLevel="72">
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Admin" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_BookingHistory" Width="1.5" PointX="7.5" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Destination" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Expert" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Reviews" Width="1.5" PointX="10.5" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_SavedDestinations" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_User" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Venue" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+      <Diagram DiagramId="881a6004843f444eb8678027fccc67c8" Name="Diagram1" ZoomLevel="48">
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Admin" Width="1.5" PointX="1.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_BookingHistory" Width="1.5" PointX="8.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Bookings" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Destination" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Expert" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Reviews" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_SavedDestinations" Width="1.5" PointX="11.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_User" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Venue" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B" ManuallyRouted="false" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Booki__Desti__75A278F5" ManuallyRouted="false" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Booki__UserI__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.DestinationId" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.ExpertID" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ex__2739D489" ManuallyRouted="false" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ve__6FE99F9F" ManuallyRouted="false" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Revie__Desti__7D439ABD" ManuallyRouted="false" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Saved__Desti__797309D9" ManuallyRouted="false" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Revie__UserI__7C4F7684" ManuallyRouted="false" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Saved__UserI__787EE5A0" ManuallyRouted="false" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ex__2739D489" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

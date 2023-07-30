@@ -17,7 +17,7 @@ namespace ExploreLocal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_User()
         {
-            this.Tbl_BookingHistory = new HashSet<Tbl_BookingHistory>();
+            this.Tbl_Bookings = new HashSet<Tbl_Bookings>();
             this.Tbl_Reviews = new HashSet<Tbl_Reviews>();
             this.Tbl_SavedDestinations = new HashSet<Tbl_SavedDestinations>();
         }
@@ -31,7 +31,7 @@ namespace ExploreLocal.Models
         public string ProfileImage { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_BookingHistory> Tbl_BookingHistory { get; set; }
+        public virtual ICollection<Tbl_Bookings> Tbl_Bookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Reviews> Tbl_Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,0 +1,110 @@
+﻿@model ExploreLocal.Models.BookingViewModel
+
+<section class="layout-pt-lg layout-pb-lg bg-blue-2">
+    <div class="container">
+        <div class="row justify-center">
+            <div class="col-xl-6 col-lg-7 col-md-9">
+                <div class="px-50 py-50 sm:px-20 sm:py-20 bg-white shadow-4 rounded-4">
+                    <div class="row y-gap-20">
+                        <div class="col-12">
+                            <h1 class="text-22 fw-500">Booking Form</h1>
+                            <p class="mt-10">Please fill in the form to book the tour.</p>
+                        </div>
+
+                        <div class="col-12">
+                            @using (Html.BeginForm("SubmitBooking", "ExploreLocal", new { id = Model.BookingId }, FormMethod.Post, new { id = "bookingForm" }))
+                            {
+                                @Html.HiddenFor(model => model.UserId)
+                                @Html.HiddenFor(model => model.DestinationId)
+                                @Html.HiddenFor(model => model.ExpertID)
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.FullName, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.Email, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.ContactNumber, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.ContactNumber, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger" })
+
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.NumberOfAdults, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.NumberOfAdults, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.NumberOfAdults, "", new { @class = "text-danger" })
+
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.NumberOfChildren, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.NumberOfChildren, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.NumberOfChildren, "", new { @class = "text-danger" })
+
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.BookingDate, new { @class = "form-control", type = "date", required = "required" })
+                                    @Html.LabelFor(model => model.BookingDate, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.BookingDate, "", new { @class = "text-danger" })
+
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.CardHolderName, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.CardHolderName, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.CardHolderName, "", new { @class = "text-danger" })
+
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.CreditCardNumber, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.CreditCardNumber, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.CreditCardNumber, "", new { @class = "text-danger" })
+
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.PIN, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.PIN, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.PIN, "", new { @class = "text-danger" })
+
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.CVV, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.CVV, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.CVV, "", new { @class = "text-danger" })
+
+                                </div>
+                                <br />
+                                <input type="submit" value="Submit Booking" class="button py-20 -dark-1 bg-blue-1 text-white" style="width:100%;" />
+                            }
+                            @if (!string.IsNullOrEmpty(ViewBag.Error))
+                            {
+                                <div class="container" style="background-color:red;">
+                                    <h1 style="color:white;"> @ViewBag.Error</h1>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="row y-gap-20 pt-30">
+                        <div class="col-12">
+                            <div class="text-center px-30">By submitting this form, you agree to the Terms of Use and Privacy Policy.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

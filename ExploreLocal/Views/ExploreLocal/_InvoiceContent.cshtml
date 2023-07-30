@@ -1,0 +1,36 @@
+﻿@model dynamic
+
+<div class="invoice-data">
+    <h3>Your Booking Invoice</h3>
+    <p><strong>Booking ID:</strong> @Model.BookingId</p>
+    <p><strong>Your Name:</strong> @Model.User.FirstName @Model.User.LastName</p>
+
+    @if (Model.Destination != null)
+    {
+        <p><strong>Tour Name:</strong> @Model.Destination.DestinationName</p>
+        <p><strong>Tour Duration:</strong> @Model.Destination.Destination_Duration</p>
+        <p><strong>Meeting Point:</strong> @Model.Destination.MeetingPoint</p>
+        <p><strong>Tour Start Date:</strong> @Model.Destination.StartDate</p>
+        <p><strong>Tour End Date:</strong> @Model.Destination.EndDate</p>
+    }
+    else
+    {
+        <p><strong>Destination:</strong> Destination information not available</p>
+    }
+
+    @if (Model.Expert != null)
+    {
+        <p><strong>Expert:</strong> @Model.Expert.ExpertName</p>
+    }
+    else
+    {
+        <p><strong>Expert:</strong> Expert information not available</p>
+    }
+
+    <p><strong>Number of Adults:</strong> @Model.NumberOfAdults</p>
+    <p><strong>Number of Children:</strong> @Model.NumberOfChildren</p>
+    <p><strong>Booking Date:</strong> @Model.BookingDateStr</p>
+    <p><strong>Card Holder Name:</strong> @Model.CardHolderName</p>
+    <p><strong>Payment Details (CC-Number):</strong> @Model.CreditCardNumber</p>
+</div>
+

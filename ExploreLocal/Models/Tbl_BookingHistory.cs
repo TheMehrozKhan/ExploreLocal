@@ -14,13 +14,18 @@ namespace ExploreLocal.Models
     
     public partial class Tbl_BookingHistory
     {
-        public int BookingID { get; set; }
-        public Nullable<int> UserID { get; set; }
-        public Nullable<int> DestinationID { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public string Status { get; set; }
-    
-        public virtual Tbl_Destination Tbl_Destination { get; set; }
-        public virtual Tbl_User Tbl_User { get; set; }
+        public int BookingId { get; set; }
+        public int UserId { get; set; }
+        public int DestinationId { get; set; }
+        public int NumberOfAdults { get; set; }
+        public int NumberOfChildren { get; set; }
+        public System.DateTime BookingDate { get; set; }
+        public string CreditCardNumber { get; set; }
+        public int PIN { get; set; }
+        public int CVV { get; set; }
+        public string CardHolderName { get; set; }
+        public decimal TotalAmount { get; set; }
+        public bool PaymentStatus { get; set; }
+        public string BookingStatus { get; set; }
     }
 }

@@ -1,0 +1,83 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>InvoiceTemplate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Center the container */
+        .thecontainer {
+            margin-top: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            margin-bottom: 150px;
+        }
+
+        /* Style the header message */
+        h1 {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Style the invoice data */
+        .invoice-data {
+            margin-top: 50px;
+            border: 1px solid deepskyblue;
+            padding: 20px;
+            width: 80%; /* Adjust the width as needed */
+            max-width: 600px; /* Set a maximum width for larger screens */
+            box-shadow: rgba(0, 0, 0, 0.02) 0px 10px 36px 0px, rgba(0, 0, 0, 0.02) 0px 0px 0px 1px;
+            text-align: left;
+            margin-left: 50px;
+            border-radius: 12px;
+        }
+
+            .invoice-data p {
+                margin-left: 15px;
+                margin-top: 15px;
+            }
+    </style>
+</head>
+<body>
+    <div class="thecontainer">
+        @if (ViewBag.Booking != null)
+        {
+            @Html.Partial("_InvoiceContent", new
+            {
+                BookingId = ViewBag.Booking.BookingId,
+                User = ViewBag.User,
+                Destination = ViewBag.Destination,
+                Expert = ViewBag.Expert,
+                NumberOfAdults = ViewBag.Booking.NumberOfAdults,
+                NumberOfChildren = ViewBag.Booking.NumberOfChildren,
+                BookingDateStr = ViewBag.BookingDateStr,
+                CardHolderName = ViewBag.Booking.CardHolderName,
+                CreditCardNumber = ViewBag.Booking.CreditCardNumber
+            })
+        }
+        else
+        {
+            <p>Booking information not available.</p>
+        }
+    </div>
+</body>
+</html>

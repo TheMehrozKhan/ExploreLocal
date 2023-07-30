@@ -17,7 +17,7 @@ namespace ExploreLocal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Destination()
         {
-            this.Tbl_BookingHistory = new HashSet<Tbl_BookingHistory>();
+            this.Tbl_Bookings = new HashSet<Tbl_Bookings>();
             this.Tbl_Reviews = new HashSet<Tbl_Reviews>();
             this.Tbl_SavedDestinations = new HashSet<Tbl_SavedDestinations>();
         }
@@ -25,7 +25,6 @@ namespace ExploreLocal.Models
         public int DestinationID { get; set; }
         public string DestinationName { get; set; }
         public string Country { get; set; }
-        public string Description { get; set; }
         public string Image { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
@@ -36,14 +35,19 @@ namespace ExploreLocal.Models
         public string MeetingPoint { get; set; }
         public string Language { get; set; }
         public Nullable<int> FK_Expert_Id { get; set; }
+        public string Destination_Duration { get; set; }
+        [AllowHtml]
+        public string Destination_Highlights { get; set; }
+        [AllowHtml]
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_BookingHistory> Tbl_BookingHistory { get; set; }
+        public virtual ICollection<Tbl_Bookings> Tbl_Bookings { get; set; }
+        public virtual Tbl_Expert Tbl_Expert { get; set; }
         public virtual Tbl_Venue Tbl_Venue { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Reviews> Tbl_Reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_SavedDestinations> Tbl_SavedDestinations { get; set; }
-        public virtual Tbl_Expert Tbl_Expert { get; set; }
     }
 }

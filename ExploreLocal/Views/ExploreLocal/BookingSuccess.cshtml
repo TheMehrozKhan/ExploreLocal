@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Booking Success";
+}
+
+<style>
+    .thecontainer {
+        margin-top: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 150px;
+    }
+
+    h1 {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    h3 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="thecontainer">
+    <h1>Booking Successfully Submitted!</h1>
+    <p>Thank you for booking the tour. Your booking has been successfully submitted.</p>
+    @if (ViewBag.Booking != null)
+    {
+        <a href="@Url.Action("DownloadInvoice", new { bookingId = ViewBag.Booking.BookingId })">
+            <button id="downloadButton">Download Invoice</button>
+        </a>
+        <a href="@Url.Action("InvoiceTemplate", new { bookingId = ViewBag.Booking.BookingId })">
+            <button id="viewInvoiceButton">View Invoice</button>
+        </a>
+    }
+</div>
