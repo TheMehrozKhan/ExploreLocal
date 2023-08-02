@@ -1,0 +1,12 @@
+﻿body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background-image: url(~/Content/img/TheBookinForm.png);
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+}

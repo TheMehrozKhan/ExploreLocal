@@ -284,6 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\AdminPanel.css" />
+    <Content Include="Content\css\BookingForm.css" />
     <Content Include="Content\css\bootstrap-select-country.min.css" />
     <Content Include="Content\css\images\flags16.png" />
     <Content Include="Content\PagedList.css" />

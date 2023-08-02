@@ -6,36 +6,59 @@
     .thecontainer {
         margin-top: 150px;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+        margin-bottom: 100px;
+    }
+
+    .left-section {
+        margin-top: 120px;
+        width: 60%;
+        text-align: left;
+        margin-left: 55px;
+    }
+
+    .right-section {
+        width: 40%;
         text-align: center;
-        margin-bottom: 150px;
     }
 
     h1 {
         font-size: 30px;
         font-weight: bold;
-        margin-bottom: 20px;
         color: #333;
+        text-align: left;
     }
 
     h3 {
-        text-align: center;
-        margin-bottom: 20px;
+        text-align: left;
     }
 </style>
 
 <div class="thecontainer">
-    <h1>Booking Successfully Submitted!</h1>
-    <p>Thank you for booking the tour. Your booking has been successfully submitted.</p>
-    @if (ViewBag.Booking != null)
-    {
-        <a href="@Url.Action("DownloadInvoice", new { bookingId = ViewBag.Booking.BookingId })">
-            <button id="downloadButton">Download Invoice</button>
-        </a>
-        <a href="@Url.Action("InvoiceTemplate", new { bookingId = ViewBag.Booking.BookingId })">
-            <button id="viewInvoiceButton">View Invoice</button>
-        </a>
-    }
+    <div class="left-section">
+        <h1>Booking Successfully Submitted <img src="~/Content/img/greentick-icon.png" height="30" width="30" /> </h1>
+        <p>Thank you for booking the tour. Your booking has been successfully submitted.</p>
+        @if (ViewBag.Booking != null)
+        {
+            <style>
+                #thebtns {
+                    border: 0.5px solid darkblue;
+                    border-radius: 6px;
+                    position:relative;
+                    bottom:120px;
+                    margin:5px;
+                }
+
+                    #thebtns:hover {
+                        border: none;
+                    }
+            </style>
+            <div class="thecontainer">
+                <a href="@Url.Action("DownloadInvoice", new { bookingId = ViewBag.Booking.BookingId })" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none" id="thebtns">Download Invoice</a>
+                <a href="@Url.Action("InvoiceTemplate", new { bookingId = ViewBag.Booking.BookingId })" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none" id="thebtns">View Invoice</a>
+            </div>
+        }
+    </div>
+    <div class="right-section">
+        <img src="~/Content/img/Booked.png" alt="Image" style="position:relative;right:55px;">
+    </div>
 </div>

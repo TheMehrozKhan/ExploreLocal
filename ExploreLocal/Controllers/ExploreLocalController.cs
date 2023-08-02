@@ -584,9 +584,24 @@ namespace ExploreLocal.Controllers
                 return View();
             }
 
+            // Retrieve booked tours for the user
+            List<Tbl_Bookings> userBookings = db.Tbl_Bookings
+                .Where(b => b.UserId == id)
+                .ToList();
+
+            // Fetch the associated Destination for each booking
+            foreach (var booking in userBookings)
+            {
+                booking.Tbl_Destination = db.Tbl_Destination.Find(booking.DestinationId);
+            }
+
+            // Pass the user and their bookings to the view
             ViewBag.ProfileNotFound = true;
+            ViewBag.UserBookings = userBookings;
             return View(profileUser);
         }
+
+
 
         [HttpGet]
         public ActionResult Edit_Profile(int id)
