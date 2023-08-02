@@ -372,6 +372,7 @@ namespace ExploreLocal.Controllers
             {
                 Session["u_id"] = us.UserID.ToString();
                 Session["u_email"] = us.Email;
+                Session["u_name"] = us.FirstName;
                 TempData["ToastMessage"] = "Hi, " + us.FirstName + us.LastName + " You Successfully Logged In!";
                 return RedirectToAction("Index");
             }

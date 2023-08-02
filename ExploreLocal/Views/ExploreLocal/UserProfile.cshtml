@@ -209,10 +209,10 @@
             <div class="profile-actions">
                 @if (Convert.ToInt32(Session["u_id"]) == Model.UserID)
                 {
-                <div style="margin-top:20px;">
-                    <a href="@Url.Action("Edit_Profile", "ExploreLocal", new { id = Model.UserID })" class="button-5">Edit</a>
-                    <a href="@Url.Action("Logout", "ExploreLocal", new { id = Model.UserID })" class="button-5" style="background-color:darkorange">Logout</a>
-                </div>
+                    <div style="margin-top:20px;">
+                        <a href="@Url.Action("Edit_Profile", "ExploreLocal", new { id = Model.UserID })" class="button-5">Edit</a>
+                        <a href="@Url.Action("Logout", "ExploreLocal", new { id = Model.UserID })" class="button-5" style="background-color:darkorange">Logout</a>
+                    </div>
                 }
             </div>
         </div>
@@ -222,70 +222,75 @@
     <div class="user-bookings" style="padding: 20px;">
         <h2 style="text-align: center; margin-bottom: 30px;">Booked Tours</h2>
         @if (ViewBag.UserBookings != null && ViewBag.UserBookings.Count > 0)
-{
-        <div class="table-responsive">
-            <!-- Add table-responsive class for responsive table -->
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Booking ID</th>
-                        <th>Destination</th>
-                        <th>Booking Date</th>
-                        <th>Your Expert</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Tour Duration</th>
-                        <th>Tour Price</th>
-                        <th>Tour State</th> <!-- New column -->
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var booking in ViewBag.UserBookings)
-                {
-                    <tr>
-                        <td>@booking.BookingId</td>
-                        <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.DestinationName : "N/A")</td>
-                        <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
-                        <td>@(booking.Tbl_Expert != null ? booking.Tbl_Expert.ExpertName : "N/A")</td>
-                        <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.StartDate : "N/A")</td>
-                        <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.EndDate : "N/A")</td>
-                        <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Destination_Duration : "N/A")</td>
-                        <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Price : "N/A")</td>
-                        <td>
-                            <p style="background-color: @GetTourStateColor(booking.TourState);color:white;border-radius:12px;height:35px;width:120px;display:flex;justify-content:center;align-items:center;"> @booking.TourState </p>
-                        </td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        </div>
-}
-else
-{
-        <p>No booked tours found.</p>
-}
-
-        @functions {
-    // Helper function to get background color based on tour state
-    private string GetTourStateColor(string tourState)
-    {
-        if (tourState == "Upcoming")
         {
-            return "yellow"; // Yellow background for "Upcoming"
-        }
-        else if (tourState == "Ongoing")
-        {
-            return "deepskyblue"; // Deep sky blue background for "Ongoing"
-        }
-        else if (tourState == "Completed")
-        {
-            return "#32CD32"; // Light green background for "Completed"
+            <div class="table-responsive">
+                <!-- Add table-responsive class for responsive table -->
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Destination</th>
+                            <th>Booking Date</th>
+                            <th>Your Expert</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Tour Duration</th>
+                            <th>Tour Price</th>
+                            <th>Tour State</th> <!-- New column -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var booking in ViewBag.UserBookings)
+                        {
+                            <tr>
+                                <td>@booking.BookingId</td>
+                                <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.DestinationName : "N/A")</td>
+                                <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
+                                <td>@(booking.Tbl_Expert != null ? booking.Tbl_Expert.ExpertName : "N/A")</td>
+                                <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.StartDate : "N/A")</td>
+                                <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.EndDate : "N/A")</td>
+                                <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Destination_Duration : "N/A")</td>
+                                <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Price : "N/A")</td>
+                                <td>
+                                    <p style="background-color: @GetTourStateColor(booking.TourState);color:white;border-radius:12px;height:35px;width:120px;display:flex;justify-content:center;align-items:center;"> @booking.TourState </p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
         else
         {
-            return "white"; // Default background color (white) for unknown states
+            <div style="display:flex;justify-content:center;align-items:center;">
+                <div class="p-container" style="box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px; background: #3554D1; border-radius: 12px; padding: 21px; ">
+                    <p style="font-size:26px;font-weight:600;line-height:30px;color:#000000;color:white;">Sorry @Session["u_name"] You Didn't <br /> Booked Any Tours Yet!</p>
+                </div>
+                    <img src="~/Content/img/Couldn'tFind.png" style="position:relative;top:20px;"/>
+            </div>
         }
-    }
+
+        @functions {
+            // Helper function to get background color based on tour state
+            private string GetTourStateColor(string tourState)
+            {
+                if (tourState == "Upcoming")
+                {
+                    return "darkorange"; // Yellow background for "Upcoming"
+                }
+                else if (tourState == "Ongoing")
+                {
+                    return "deepskyblue"; // Deep sky blue background for "Ongoing"
+                }
+                else if (tourState == "Completed")
+                {
+                    return "#32CD32"; // Light green background for "Completed"
+                }
+                else
+                {
+                    return "white"; // Default background color (white) for unknown states
+                }
+            }
         }
 
     </div>
