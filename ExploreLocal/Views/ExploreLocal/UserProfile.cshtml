@@ -159,6 +159,23 @@
             box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
             transform: translateY(0);
         }
+
+    /* Custom CSS to truncate text and add ellipsis for long content in the "Tour State" column */
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+        .table-responsive table {
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        .table-responsive td,
+        .table-responsive th {
+            max-width: 200px; /* Adjust the maximum width as per your preference */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 </style>
 <div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;border-radius:15px;margin-top:150px;margin-bottom:50px;">
     <div class="profile-card">
@@ -192,10 +209,10 @@
             <div class="profile-actions">
                 @if (Convert.ToInt32(Session["u_id"]) == Model.UserID)
                 {
-                    <div style="margin-top:20px;">
-                        <a href="@Url.Action("Edit_Profile", "ExploreLocal", new { id = Model.UserID })" class="button-5">Edit</a>
-                        <a href="@Url.Action("Logout", "ExploreLocal", new { id = Model.UserID })" class="button-5" style="background-color:darkorange">Logout</a>
-                    </div>
+                <div style="margin-top:20px;">
+                    <a href="@Url.Action("Edit_Profile", "ExploreLocal", new { id = Model.UserID })" class="button-5">Edit</a>
+                    <a href="@Url.Action("Logout", "ExploreLocal", new { id = Model.UserID })" class="button-5" style="background-color:darkorange">Logout</a>
+                </div>
                 }
             </div>
         </div>
@@ -205,7 +222,9 @@
     <div class="user-bookings" style="padding: 20px;">
         <h2 style="text-align: center; margin-bottom: 30px;">Booked Tours</h2>
         @if (ViewBag.UserBookings != null && ViewBag.UserBookings.Count > 0)
-        {
+{
+        <div class="table-responsive">
+            <!-- Add table-responsive class for responsive table -->
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -217,28 +236,57 @@
                         <th>End Date</th>
                         <th>Tour Duration</th>
                         <th>Tour Price</th>
+                        <th>Tour State</th> <!-- New column -->
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var booking in ViewBag.UserBookings)
-                    {
-                        <tr>
-                            <td>@booking.BookingId</td>
-                            <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.DestinationName : "N/A")</td>
-                            <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
-                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_Expert.ExpertName : "N/A")</td>
-                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.StartDate : "N/A")</td>
-                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.EndDate : "N/A")</td>
-                            <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Destination_Duration : "N/A")</td>
-                            <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Price : "N/A")</td>
-                        </tr>
-                    }
+                {
+                    <tr>
+                        <td>@booking.BookingId</td>
+                        <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.DestinationName : "N/A")</td>
+                        <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
+                        <td>@(booking.Tbl_Expert != null ? booking.Tbl_Expert.ExpertName : "N/A")</td>
+                        <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.StartDate : "N/A")</td>
+                        <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.EndDate : "N/A")</td>
+                        <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Destination_Duration : "N/A")</td>
+                        <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Price : "N/A")</td>
+                        <td>
+                            <p style="background-color: @GetTourStateColor(booking.TourState);color:white;border-radius:12px;height:35px;width:120px;display:flex;justify-content:center;align-items:center;"> @booking.TourState </p>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
+        </div>
+}
+else
+{
+        <p>No booked tours found.</p>
+}
+
+        @functions {
+    // Helper function to get background color based on tour state
+    private string GetTourStateColor(string tourState)
+    {
+        if (tourState == "Upcoming")
+        {
+            return "yellow"; // Yellow background for "Upcoming"
+        }
+        else if (tourState == "Ongoing")
+        {
+            return "deepskyblue"; // Deep sky blue background for "Ongoing"
+        }
+        else if (tourState == "Completed")
+        {
+            return "#32CD32"; // Light green background for "Completed"
         }
         else
         {
-            <p>No booked tours found.</p>
+            return "white"; // Default background color (white) for unknown states
         }
+    }
+        }
+
     </div>
 </div>

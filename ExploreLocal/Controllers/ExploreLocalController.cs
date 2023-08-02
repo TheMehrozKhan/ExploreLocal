@@ -593,15 +593,39 @@ namespace ExploreLocal.Controllers
             foreach (var booking in userBookings)
             {
                 booking.Tbl_Destination = db.Tbl_Destination.Find(booking.DestinationId);
+
+                // Determine the tour state based on start and end dates
+                booking.TourState = GetTourState(booking.Tbl_Destination.StartDate, booking.Tbl_Destination.EndDate);
             }
 
             // Pass the user and their bookings to the view
-            ViewBag.ProfileNotFound = true;
+            ViewBag.ProfileNotFound = false; // Set to false when profileUser is found
             ViewBag.UserBookings = userBookings;
             return View(profileUser);
         }
 
+        private string GetTourState(DateTime? startDate, DateTime? endDate)
+        {
+            if (startDate == null || endDate == null)
+            {
+                return "N/A";
+            }
 
+            DateTime currentDate = DateTime.Now;
+
+            if (currentDate < startDate)
+            {
+                return "Upcoming";
+            }
+            else if (currentDate >= startDate && currentDate <= endDate)
+            {
+                return "Ongoing";
+            }
+            else
+            {
+                return "Completed";
+            }
+        }
 
         [HttpGet]
         public ActionResult Edit_Profile(int id)
