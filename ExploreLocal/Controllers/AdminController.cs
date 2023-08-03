@@ -177,6 +177,12 @@ namespace ExploreLocal.Controllers
             return RedirectToAction("AllExperts");
         }
 
+        public ActionResult ExpertBookings()
+        {
+            List<Tbl_Bookings> ExpertBookings = db.Tbl_Bookings.ToList();
+            return View(ExpertBookings);
+        }
+
         public ActionResult View_Venue(int? page)
         {
             if (Session["ad_id"] == null)
