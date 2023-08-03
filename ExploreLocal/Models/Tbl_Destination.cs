@@ -37,10 +37,16 @@ namespace ExploreLocal.Models
         public Nullable<int> FK_Expert_Id { get; set; }
         public string Destination_Duration { get; set; }
         [AllowHtml]
+
         public string Destination_Highlights { get; set; }
         [AllowHtml]
+
         public string Description { get; set; }
-    
+        public Nullable<bool> TourStatus { get; set; }
+        public virtual Tbl_Expert Expert { get; set; }
+
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Bookings> Tbl_Bookings { get; set; }
         public virtual Tbl_Expert Tbl_Expert { get; set; }

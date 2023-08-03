@@ -23,9 +23,11 @@ namespace ExploreLocal.Controllers
 
         public ActionResult Destinations(int id)
         {
-            var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id).ToList();
+            // Fetch the selected venue tours and venue details
+            var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id && t.TourStatus == true).ToList();
             var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
 
+            // Fetch most popular tours
             var mostPopularTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_BookingHistory,
@@ -36,11 +38,13 @@ namespace ExploreLocal.Controllers
                         Destination = destination,
                         BookingsCount = bookings.Count()
                     })
+                .Where(x => x.Destination.TourStatus == true) // Add condition for approved tours
                 .OrderByDescending(x => x.BookingsCount)
                 .Select(x => x.Destination)
                 .Take(4)
                 .ToList();
 
+            // Fetch trending tours
             var trendingTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_BookingHistory,
@@ -51,6 +55,7 @@ namespace ExploreLocal.Controllers
                         Destination = destination,
                         LatestBookingDate = bookings.Max(b => b.BookingDate)
                     })
+                .Where(x => x.Destination.TourStatus == true) // Add condition for approved tours
                 .OrderByDescending(x => x.LatestBookingDate)
                 .Select(x => x.Destination)
                 .Take(4)
@@ -67,6 +72,8 @@ namespace ExploreLocal.Controllers
 
             return View(viewModel);
         }
+
+
 
         public ActionResult DestinationDetails(int id)
         {
@@ -496,6 +503,7 @@ namespace ExploreLocal.Controllers
             {
                 return RedirectToAction("ExpertLogin");
             }
+
             List<Tbl_Venue> li = db.Tbl_Venue.ToList();
             ViewBag.categorylist = new SelectList(li, "Venue_id", "Venue_name");
             return View();
@@ -524,20 +532,23 @@ namespace ExploreLocal.Controllers
                 }
             }
 
-            Tbl_Destination pro = new Tbl_Destination();
-            pro.DestinationName = pr.DestinationName;
-            pro.Country = pr.Country;
-            pro.Description = pr.Description;
-            pro.Price = pr.Price;
-            pro.MeetingPoint = pr.MeetingPoint;
-            pro.Language = pr.Language;
-            pro.FK_Venue_Id = pr.FK_Venue_Id;
-            pro.GoogleStreetViewURL = pr.GoogleStreetViewURL;
-            pro.StartDate = pr.StartDate;
-            pro.EndDate = pr.EndDate;
-            pro.Destination_Duration = pr.Destination_Duration;
-            pro.Destination_Highlights = pr.Destination_Highlights;
-            pro.FK_Expert_Id = Convert.ToInt32(Session["expert_id"].ToString());
+            Tbl_Destination pro = new Tbl_Destination
+            {
+                DestinationName = pr.DestinationName,
+                Price = pr.Price,
+                Country = pr.Country,
+                Description = pr.Description,
+                MeetingPoint = pr.MeetingPoint,
+                Language = pr.Language,
+                FK_Venue_Id = pr.FK_Venue_Id,
+                GoogleStreetViewURL = pr.GoogleStreetViewURL,
+                StartDate = pr.StartDate,
+                EndDate = pr.EndDate,
+                Destination_Duration = pr.Destination_Duration,
+                Destination_Highlights = pr.Destination_Highlights,
+                FK_Expert_Id = Convert.ToInt32(Session["expert_id"].ToString()),
+                TourStatus = false // Set the status to false (pending) when the tour is uploaded
+            };
 
             if (imagePaths.Count > 0)
             {

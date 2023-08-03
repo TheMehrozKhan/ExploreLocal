@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ExploreLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ExploreLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Tbl_Admin">
           <Key>
             <PropertyRef Name="Admin_Id" />
@@ -70,6 +70,7 @@
           <Property Name="Destination_Duration" Type="varchar" MaxLength="100" />
           <Property Name="Destination_Highlights" Type="varchar(max)" />
           <Property Name="Description" Type="varchar(max)" />
+          <Property Name="TourStatus" Type="bit" />
         </EntityType>
         <EntityType Name="Tbl_Expert">
           <Key>
@@ -299,8 +300,7 @@
             <End Role="Tbl_Bookings" EntitySet="Tbl_Bookings" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ExploreLocalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -378,6 +378,7 @@
           <NavigationProperty Name="Tbl_Venue" Relationship="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Destination" ToRole="Tbl_Venue" />
           <NavigationProperty Name="Tbl_Reviews" Relationship="Self.FK__Tbl_Revie__Desti__7D439ABD" FromRole="Tbl_Destination" ToRole="Tbl_Reviews" />
           <NavigationProperty Name="Tbl_SavedDestinations" Relationship="Self.FK__Tbl_Saved__Desti__797309D9" FromRole="Tbl_Destination" ToRole="Tbl_SavedDestinations" />
+          <Property Name="TourStatus" Type="Boolean" />
         </EntityType>
         <EntityType Name="Tbl_Expert">
           <Key>
@@ -676,6 +677,7 @@
           <EntitySetMapping Name="Tbl_Destination">
             <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Destination">
               <MappingFragment StoreEntitySet="Tbl_Destination">
+                <ScalarProperty Name="TourStatus" ColumnName="TourStatus" />
                 <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
                 <ScalarProperty Name="DestinationName" ColumnName="DestinationName" />
                 <ScalarProperty Name="Country" ColumnName="Country" />

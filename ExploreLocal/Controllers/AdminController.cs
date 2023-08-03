@@ -126,22 +126,6 @@ namespace ExploreLocal.Controllers
             }
         }
 
-        public ActionResult ApproveExpert(int expertId)
-        {
-            using (var db = new ExploreLocalEntities5())
-            {
-                var expert = db.Tbl_Expert.Find(expertId);
-                if (expert != null)
-                {
-                    expert.ExpertStatus = true; 
-                    db.SaveChanges();
-                    SendExpertApprovalEmail(expert.ExpertEmail);
-                }
-            }
-
-            return RedirectToAction("ExpertRequests");
-        }
-
         public ActionResult RejectExpert(int expertId)
         {
             using (var db = new ExploreLocalEntities5())
@@ -155,6 +139,73 @@ namespace ExploreLocal.Controllers
             }
 
             return RedirectToAction("ExpertRequests");
+        }
+
+        public ActionResult ExpertTourRequests()
+        {
+            using (var db = new ExploreLocalEntities5())
+            {
+                var pendingTourExperts = db.Tbl_Destination
+                    .Where(e => e.TourStatus == false)
+                    .ToList();
+
+                // Fetch the associated Tbl_Expert for each pendingTourExpert
+                foreach (var expert in pendingTourExperts)
+                {
+                    expert.Expert = db.Tbl_Expert.FirstOrDefault(e => e.ExpertId == expert.FK_Expert_Id);
+                }
+
+                return View(pendingTourExperts);
+            }
+        }
+
+        public void SendExpertTourApprovalEmail(string recipientEmail)
+        {
+            string senderEmail = "khanmehroz245@gmail.com";
+            string apiKey = "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";
+            string subject = "Congratulations! To Our ExploreLocal Expert";
+            string body = "Dear expert, congratulations! Your uploaded tour on ExploreLocal has been approved.";
+
+
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(senderEmail);
+            var to = new EmailAddress(recipientEmail);
+            var plainTextContent = body;
+            var htmlContent = "<strong>" + body + "</strong>";
+
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = client.SendEmailAsync(msg).Result;
+
+            if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
+            {
+                Console.WriteLine($"Failed to send email: {response.StatusCode}");
+            }
+        }
+
+        public ActionResult ApproveTour(int tourId)
+        {
+            Tbl_Destination tour = db.Tbl_Destination.Find(tourId);
+            if (tour != null)
+            {
+                tour.TourStatus = true;
+                var expert = db.Tbl_Expert.Find(tour.FK_Expert_Id);
+                db.SaveChanges();
+                SendExpertTourApprovalEmail(expert.ExpertEmail);
+            }
+
+            return RedirectToAction("ExpertTourRequests");
+        }
+
+        public ActionResult RejectTour(int tourId)
+        {
+            Tbl_Destination tour = db.Tbl_Destination.Find(tourId);
+            if (tour != null)
+            {
+                db.Tbl_Destination.Remove(tour); // Remove the tour from the database (reject)
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("ExpertTourRequests");
         }
 
         public ActionResult AllExperts()
