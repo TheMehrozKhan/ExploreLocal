@@ -24,6 +24,7 @@
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Saved__Desti__797309D9" ManuallyRouted="false" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Revie__UserI__7C4F7684" ManuallyRouted="false" />
         <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Saved__UserI__787EE5A0" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Announcement" Width="1.5" PointX="8.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1,4 +1,4 @@
-﻿﻿﻿@model ExploreLocal.Models.Tbl_Venue
+﻿﻿﻿@model ExploreLocal.Models.Tbl_Announcement
 @{
     ViewBag.Title = "Add_Category";
     Layout = null;
@@ -81,22 +81,17 @@
             {
             <form method="post">
                 <div class="form-group">
-                    <label for="venue_name">Venue Name:</label>
-                    @Html.TextBoxFor(x => x.Venue_name, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Venue Name" })
-                    <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_name)</span>
+                    <label for="venue_name">Announcement Headline:</label>
+                    @Html.TextBoxFor(x => x.Announcement_headline, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Announcement Headline" })
+                    <span style="color: red">@Html.ValidationMessageFor(x => x.Announcement_headline)</span>
                 </div>
                 <div class="form-group">
-                    <label for="venueCountry">Venue Country:</label>
-                    @Html.TextBoxFor(x => x.Venue_Country, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Venue Country" })
-                    <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_Country)</span>
+                    <label for="venueCountry">Announcement Description:</label>
+                    @Html.TextAreaFor(x => x.Announcement_description, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Announcement Desscription" })
+                    <span style="color: red">@Html.ValidationMessageFor(x => x.Announcement_description)</span>
                 </div>
                 <div class="form-group">
-                    <label for="venueCountry">Venue Description:</label>
-                    @Html.TextAreaFor(x => x.Venue_Description, new { @class = "form-control", @id = "custom-input", @placeholder = "Enter Venue Description", @style = "padding:15px;" })
-                    <span style="color: red">@Html.ValidationMessageFor(x => x.Venue_Description)</span>
-                </div>
-                <div class="form-group">
-                    <label for="venue_img">Venue Image:</label>
+                    <label for="venue_img">Announcement Image:</label>
                     <input type="file" name="imgfile" id="imgfile" class="input" required />
                 </div>
                 <div class="d-flex justify-content-center">
@@ -113,10 +108,10 @@
         Swal.fire({
             icon: 'success',
             title: 'Congrats!',
-            text: 'Your Venue Has Been Uploaded!'
+            text: 'Your Announcement Are Uploaded!'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '@Url.Action("View_Venue", "ExploreLocal")';
+                window.location.href = '@Url.Action("View_Announcement", "ExploreLocal")';
                 this.submit();
             }
         });

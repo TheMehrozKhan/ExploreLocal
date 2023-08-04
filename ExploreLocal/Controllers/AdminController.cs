@@ -53,41 +53,7 @@ namespace ExploreLocal.Controllers
             ViewBag.ToastMessage = TempData["ToastMessage"];
             return View();
         }
-
-        [HttpGet]
-        public ActionResult Add_Venue()
-        {
-            if (Session["ad_id"] == null)
-            {
-                return RedirectToAction("Login");
-            }
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Add_Venue(Tbl_Venue cat, HttpPostedFileBase imgfile)
-        {
-            Tbl_Admin ad = new Tbl_Admin();
-            string path = uploadimage(imgfile);
-            if (path.Equals(-1))
-            {
-                ViewBag.Error = "Image Couldn't Uploaded Try Again";
-            }
-            else
-            {
-                Tbl_Venue ca = new Tbl_Venue();
-                ca.Venue_name = cat.Venue_name;
-                ca.Venue_Country = cat.Venue_Country; // We'll set this value based on user input
-
-                ca.Venue_img = path;
-                ca.Venue_Description = cat.Venue_Description;
-                ca.Admin_id = Convert.ToInt32(Session["ad_id"].ToString());
-                db.Tbl_Venue.Add(ca);
-                db.SaveChanges();
-                return RedirectToAction("View_Venue");
-            }
-            return View();
-        }
+       
         public ActionResult Logout()
         {
             Session.Clear();
@@ -234,6 +200,69 @@ namespace ExploreLocal.Controllers
             return View(ExpertBookings);
         }
 
+        [HttpGet]
+        public ActionResult Add_Venue()
+        {
+            if (Session["ad_id"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Add_Venue(Tbl_Venue cat, HttpPostedFileBase imgfile)
+        {
+            Tbl_Admin ad = new Tbl_Admin();
+            string path = uploadimage(imgfile);
+            if (path.Equals(-1))
+            {
+                ViewBag.Error = "Image Couldn't Uploaded Try Again";
+            }
+            else
+            {
+                Tbl_Venue ca = new Tbl_Venue();
+                ca.Venue_name = cat.Venue_name;
+                ca.Venue_Country = cat.Venue_Country; 
+                ca.Venue_img = path;
+                ca.Venue_Description = cat.Venue_Description;
+                ca.Admin_id = Convert.ToInt32(Session["ad_id"].ToString());
+                db.Tbl_Venue.Add(ca);
+                db.SaveChanges();
+                return RedirectToAction("View_Venue");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Add_Annoucement()
+        {
+            if (Session["ad_id"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Add_Annoucement(Tbl_Announcement ann, HttpPostedFileBase imgfile)
+        {
+
+            Tbl_Announcement an = new Tbl_Announcement();
+            string path = uploadimage(imgfile);
+            if (path.Equals(-1))
+            {
+                ViewBag.Error = "Image Couldn't Uploaded Try Again";
+            }
+            an.Announcement_headline = ann.Announcement_headline;
+            an.Announcement_description = ann.Announcement_description;
+            an.Announcement_image = path;
+            db.Tbl_Announcement.Add(an);
+            db.SaveChanges();
+
+            return View();
+        }
+
         public ActionResult View_Venue(int? page)
         {
             if (Session["ad_id"] == null)
@@ -311,59 +340,6 @@ namespace ExploreLocal.Controllers
             return View(category);
         }
 
-        [HttpGet]
-        public ActionResult Create_Destination()
-        {
-            if (Session["ad_id"] == null)
-            {
-                return RedirectToAction("Login");
-            }
-            List<Tbl_Venue> li = db.Tbl_Venue.ToList();
-            ViewBag.categorylist = new SelectList(li, "Venue_id", "Venue_name");
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create_Destination(Tbl_Destination pr, HttpPostedFileBase[] imgfiles)
-        {
-            List<Tbl_Venue> li = db.Tbl_Venue.ToList();
-            ViewBag.categorylist = new SelectList(li, "Venue_id", "Venue_name");
-            List<string> imagePaths = new List<string>();
-
-            if (imgfiles != null && imgfiles.Length > 0)
-            {
-                foreach (HttpPostedFileBase imgfile in imgfiles)
-                {
-                    string path = uploadimage(imgfile);
-
-                    if (path.Equals(-1))
-                    {
-                        ViewBag.Error = "Image Couldn't Uploaded Try Again";
-                        return View();
-                    }
-
-                    imagePaths.Add(path);
-                }
-            }
-
-            Tbl_Destination pro = new Tbl_Destination();
-            pro.DestinationName = pr.DestinationName;
-            pro.Country = pr.Country;
-            pro.Description = pr.Description;
-            pro.Price = pr.Price;
-            pro.FK_Venue_Id = pr.FK_Venue_Id;
-            pro.GoogleStreetViewURL = pr.GoogleStreetViewURL;
-
-            if (imagePaths.Count > 0)
-            {
-                pro.Image = string.Join(",", imagePaths);
-            }
-
-            db.Tbl_Destination.Add(pro);
-            db.SaveChanges();
-
-            return View();
-        }
         public ActionResult RegisteredUser()
         {
             List<Tbl_User> userList = db.Tbl_User.ToList();

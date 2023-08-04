@@ -14,6 +14,15 @@
           <Property Name="Admin_Password" Type="varchar" MaxLength="100" />
           <Property Name="Admin_Email" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Tbl_Announcement">
+          <Key>
+            <PropertyRef Name="Announcement_id" />
+          </Key>
+          <Property Name="Announcement_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Announcement_headline" Type="varchar" MaxLength="100" />
+          <Property Name="Announcement_description" Type="varchar(max)" />
+          <Property Name="Announcement_image" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="Tbl_BookingHistory">
           <Key>
             <PropertyRef Name="BookingId" />
@@ -251,6 +260,7 @@
         </Association>
         <EntityContainer Name="ExploreLocalModelStoreContainer">
           <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Announcement" EntityType="Self.Tbl_Announcement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_BookingHistory" EntityType="Self.Tbl_BookingHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Bookings" EntityType="Self.Tbl_Bookings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Destination" EntityType="Self.Tbl_Destination" Schema="dbo" store:Type="Tables" />
@@ -618,7 +628,17 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
           </AssociationSet>
+          <EntitySet Name="Tbl_Announcement" EntityType="ExploreLocalModel.Tbl_Announcement" />
         </EntityContainer>
+        <EntityType Name="Tbl_Announcement">
+          <Key>
+            <PropertyRef Name="Announcement_id" />
+          </Key>
+          <Property Name="Announcement_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Announcement_headline" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Announcement_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Announcement_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -755,6 +775,16 @@
                 <ScalarProperty Name="Venue_status" ColumnName="Venue_status" />
                 <ScalarProperty Name="Venue_Country" ColumnName="Venue_Country" />
                 <ScalarProperty Name="Venue_Description" ColumnName="Venue_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Announcement">
+            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Announcement">
+              <MappingFragment StoreEntitySet="Tbl_Announcement">
+                <ScalarProperty Name="Announcement_image" ColumnName="Announcement_image" />
+                <ScalarProperty Name="Announcement_description" ColumnName="Announcement_description" />
+                <ScalarProperty Name="Announcement_headline" ColumnName="Announcement_headline" />
+                <ScalarProperty Name="Announcement_id" ColumnName="Announcement_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

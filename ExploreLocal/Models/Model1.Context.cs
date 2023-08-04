@@ -34,5 +34,6 @@ namespace ExploreLocal.Models
         public virtual DbSet<Tbl_SavedDestinations> Tbl_SavedDestinations { get; set; }
         public virtual DbSet<Tbl_User> Tbl_User { get; set; }
         public virtual DbSet<Tbl_Venue> Tbl_Venue { get; set; }
+        public virtual DbSet<Tbl_Announcement> Tbl_Announcement { get; set; }
     }
 }
