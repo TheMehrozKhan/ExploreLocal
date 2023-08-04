@@ -300,6 +300,64 @@ namespace ExploreLocal.Controllers
         }
 
         [HttpGet]
+        public ActionResult Edit_Annoucement(int id)
+        {
+            Tbl_Announcement category = db.Tbl_Announcement.Find(id);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost]
+        public ActionResult Save_Annoucement(Tbl_Announcement category, HttpPostedFileBase imgfile)
+        {
+            string path = uploadimage(imgfile);
+            if (path.Equals(-1))
+            {
+                ViewBag.Error = "Image Couldn't Uploaded Try Again";
+            }
+            else
+            {
+                Tbl_Announcement ca = db.Tbl_Announcement.Find(category.Announcement_id);
+                ca.Announcement_headline = category.Announcement_headline;
+                ca.Announcement_description = category.Announcement_description;
+                if (imgfile != null)
+                {
+                    ca.Announcement_image = path;
+                }
+                db.SaveChanges();
+                return RedirectToAction("View_Annoucement");
+            }
+            return View(category);
+        }
+
+        [HttpGet]
+        public ActionResult TheDelete(int? id)
+        {
+            Tbl_Announcement ca = db.Tbl_Announcement.Where(x => x.Announcement_id == id).SingleOrDefault();
+            return PartialView(ca);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAnnoucementConfirmed(int? id)
+        {
+            Tbl_Announcement ca = db.Tbl_Announcement.FirstOrDefault(x => x.Announcement_id == id);
+            if (ca != null)
+            {
+                db.Tbl_Announcement.Remove(ca);
+                db.SaveChanges();
+                return Json(new { success = true });
+            }
+            else
+            {
+                return Json(new { success = false });
+            }
+        }
+
+        [HttpGet]
         public ActionResult Delete(int? id)
         {
             Tbl_Venue ca = db.Tbl_Venue.Where(x => x.Venue_id == id).SingleOrDefault();

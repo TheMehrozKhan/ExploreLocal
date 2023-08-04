@@ -18,14 +18,13 @@
     <style>
 
         a {
-            text-decoration:none;
-            color:black;
+            text-decoration: none;
+            color: black;
         }
 
-        a:hover {
-            text-decoration:none;
-
-        }
+            a:hover {
+                text-decoration: none;
+            }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -47,7 +46,6 @@
         }
 
         .venue-card {
-            height: 380px;
             width: 330px;
             margin: 20px;
             box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;
@@ -142,13 +140,13 @@
                 height: 35px;
                 border: none;
                 margin: 0 10px;
-                transition:0.2s;
+                transition: 0.2s;
             }
 
                 .popup-buttons button:hover {
                     width: 57px;
                     height: 37px;
-                    font-size:19px;
+                    font-size: 19px;
                     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
                 }
     </style>
@@ -166,6 +164,7 @@
                     <li><a class="dropdown-item" href="@Url.Action("View_Annoucement")">View Announcement</a></li>
                 </ul>
             </li>
+
 
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle thenav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">Experts</a>
@@ -195,17 +194,18 @@
         });
     </script>
     <div class="container">
-        <h4 style="font-weight: 500;">View All Venues</h4>
+        <h4 style="font-weight: 500;">View All Announcement</h4>
         <div class="venue-container">
             @if (Model != null)
             {
                 foreach (var item in Model)
                 {
                     <div class="venue-card" style="margin-bottom: 80px;">
-                        <img src="@Url.Content(item.Venue_img)" class="venue-img" alt="Venue Image">
+                        <img src="@Url.Content(item.Announcement_image)" class="venue-img" alt="Venue Image">
+                        <h6 style="text-align:center;margin:20px;font-size:21px;font-weight:600;">@Url.Content(item.Announcement_headline)</h6>
                         <div class="thevenueaction" style="background-color: white; width: 330px; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; padding: 5px; height: 60px; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; display: flex; justify-content: center; align-items: center; ">
-                            <a href="@Url.Action("Edit_Venue", "Admin", new { id = item.Venue_id })" style="font-size: 19px;">Edit <img src="~/Content/img/edit.png" height="20" width="20" /> </a>
-                            <a href="#" class="thedeletebtn" onclick="showPopup('@Url.Action("DeleteConfirmed", "Admin", new { id = item.Venue_id })')" style="font-size: 19px; margin-left: 15px;">Delete <img src="~/Content/img/delete.png" height="20" width="20" /> </a>
+                            <a href="@Url.Action("Edit_Annoucement", "Admin", new { id = item.Announcement_id })" style="font-size: 19px;">Edit <img src="~/Content/img/edit.png" height="20" width="20" /> </a>
+                            <a href="#" class="thedeletebtn" onclick="showPopup('@Url.Action("DeleteAnnoucementConfirmed", "Admin", new { id = item.Announcement_id })')" style="font-size: 19px; margin-left: 15px;">Delete <img src="~/Content/img/delete.png" height="20" width="20" /> </a>
                         </div>
                     </div>
                 }

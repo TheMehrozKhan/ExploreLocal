@@ -372,6 +372,8 @@
     <Content Include="Views\Admin\ExpertBookings.cshtml" />
     <Content Include="Views\Admin\ExpertTourRequests.cshtml" />
     <Content Include="Views\Admin\Add_Annoucement.cshtml" />
+    <Content Include="Views\Admin\View_Annoucement.cshtml" />
+    <Content Include="Views\Admin\Edit_Annoucement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
