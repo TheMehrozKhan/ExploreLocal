@@ -13,7 +13,7 @@ namespace ExploreLocal.Controllers
 {
     public class AdminController : Controller
     {
-        ExploreLocalEntities5 db = new ExploreLocalEntities5();
+        ExploreLocalEntities db = new ExploreLocalEntities();
         public ActionResult Index()
         {
             return View();
@@ -62,7 +62,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertRequests()
         {
-            using (var db = new ExploreLocalEntities5())
+            using (var db = new ExploreLocalEntities())
             {
                 var pendingExperts = db.Tbl_Expert.Where(e => e.ExpertStatus == false).ToList();
                 return View(pendingExperts);
@@ -94,7 +94,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult RejectExpert(int expertId)
         {
-            using (var db = new ExploreLocalEntities5())
+            using (var db = new ExploreLocalEntities())
             {
                 var expert = db.Tbl_Expert.Find(expertId);
                 if (expert != null)
@@ -109,7 +109,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertTourRequests()
         {
-            using (var db = new ExploreLocalEntities5())
+            using (var db = new ExploreLocalEntities())
             {
                 var pendingTourExperts = db.Tbl_Destination
                     .Where(e => e.TourStatus == false)
@@ -182,7 +182,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertDelete(int expertId)
         {
-            using (var db = new ExploreLocalEntities5())
+            using (var db = new ExploreLocalEntities())
             {
                 var expert = db.Tbl_Expert.Find(expertId);
                 if (expert != null)
@@ -277,6 +277,24 @@ namespace ExploreLocal.Controllers
 
             var list = db.Tbl_Venue.Where(x => x.Venue_status == null).OrderByDescending(x => x.Venue_id).ToList();
             IPagedList<Tbl_Venue> cateList = list.ToPagedList(pageIndex, pageSize);
+
+            return View(cateList);
+        }
+
+        public ActionResult View_Annoucement(int? page)
+        {
+            if (Session["ad_id"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            int pageSize = 6;
+            int pageIndex = 1;
+
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+
+            var list = db.Tbl_Announcement.Where(x => x.Announcement_status == null).OrderByDescending(x => x.Announcement_id).ToList();
+            IPagedList<Tbl_Announcement> cateList = list.ToPagedList(pageIndex, pageSize);
 
             return View(cateList);
         }

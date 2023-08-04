@@ -22,6 +22,7 @@
           <Property Name="Announcement_headline" Type="varchar" MaxLength="100" />
           <Property Name="Announcement_description" Type="varchar(max)" />
           <Property Name="Announcement_image" Type="varchar(max)" />
+          <Property Name="Announcement_status" Type="bit" />
         </EntityType>
         <EntityType Name="Tbl_BookingHistory">
           <Key>
@@ -324,6 +325,16 @@
           <Property Name="Admin_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Tbl_Venue" Relationship="Self.FK__Tbl_Venue__Admin__5CD6CB2B" FromRole="Tbl_Admin" ToRole="Tbl_Venue" />
         </EntityType>
+        <EntityType Name="Tbl_Announcement">
+          <Key>
+            <PropertyRef Name="Announcement_id" />
+          </Key>
+          <Property Name="Announcement_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Announcement_headline" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Announcement_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Announcement_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Announcement_status" Type="Boolean" />
+        </EntityType>
         <EntityType Name="Tbl_BookingHistory">
           <Key>
             <PropertyRef Name="BookingId" />
@@ -383,12 +394,12 @@
           <Property Name="Destination_Duration" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Destination_Highlights" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TourStatus" Type="Boolean" />
           <NavigationProperty Name="Tbl_Bookings" Relationship="Self.DestinationId" FromRole="Tbl_Destination" ToRole="Tbl_Bookings" />
           <NavigationProperty Name="Tbl_Expert" Relationship="Self.FK__Tbl_Desti__FK_Ex__2739D489" FromRole="Tbl_Destination" ToRole="Tbl_Expert" />
           <NavigationProperty Name="Tbl_Venue" Relationship="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Destination" ToRole="Tbl_Venue" />
           <NavigationProperty Name="Tbl_Reviews" Relationship="Self.FK__Tbl_Revie__Desti__7D439ABD" FromRole="Tbl_Destination" ToRole="Tbl_Reviews" />
           <NavigationProperty Name="Tbl_SavedDestinations" Relationship="Self.FK__Tbl_Saved__Desti__797309D9" FromRole="Tbl_Destination" ToRole="Tbl_SavedDestinations" />
-          <Property Name="TourStatus" Type="Boolean" />
         </EntityType>
         <EntityType Name="Tbl_Expert">
           <Key>
@@ -578,8 +589,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ExploreLocalEntities5" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ExploreLocalEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" />
+          <EntitySet Name="Tbl_Announcement" EntityType="Self.Tbl_Announcement" />
           <EntitySet Name="Tbl_BookingHistory" EntityType="Self.Tbl_BookingHistory" />
           <EntitySet Name="Tbl_Bookings" EntityType="Self.Tbl_Bookings" />
           <EntitySet Name="Tbl_Destination" EntityType="Self.Tbl_Destination" />
@@ -628,23 +640,13 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
           </AssociationSet>
-          <EntitySet Name="Tbl_Announcement" EntityType="ExploreLocalModel.Tbl_Announcement" />
         </EntityContainer>
-        <EntityType Name="Tbl_Announcement">
-          <Key>
-            <PropertyRef Name="Announcement_id" />
-          </Key>
-          <Property Name="Announcement_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Announcement_headline" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Announcement_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Announcement_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ExploreLocalModelStoreContainer" CdmEntityContainer="ExploreLocalEntities5">
+        <EntityContainerMapping StorageEntityContainer="ExploreLocalModelStoreContainer" CdmEntityContainer="ExploreLocalEntities">
           <EntitySetMapping Name="Tbl_Admin">
             <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Admin">
               <MappingFragment StoreEntitySet="Tbl_Admin">
@@ -652,6 +654,17 @@
                 <ScalarProperty Name="Admmin_Username" ColumnName="Admmin_Username" />
                 <ScalarProperty Name="Admin_Password" ColumnName="Admin_Password" />
                 <ScalarProperty Name="Admin_Email" ColumnName="Admin_Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Announcement">
+            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Announcement">
+              <MappingFragment StoreEntitySet="Tbl_Announcement">
+                <ScalarProperty Name="Announcement_status" ColumnName="Announcement_status" />
+                <ScalarProperty Name="Announcement_id" ColumnName="Announcement_id" />
+                <ScalarProperty Name="Announcement_headline" ColumnName="Announcement_headline" />
+                <ScalarProperty Name="Announcement_description" ColumnName="Announcement_description" />
+                <ScalarProperty Name="Announcement_image" ColumnName="Announcement_image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -697,7 +710,6 @@
           <EntitySetMapping Name="Tbl_Destination">
             <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Destination">
               <MappingFragment StoreEntitySet="Tbl_Destination">
-                <ScalarProperty Name="TourStatus" ColumnName="TourStatus" />
                 <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
                 <ScalarProperty Name="DestinationName" ColumnName="DestinationName" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
@@ -713,6 +725,7 @@
                 <ScalarProperty Name="Destination_Duration" ColumnName="Destination_Duration" />
                 <ScalarProperty Name="Destination_Highlights" ColumnName="Destination_Highlights" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TourStatus" ColumnName="TourStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -775,16 +788,6 @@
                 <ScalarProperty Name="Venue_status" ColumnName="Venue_status" />
                 <ScalarProperty Name="Venue_Country" ColumnName="Venue_Country" />
                 <ScalarProperty Name="Venue_Description" ColumnName="Venue_Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Announcement">
-            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Announcement">
-              <MappingFragment StoreEntitySet="Tbl_Announcement">
-                <ScalarProperty Name="Announcement_image" ColumnName="Announcement_image" />
-                <ScalarProperty Name="Announcement_description" ColumnName="Announcement_description" />
-                <ScalarProperty Name="Announcement_headline" ColumnName="Announcement_headline" />
-                <ScalarProperty Name="Announcement_id" ColumnName="Announcement_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

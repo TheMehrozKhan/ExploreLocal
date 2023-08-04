@@ -18,5 +18,6 @@ namespace ExploreLocal.Models
         public string Announcement_headline { get; set; }
         public string Announcement_description { get; set; }
         public string Announcement_image { get; set; }
+        public Nullable<bool> Announcement_status { get; set; }
     }
 }

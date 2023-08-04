@@ -13,7 +13,7 @@ namespace ExploreLocal.Controllers
 {
     public class ExploreLocalController : Controller
     {
-        ExploreLocalEntities5 db = new ExploreLocalEntities5();
+        ExploreLocalEntities db = new ExploreLocalEntities();
         public ActionResult Index(Tbl_User us)
         {
             TempData["ToastMessage"] = "Hi, " + us.FirstName + " " + us.LastName + " You Successfully Logged In!";
@@ -156,7 +156,7 @@ namespace ExploreLocal.Controllers
             {
                 try
                 {
-                    using (var db = new ExploreLocalEntities5())
+                    using (var db = new ExploreLocalEntities())
                     {
                         // Create a new instance of the Tbl_Bookings model and set the BookingId
                         var booking = new Tbl_Bookings
@@ -203,7 +203,7 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
 
-            using (var db = new ExploreLocalEntities5())
+            using (var db = new ExploreLocalEntities())
             {
                 var booking = db.Tbl_Bookings.Find(id);
                 if (booking != null)
@@ -242,7 +242,7 @@ namespace ExploreLocal.Controllers
             }
 
             // Retrieve the booking details and associated data from the database
-            using (var db = new ExploreLocalEntities5())
+            using (var db = new ExploreLocalEntities())
             {
                 var booking = db.Tbl_Bookings.Find(bookingId);
                 if (booking == null)
@@ -321,7 +321,7 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
 
-            using (var db = new ExploreLocalEntities5())
+            using (var db = new ExploreLocalEntities())
             {
                 var booking = db.Tbl_Bookings.Find(bookingId);
                 if (booking != null)
@@ -479,7 +479,7 @@ namespace ExploreLocal.Controllers
                     ExpertStatus = Convert.ToBoolean(0)
                 };
 
-                using (var db = new ExploreLocalEntities5()) 
+                using (var db = new ExploreLocalEntities()) 
                 {
                     db.Tbl_Expert.Add(expert);
                     db.SaveChanges();

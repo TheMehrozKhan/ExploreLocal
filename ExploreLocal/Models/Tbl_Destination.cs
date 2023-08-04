@@ -39,7 +39,6 @@ namespace ExploreLocal.Models
         [AllowHtml]
         public string Destination_Highlights { get; set; }
         [AllowHtml]
-
         public string Description { get; set; }
         public Nullable<bool> TourStatus { get; set; }
         public Tbl_Expert Expert { get; set; }
