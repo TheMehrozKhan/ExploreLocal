@@ -12,6 +12,7 @@ namespace ExploreLocal.Models
         public List<Tbl_Destination> TrendingTours { get; set; }
         public string SelectedVenueName { get; set; }
         public string SelectedVenueDescription { get; set; }
+        public List <Tbl_Announcement> Announcement { get; set; }
 
     }
 

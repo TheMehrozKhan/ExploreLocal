@@ -166,7 +166,6 @@
         .button-34 {
             background: #5E5DF0;
             border-radius: 6px;
-            box-shadow: #5E5DF0 0 10px 20px -10px;
             box-sizing: border-box;
             color: #FFFFFF;
             cursor: pointer;
@@ -182,11 +181,54 @@
             width: fit-content;
             word-break: break-word;
             border: 0;
+            transition: 0.2s;
         }
 
+            .button-34:hover {
+                border: 0.5px solid #5E5DF0;
+                color: #5E5DF0;
+                background-color: white;
+                box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+            }
+
         .thelink:hover {
-            color:white;
+            color: #5E5DF0;
         }
+
+        .table-responsive {
+            overflow-y: hidden; /* Hide the vertical scrollbar */
+            overflow-x: auto; /* Enable horizontal scrollbar */
+        }
+
+            .table-responsive table {
+                width: 100%;
+                white-space: nowrap;
+            }
+
+            .table-responsive td,
+            .table-responsive th {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .table-responsive::-webkit-scrollbar {
+                overflow-y: hidden;
+                overflow-x: auto;
+                height: 5px; /* Adjust the width of the scrollbar as needed */
+            }
+
+            .table-responsive::-webkit-scrollbar-thumb {
+                background-color: deepskyblue; /* Scrollbar thumb color */
+                border-radius: 8px; /* Adjust the radius to make the thumb rounded */
+            }
+
+                .table-responsive::-webkit-scrollbar-thumb:hover {
+                    background-color: #888; /* Scrollbar thumb color on hover */
+                }
+
+            .table-responsive::-webkit-scrollbar-track {
+                background-color: white; /* Background color of the scrollbar track */
+            }
     </style>
 </head>
 <div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;border-radius:15px;margin-top:150px;margin-bottom:50px;">
@@ -214,7 +256,7 @@
                             <input type="password" class="profile-input" value="@Model.ExperPassword" readonly style="text-align:right;" />
                         </div>
                     }
-                    </div>
+                </div>
                 <div class="profile-details-item">
                     <div class="profile-details-label">Email:</div>
                     <div class="profile-details-value">
@@ -237,15 +279,143 @@
             <div class="profile-actions">
                 @if (Convert.ToInt32(Session["expert_id"]) == Model.ExpertId)
                 {
-                <div style="margin-top:20px;">
-                    <a href="@Url.Action("Edit_Expert", "ExploreLocal", new { id = Model.ExpertId })" class="button-5">Edit</a>
-                    <a href="@Url.Action("Logout", "ExploreLocal", new { id = Model.ExpertId })" class="button-5" style="background-color: darkorange;">Logout</a>
-                    <div class="centered-button" style="display: flex; justify-content: center; align-items: center;">
-                        <button class="button-34" role="button"><i class="fa-solid fa-upload"></i><a href="@Url.Action("Create_Tour","ExploreLocal")" class="thelink"> Upload Your Tours </a></button>
+                    <div style="margin-top:20px;">
+                        <a href="@Url.Action("Edit_Expert", "ExploreLocal", new { id = Model.ExpertId })" class="button-5">Edit</a>
+                        <a href="@Url.Action("Logout", "ExploreLocal", new { id = Model.ExpertId })" class="button-5" style="background-color: darkorange;">Logout</a>
+                        <div class="centered-button" style="display: flex; justify-content: center; align-items: center;">
+                            <button class="button-34" role="button"><i class="fa-solid fa-upload"></i><a href="@Url.Action("Create_Tour","ExploreLocal")" class="thelink"> Upload Your Tours </a></button>
+                        </div>
                     </div>
-                </div>
                 }
             </div>
-            </div>
         </div>
+    </div>
+</div>
+@{
+    var expertBookings = ViewBag.ExpertBookings as List<ExploreLocal.Models.Tbl_Bookings>;
+}
+<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; border-radius: 15px; margin-top: 150px; margin-bottom: 50px;">
+    <div class="user-bookings" style="padding: 20px;">
+        <h2 style="text-align: center; margin-bottom: 30px;">Your Bookings</h2>
+        @if (ViewBag.ExpertBookings != null && ViewBag.ExpertBookings.Count > 0)
+        {
+            <div class="table-responsive">
+                <!-- Add table-responsive class for responsive table -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Tour Name</th>
+                            <th>Booking Date</th>
+                            <th>Booked By</th>
+                            <th>Contact Number</th>
+                            <th>Email</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Duration</th>
+                            <th>Tour Price</th>
+                            <th>Tour Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var booking in ViewBag.ExpertBookings)
+                        {
+                        <tr>
+                            <td>@booking.BookingId</td>
+                            <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.DestinationName : "N/A")</td>
+                            <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
+                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_User.FirstName + booking.Tbl_User.LastName : "N/A")</td>
+                            <td>@(booking.Tbl_Expert != null ? booking.ContactNumber : "N/A")</td>
+                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_User.Email : "N/A")</td>
+                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.StartDate : "N/A")</td>
+                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.EndDate : "N/A")</td>
+                            <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Destination_Duration : "N/A")</td>
+                            <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Price : "N/A")</td>
+                            <td>
+                                <p style="background-color: @GetTourStateColor(booking.TourState);color:white;border-radius:12px;height:35px;width:120px;display:flex;justify-content:center;align-items:center;box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                                    @booking.TourState
+                                </p>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div style="display:flex;justify-content:center;align-items:center;">
+                <div class="p-container" style="box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px; background: #3554D1; border-radius: 12px; padding: 21px; ">
+                    <p style="font-size:26px;font-weight:600;line-height:30px;color:#000000;color:black;">Sorry @Session["u_name"] You Didn't <br /> Booked Any Tours Yet!</p>
+                </div>
+                <img src="~/Content/img/Couldn'tFind.png" style="position:relative;top:20px;" />
+            </div>
+        }
+
+        @functions {
+            // Helper function to get background color based on tour state
+            private string GetTourStateColor(string tourState)
+            {
+                if (tourState == "Upcoming")
+                {
+                    return "darkorange"; // Yellow background for "Upcoming"
+                }
+                else if (tourState == "Ongoing")
+                {
+                    return "#a402f5"; // Deep sky blue background for "Ongoing"
+                }
+                else if (tourState == "Completed")
+                {
+                    return "#0298f5"; // Light green background for "Completed"
+                }
+                else
+                {
+                    return "white"; // Default background color (white) for unknown states
+                }
+            }
+        }
+
+    </div>
+</div>
+
+<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; border-radius: 15px; margin-top: 30px; margin-bottom: 50px;">
+    <div class="user-bookings" style="padding: 20px;">
+        <h2 style="text-align: center; margin-bottom: 30px; margin-top: 20px;">Your Uploaded Tours</h2>
+        @if (ViewBag.ExpertUploadedTours != null && ViewBag.ExpertUploadedTours.Count > 0)
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tour Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Duration</th>
+                            <th>Price</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tour in ViewBag.ExpertUploadedTours)
+                        {
+                        <tr>
+                            <td>@tour.DestinationName</td>
+                            <td>@tour.StartDate.ToShortDateString()</td>
+                            <td>@tour.EndDate.ToShortDateString()</td>
+                            <td>@tour.Destination_Duration</td>
+                            <td>@tour.Price</td>
+                            <td style="text-align:center;font-size:14px;">
+                                <a href="@Url.Action("DeleteTour", "ExploreLocal", new { id = tour.DestinationID })"><i class="fa-solid fa-trash-can" style="color: #db0016;"></i></a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p>No tours uploaded yet.</p>
+        }
+    </div>
 </div>

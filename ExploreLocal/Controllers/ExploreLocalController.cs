@@ -61,13 +61,16 @@ namespace ExploreLocal.Controllers
                 .Take(4)
                 .ToList();
 
+            var announcements = db.Tbl_Announcement.Where(t => t.Announcement_status == null).ToList();
+
             var viewModel = new ToursViewModel
             {
                 SelectedVenueTours = selectedVenueTours,
                 MostPopularTours = mostPopularTours,
                 TrendingTours = trendingTours,
                 SelectedVenueName = selectedVenue?.Venue_name,
-                SelectedVenueDescription = selectedVenue?.Venue_Description
+                SelectedVenueDescription = selectedVenue?.Venue_Description,
+                Announcement = announcements
             };
 
             return View(viewModel);
@@ -479,7 +482,7 @@ namespace ExploreLocal.Controllers
                     ExpertStatus = Convert.ToBoolean(0)
                 };
 
-                using (var db = new ExploreLocalEntities()) 
+                using (var db = new ExploreLocalEntities())
                 {
                     db.Tbl_Expert.Add(expert);
                     db.SaveChanges();
@@ -684,14 +687,20 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertDashboard(int? id)
         {
-            int userId = Convert.ToInt32(Session["expert_id"]);
-
-            if (id == null)
+            int expertId;
+            if (id == null || (int)id == Convert.ToInt32(Session["expert_id"]))
             {
-                id = userId;
+                // If id is not provided or it's the currently logged-in expert, use the logged-in expert's ID
+                expertId = Convert.ToInt32(Session["expert_id"]);
+            }
+            else
+            {
+                // Otherwise, use the provided expert ID
+                expertId = (int)id;
             }
 
-            Tbl_Expert profileUser = db.Tbl_Expert.FirstOrDefault(u => u.ExpertId == id);
+            // Retrieve the expert's profile data
+            Tbl_Expert profileUser = db.Tbl_Expert.FirstOrDefault(u => u.ExpertId == expertId);
 
             if (profileUser == null)
             {
@@ -699,9 +708,67 @@ namespace ExploreLocal.Controllers
                 return View();
             }
 
-            ViewBag.ProfileNotFound = true;
+            // Retrieve the expert's bookings
+            var expertBookings = db.Tbl_Bookings
+                .Where(b => b.ExpertID == expertId)
+                .ToList();
+
+            // Fetch the associated Destination for each booking and determine the tour state
+            foreach (var booking in expertBookings)
+            {
+                booking.Tbl_Destination = db.Tbl_Destination.Find(booking.DestinationId);
+                booking.TourState = GetTourState(booking.Tbl_Destination.StartDate, booking.Tbl_Destination.EndDate);
+            }
+
+            // Retrieve the expert's uploaded tours
+            var expertUploadedTours = db.Tbl_Destination
+                .Where(t => t.FK_Expert_Id == expertId)
+                .ToList();
+
+            // Pass the expert's profile data, bookings, and uploaded tours to the view
+            ViewBag.ProfileUser = profileUser;
+            ViewBag.ExpertBookings = expertBookings;
+            ViewBag.ExpertUploadedTours = expertUploadedTours;
+
             return View(profileUser);
         }
+
+
+        public ActionResult DeleteTour(int id)
+        {
+            // Find the tour with the given DestinationId
+            var tourToDelete = db.Tbl_Destination.FirstOrDefault(t => t.DestinationID == id);
+
+            if (tourToDelete == null)
+            {
+                // Tour not found, show an error message or redirect to an error page
+                // For simplicity, let's redirect to the ExpertDashboard with an error message
+                TempData["ErrorMessage"] = "Tour not found.";
+                return RedirectToAction("ExpertDashboard");
+            }
+
+            // Check for data dependencies (e.g., bookings) before deleting the tour
+            var hasDependencies = db.Tbl_Bookings.Any(b => b.DestinationId == id);
+
+            if (hasDependencies)
+            {
+                // If there are bookings or any other dependent data, prevent deletion and show an error message
+                TempData["ErrorMessage"] = "Cannot delete the tour. It has associated bookings.";
+                return RedirectToAction("ExpertDashboard");
+            }
+
+            // Now, remove the tour itself
+            db.Tbl_Destination.Remove(tourToDelete);
+
+            // Save changes to the database
+            db.SaveChanges();
+
+            // Redirect to the ExpertDashboard with a success message
+            TempData["SuccessMessage"] = "Tour successfully deleted.";
+            return RedirectToAction("ExpertDashboard");
+        }
+
+
 
         [HttpGet]
         public ActionResult Edit_Expert(int id)
@@ -746,7 +813,7 @@ namespace ExploreLocal.Controllers
             }
             return View(user);
         }
-        
+
         public string uploadimage(HttpPostedFileBase file)
         {
             Random r = new Random();

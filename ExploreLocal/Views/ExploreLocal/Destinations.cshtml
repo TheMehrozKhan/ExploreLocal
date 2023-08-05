@@ -47,7 +47,7 @@
                 <div class="col-auto">
                     <div class="sectionTitle -md">
                         <h2 class="sectionTitle__title">Our This Venue Tours</h2>
-                        <p class="sectionTitle__text mt-5 sm:mt-0">There is The Best Destination for Your Selected Venue</p>
+                        <p class="sectionTitle__text mt-5 sm:mt-0">There is The Best Destination for @Model.SelectedVenueName</p>
                     </div>
                 </div>
                 <div class="col-auto">
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="row y-gap-30 pt-40 sm:pt-20">
-                @if (Model.SelectedVenueTours != null)
+                @if (Model.SelectedVenueTours != null && Model.SelectedVenueTours.Count > 0)
                 {
                     foreach (var tour in Model.SelectedVenueTours)
                     {
@@ -105,7 +105,6 @@
                 <div class="col-auto">
                     <div class="sectionTitle -md">
                         <h2 class="sectionTitle__title">Most Popular Tours</h2>
-                        <p class="sectionTitle__text mt-5 sm:mt-0">Interdum et malesuada fames ac ante ipsum</p>
                     </div>
                 </div>
                 <div class="col-auto">
@@ -185,7 +184,6 @@
                 <div class="col-auto">
                     <div class="sectionTitle -md">
                         <h2 class="sectionTitle__title">Trending Activity</h2>
-                        <p class="sectionTitle__text mt-5 sm:mt-0">Interdum et malesuada fames ac ante ipsum</p>
                     </div>
                 </div>
                 <div class="col-auto">
@@ -324,95 +322,39 @@
             <div class="row">
                 <div class="col-auto">
                     <div class="sectionTitle -md">
-                        <h2 class="sectionTitle__title">Top sights in London</h2>
-                        <p class=" sectionTitle__text mt-5 sm:mt-0">These popular destinations have a lot to offer</p>
+                        <h2 class="sectionTitle__title">Our Latest Announcements</h2>
+                        <p class=" sectionTitle__text mt-5 sm:mt-0">Checkout Our Announcement For More Detail's About ExploreLocal</p>
                     </div>
                 </div>
             </div>
+            @if (Model.Announcement != null && Model.Announcement.Count > 0)
+            {
+                foreach (var announcement in Model.Announcement)
+                {
+                    <div class="row y-gap-30 pt-40">
+                        <div class="col-lg-6">
+                            <div class="rounded-4 border-light">
+                                <div class="d-flex flex-wrap y-gap-30">
+                                    <div class="col-auto">
+                                        <div class="ratio ratio-1:1 w-200">
+                                            <img src="@Url.Content(announcement.Announcement_image)" alt="image" class="img-ratio">
+                                        </div>
+                                    </div>
 
-            <div class="row y-gap-30 pt-40">
-
-                <div class="col-lg-6">
-                    <div class="rounded-4 border-light">
-                        <div class="d-flex flex-wrap y-gap-30">
-                            <div class="col-auto">
-                                <div class="ratio ratio-1:1 w-200">
-                                    <img src="/Template/img/backgrounds/1.png" alt="image" class="img-ratio">
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="d-flex flex-column justify-center h-full px-30 py-20">
-                                    <h3 class="text-18 fw-500">The British Museum</h3>
-                                    <p class="text-15 mt-5">Learn about British history at the Tower of London, a medieval castle that was first built in 1066 by William the Conqueror.</p>
-                                    <a href="#" class="d-block text-14 text-blue-1 fw-500 underline mt-5">See More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="rounded-4 border-light">
-                        <div class="d-flex flex-wrap y-gap-30">
-                            <div class="col-auto">
-                                <div class="ratio ratio-1:1 w-200">
-                                    <img src="/Template/img/backgrounds/1.png" alt="image" class="img-ratio">
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="d-flex flex-column justify-center h-full px-30 py-20">
-                                    <h3 class="text-18 fw-500">London Eye</h3>
-                                    <p class="text-15 mt-5">Learn about British history at the Tower of London, a medieval castle that was first built in 1066 by William the Conqueror.</p>
-                                    <a href="#" class="d-block text-14 text-blue-1 fw-500 underline mt-5">See More</a>
+                                    <div class="col">
+                                        <div class="d-flex flex-column justify-center h-full px-30 py-20">
+                                            <h3 class="text-18 fw-500">@Url.Content(announcement.Announcement_headline)</h3>
+                                            <p class="text-15 mt-5">@Url.Content(announcement.Announcement_description)</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+            }
 
-                <div class="col-lg-6">
-                    <div class="rounded-4 border-light">
-                        <div class="d-flex flex-wrap y-gap-30">
-                            <div class="col-auto">
-                                <div class="ratio ratio-1:1 w-200">
-                                    <img src="/Template/img/backgrounds/1.png" alt="image" class="img-ratio">
-                                </div>
-                            </div>
 
-                            <div class="col">
-                                <div class="d-flex flex-column justify-center h-full px-30 py-20">
-                                    <h3 class="text-18 fw-500">Tower of London</h3>
-                                    <p class="text-15 mt-5">Learn about British history at the Tower of London, a medieval castle that was first built in 1066 by William the Conqueror.</p>
-                                    <a href="#" class="d-block text-14 text-blue-1 fw-500 underline mt-5">See More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="rounded-4 border-light">
-                        <div class="d-flex flex-wrap y-gap-30">
-                            <div class="col-auto">
-                                <div class="ratio ratio-1:1 w-200">
-                                    <img src="/Template/img/backgrounds/1.png" alt="image" class="img-ratio">
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="d-flex flex-column justify-center h-full px-30 py-20">
-                                    <h3 class="text-18 fw-500">Tower Bridge</h3>
-                                    <p class="text-15 mt-5">Learn about British history at the Tower of London, a medieval castle that was first built in 1066 by William the Conqueror.</p>
-                                    <a href="#" class="d-block text-14 text-blue-1 fw-500 underline mt-5">See More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
 
             <div class="row justify-center mt-40">
                 <div class="col-auto">
