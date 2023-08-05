@@ -1,6 +1,7 @@
 ﻿@model ExploreLocal.Models.Tbl_Expert
 <head>
     <script src="https://kit.fontawesome.com/90a0d7efa7.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <title> Your Profile - FlavourFusion</title>
     <style>
         .circle-img {
@@ -229,8 +230,73 @@
             .table-responsive::-webkit-scrollbar-track {
                 background-color: white; /* Background color of the scrollbar track */
             }
+
+        /* Styling for the card */
+        .thecard {
+            margin-left: 40px;
+            height: 190px;
+            width: 85%;
+            border-radius: 13px;
+            border: none;
+            position: relative;
+            background-color: #436EEE;
+            transition: 0.3s;
+        }
+        .thecard:hover {
+            margin:0.001px;
+            padding:5px;
+        }
     </style>
 </head>
+<div class="row" style="margin-top: 80px;display:flex;justify-content:center;align-items:center;">
+    <!-- Total Uploaded Tours Card -->
+    <div class="col-xl-4 col-lg-6" style="margin-top: 80px;">
+        <div class="thecard">
+            <div class="card-statistic-3 p-4">
+                <div class="card-icon card-icon-large">
+                    <i class="ri-wallet-3-fill" style="font-size: 120px; text-align: center; margin-right: 3px; color: white; position: absolute; top: 5px; right: -4px; opacity: 0.2;"></i>
+                </div>
+                <div class="mb-4" style="margin-top: 30px;">
+                    <h5 class="card-title mb-0 text-white">Total Bookings </h5>
+                </div>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0 text-white">
+                            @(((decimal)ViewBag.TotalBookingAmount).ToString("N0"))/PKR
+                        </h2>
+                    </div>
+                </div>
+                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="progress-bar" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%; background-color: greenyellow;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Bookings Card -->
+    <div class="col-xl-4 col-lg-6" style="margin-top: 80px;">
+        <div class="thecard">
+            <div class="card-statistic-3 p-4">
+                <div class="card-icon card-icon-large">
+                    <i class="ri-flight-takeoff-line" style="font-size: 120px; text-align: center; margin-right: 3px; color: white; position: absolute; top: 5px; right: -4px; opacity: 0.2; "></i>
+                </div>
+                <div class="mb-4" style="margin-top: 30px;">
+                    <h5 class="card-title mb-0 text-white">Total Uploaded Tours</h5>
+                </div>
+                <div class="row align-items-center mb-2 d-flex">
+                    <div class="col-8">
+                        <h2 class="d-flex align-items-center mb-0 text-white">
+                            @ViewBag.TotalUploadedTours
+                        </h2>
+                    </div>
+                </div>
+                <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                    <div class="progress-bar" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%; background-color: greenyellow;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;border-radius:15px;margin-top:150px;margin-bottom:50px;">
     <div class="profile-card">
         <div class="left-section">
@@ -404,8 +470,8 @@
                             <td>@tour.EndDate.ToShortDateString()</td>
                             <td>@tour.Destination_Duration</td>
                             <td>@tour.Price</td>
-                            <td style="text-align:center;font-size:14px;">
-                                <a href="@Url.Action("DeleteTour", "ExploreLocal", new { id = tour.DestinationID })"><i class="fa-solid fa-trash-can" style="color: #db0016;"></i></a>
+                            <td>
+                                <a href="@Url.Action("DeleteTour", "ExploreLocal", new { id = tour.DestinationID })"><i class="fa-solid fa-trash-can" style="color: #db0016; font-size: 18px; display:flex;justify-content:center;align-items:center;margin-right:50px;"></i></a>
                             </td>
                         </tr>
                         }

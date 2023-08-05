@@ -725,6 +725,15 @@ namespace ExploreLocal.Controllers
                 .Where(t => t.FK_Expert_Id == expertId)
                 .ToList();
 
+            int totalUploadedTours = expertUploadedTours.Count;
+
+            // Calculate the total booking amount for the expert
+            decimal totalBookingAmount = expertBookings.Sum(b => b.Tbl_Destination?.Price ?? 0);
+
+            // Pass the additional data to the view
+            ViewBag.TotalUploadedTours = totalUploadedTours;
+            ViewBag.TotalBookingAmount = totalBookingAmount;
+
             // Pass the expert's profile data, bookings, and uploaded tours to the view
             ViewBag.ProfileUser = profileUser;
             ViewBag.ExpertBookings = expertBookings;
