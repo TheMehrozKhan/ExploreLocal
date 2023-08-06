@@ -237,6 +237,7 @@
     <Compile Include="Models\DestinationBookingViewModel.cs" />
     <Compile Include="Models\DestinationDetailsViewModel.cs" />
     <Compile Include="Models\ExpertViewModel.cs" />
+    <Compile Include="Models\IndexViewModel.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

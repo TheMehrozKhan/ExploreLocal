@@ -14,12 +14,27 @@ namespace ExploreLocal.Controllers
     public class ExploreLocalController : Controller
     {
         ExploreLocalEntities db = new ExploreLocalEntities();
-        public ActionResult Index(Tbl_User us)
+        public ActionResult Index(Tbl_User user)
         {
-            TempData["ToastMessage"] = "Hi, " + us.FirstName + " " + us.LastName + " You Successfully Logged In!";
+            TempData["ToastMessage"] = "Hi, " + user.FirstName + " " + user.LastName + " You Successfully Logged In!";
             ViewBag.ToastMessage = TempData["ToastMessage"];
-            return View();
+
+            // Retrieve the list of venues from the database
+            using (var db = new ExploreLocalEntities())
+            {
+                List<Tbl_Venue> venues = db.Tbl_Venue.ToList();
+
+                // Create the view model and pass the user and venues to the view
+                var viewModel = new IndexViewModel
+                {
+                    User = user,
+                    Venues = venues
+                };
+
+                return View(viewModel);
+            }
         }
+
 
         public ActionResult Destinations(int id)
         {
