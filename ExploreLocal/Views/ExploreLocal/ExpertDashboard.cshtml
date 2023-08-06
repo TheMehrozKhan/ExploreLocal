@@ -232,8 +232,8 @@
             }
 
         /* Styling for the card */
-        .thecard {
-            margin-left: 40px;
+        .thecard1 {
+            margin-left: 30px;
             height: 190px;
             width: 85%;
             border-radius: 13px;
@@ -242,22 +242,40 @@
             background-color: #436EEE;
             transition: 0.3s;
         }
-        .thecard:hover {
-            margin:0.001px;
+        .thecard1:hover {
+            margin-left:15px;
             padding:5px;
         }
+
+        .thecard2 {
+            margin-left: 30px;
+            height: 190px;
+            width: 85%;
+            border-radius: 13px;
+            border: none;
+            position: relative;
+            background-color: #436EEE;
+            transition: 0.3s;
+        }
+
+            .thecard2:hover {
+                margin-left: 15px;
+                padding: 5px;
+            }
+
+
     </style>
 </head>
 <div class="row" style="margin-top: 80px;display:flex;justify-content:center;align-items:center;">
     <!-- Total Uploaded Tours Card -->
     <div class="col-xl-4 col-lg-6" style="margin-top: 80px;">
-        <div class="thecard">
+        <div class="thecard1">
             <div class="card-statistic-3 p-4">
                 <div class="card-icon card-icon-large">
                     <i class="ri-wallet-3-fill" style="font-size: 120px; text-align: center; margin-right: 3px; color: white; position: absolute; top: 5px; right: -4px; opacity: 0.2;"></i>
                 </div>
                 <div class="mb-4" style="margin-top: 30px;">
-                    <h5 class="card-title mb-0 text-white">Total Bookings </h5>
+                    <h6 class="card-title mb-0 text-white" style="font-weight:500;">@Session["expert_name"] Total Bookings </h6>
                 </div>
                 <div class="row align-items-center mb-2 d-flex">
                     <div class="col-8">
@@ -275,18 +293,18 @@
 
     <!-- Total Bookings Card -->
     <div class="col-xl-4 col-lg-6" style="margin-top: 80px;">
-        <div class="thecard">
+        <div class="thecard2">
             <div class="card-statistic-3 p-4">
                 <div class="card-icon card-icon-large">
                     <i class="ri-flight-takeoff-line" style="font-size: 120px; text-align: center; margin-right: 3px; color: white; position: absolute; top: 5px; right: -4px; opacity: 0.2; "></i>
                 </div>
                 <div class="mb-4" style="margin-top: 30px;">
-                    <h5 class="card-title mb-0 text-white">Total Uploaded Tours</h5>
+                    <h6 class="card-title mb-0 text-white" style="font-weight:500;">@Session["expert_name"] Total Uploaded Tours</h6>
                 </div>
                 <div class="row align-items-center mb-2 d-flex">
                     <div class="col-8">
                         <h2 class="d-flex align-items-center mb-0 text-white">
-                            @ViewBag.TotalUploadedTours
+                            @ViewBag.TotalUploadedTours Tour's
                         </h2>
                     </div>
                 </div>
@@ -297,7 +315,7 @@
         </div>
     </div>
 </div>
-<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;border-radius:15px;margin-top:150px;margin-bottom:50px;">
+<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;border-radius:15px;margin-top:50px;margin-bottom:50px;">
     <div class="profile-card">
         <div class="left-section">
             <div class="profile-info">
@@ -360,7 +378,7 @@
 @{
     var expertBookings = ViewBag.ExpertBookings as List<ExploreLocal.Models.Tbl_Bookings>;
 }
-<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; border-radius: 15px; margin-top: 150px; margin-bottom: 50px;">
+<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; border-radius: 15px; margin-top: 100px; margin-bottom: 50px;">
     <div class="user-bookings" style="padding: 20px;">
         <h2 style="text-align: center; margin-bottom: 30px;">Your Bookings</h2>
         @if (ViewBag.ExpertBookings != null && ViewBag.ExpertBookings.Count > 0)
@@ -444,7 +462,7 @@
     </div>
 </div>
 
-<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; border-radius: 15px; margin-top: 30px; margin-bottom: 50px;">
+<div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; border-radius: 15px; margin-top: 100px; margin-bottom: 50px;">
     <div class="user-bookings" style="padding: 20px;">
         <h2 style="text-align: center; margin-bottom: 30px; margin-top: 20px;">Your Uploaded Tours</h2>
         @if (ViewBag.ExpertUploadedTours != null && ViewBag.ExpertUploadedTours.Count > 0)

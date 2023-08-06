@@ -224,6 +224,7 @@ namespace ExploreLocal.Controllers
                     if (user != null && destination != null && expert != null)
                     {
                         ViewBag.Booking = booking;
+                        ViewBag.TheBookingid = booking.BookingId;
                         string bookingDateStr = ((DateTime)booking.BookingDate).ToString("yyyy-MM-dd");
                         ViewBag.BookingDateStr = bookingDateStr;
                         ViewBag.User = user;
@@ -232,7 +233,6 @@ namespace ExploreLocal.Controllers
                     }
                 }
             }
-
             return View();
         }
 
@@ -244,10 +244,12 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
 
+            int bookingIdValue = bookingId.Value;
+
             // Retrieve the booking details and associated data from the database
             using (var db = new ExploreLocalEntities())
             {
-                var booking = db.Tbl_Bookings.Find(bookingId);
+                var booking = db.Tbl_Bookings.Find(bookingIdValue); // Use the extracted int value
                 if (booking == null)
                 {
                     // If the booking is not found, return a redirect to an error page or handle it as you prefer
@@ -264,6 +266,7 @@ namespace ExploreLocal.Controllers
                 var expert = db.Tbl_Expert.Find(booking.ExpertID);
 
                 // Controller code
+                // ...
                 if (user != null && destination != null && expert != null)
                 {
                     ViewBag.Booking = booking;
@@ -271,13 +274,15 @@ namespace ExploreLocal.Controllers
                     ViewBag.Destination = destination;
                     ViewBag.Expert = expert;
 
-                    // Render the view to a string
+                    // Render the view to a string without passing the viewModel
                     string htmlContent = RenderViewToString("InvoiceTemplate");
 
                     // Generate the PDF from the HTML content
                     byte[] invoicePdf = GenerateInvoicePdf(htmlContent);
                     return File(invoicePdf, "application/pdf", "Invoice.pdf");
                 }
+                // ...
+
             }
 
             return RedirectToAction("Error"); // If something went wrong, redirect to an error page or handle it as you prefer
@@ -348,6 +353,8 @@ namespace ExploreLocal.Controllers
                     }
                 }
             }
+
+            ViewBag.TheBookingid = bookingId;
 
             return View();
         }
