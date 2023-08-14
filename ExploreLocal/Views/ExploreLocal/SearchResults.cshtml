@@ -1,0 +1,18 @@
+﻿@model ExploreLocal.Models.SearchViewModel
+<h2>Search Results</h2>
+<div class="container" style="margin-top:150px;">
+    @if (Model.SelectedVenueTours.Any())
+    {
+        <ul>
+            @foreach (var tour in Model.SelectedVenueTours)
+            {
+                <li>@tour.DestinationName</li>
+                <!-- Display other tour details as needed -->
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No items found.</p>
+    }
+</div>

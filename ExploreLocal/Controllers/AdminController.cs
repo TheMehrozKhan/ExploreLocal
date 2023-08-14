@@ -92,6 +92,19 @@ namespace ExploreLocal.Controllers
             }
         }
 
+        public ActionResult ApproveExpert(int expertId)
+        {
+            Tbl_Expert expert = db.Tbl_Expert.Find(expertId);
+            if (expert != null)
+            {
+                expert.ExpertStatus = true;
+                db.SaveChanges();
+                SendExpertTourApprovalEmail(expert.ExpertEmail);
+            }
+
+            return RedirectToAction("ExpertTourRequests");
+        }
+
         public ActionResult RejectExpert(int expertId)
         {
             using (var db = new ExploreLocalEntities())

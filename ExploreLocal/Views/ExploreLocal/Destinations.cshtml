@@ -46,14 +46,9 @@
             <div class="row y-gap-20 justify-between items-end">
                 <div class="col-auto">
                     <div class="sectionTitle -md">
-                        <h2 class="sectionTitle__title">Our This Venue Tours</h2>
+                        <h2 class="sectionTitle__title">Our @Model.SelectedVenueName Venue Tours</h2>
                         <p class="sectionTitle__text mt-5 sm:mt-0">There is The Best Destination for @Model.SelectedVenueName</p>
                     </div>
-                </div>
-                <div class="col-auto">
-                    <a href="#" class="button -md -blue-1 bg-blue-1-05 text-blue-1">
-                        More <div class="icon-arrow-top-right ml-15"></div>
-                    </a>
                 </div>
             </div>
             <div class="row y-gap-30 pt-40 sm:pt-20">
@@ -76,9 +71,18 @@
                                                 </div>
                                             }
                                         }
+                                        <div class="cardImage__wishlist">
+                                            <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                                <i class="icon-heart text-12"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="hotelsCard__content mt-10">
+                                    <div class="d-flex items-center lh-14 mb-5 mt-10">
+                                        <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @tour.Destination_Duration</div>
+                                        <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @tour.Language</div>
+                                    </div>
                                     <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
                                         <span>@tour.DestinationName</span>
                                     </h4>
@@ -107,11 +111,6 @@
                         <h2 class="sectionTitle__title">Most Popular Tours</h2>
                     </div>
                 </div>
-                <div class="col-auto">
-                    <a href="#" class="button -md -blue-1 bg-blue-1-05 text-blue-1">
-                        More <div class="icon-arrow-top-right ml-15"></div>
-                    </a>
-                </div>
             </div>
             <div class="row y-gap-30 pt-40 sm:pt-20">
                 @foreach (var tour in Model.MostPopularTours)
@@ -131,19 +130,17 @@
                                             </div>
                                         }
                                     }
-                                            <div class="cardImage__wishlist">
-                                                <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                                    <i class="icon-heart text-12"></i>
-                                                </button>
-                                            </div>
-                                            @* Add any additional badges or labels here based on tour properties *@
-                                        </div>
+                                    <div class="cardImage__wishlist">
+                                        <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                            <i class="icon-heart text-12"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tourCard__content mt-10">
-                                <div class="d-flex items-center lh-14 mb-5">
-                                    <div class="text-14 text-light-1">16+ hours</div>
-                                    <div class="size-3 bg-light-1 rounded-full ml-10 mr-10"></div>
-                                    <div class="text-14 text-light-1">Full-day Tours</div>
+                                <div class="d-flex items-center lh-14 mb-5 mt-10">
+                                    <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @tour.Destination_Duration</div>
+                                    <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @tour.Language</div>
                                 </div>
                                 <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
                                     <span>@tour.DestinationName</span>
@@ -151,21 +148,9 @@
                                 <p class="text-light-1 lh-14 text-14 mt-5">@tour.Country</p>
                                 <div class="row justify-between items-center pt-15">
                                     <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="d-flex items-center x-gap-5">
-                                                <div class="icon-star text-yellow-1 text-10"></div>
-                                                <div class="icon-star text-yellow-1 text-10"></div>
-                                                <div class="icon-star text-yellow-1 text-10"></div>
-                                                <div class="icon-star text-yellow-1 text-10"></div>
-                                                <div class="icon-star text-yellow-1 text-10"></div>
-                                            </div>
-                                            <div class="text-14 text-light-1 ml-10">3,014 reviews</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
                                         <div class="text-14 text-light-1">
                                             From
-                                            <span class="text-16 fw-500 text-dark-1">@string.Format("{0:N0}", tour.Price) PKR</span>
+                                            <span class="text-blue-1">@string.Format("{0:N0}", tour.Price) PKR</span>
                                         </div>
                                     </div>
                                 </div>
@@ -186,11 +171,6 @@
                         <h2 class="sectionTitle__title">Trending Activity</h2>
                     </div>
                 </div>
-                <div class="col-auto">
-                    <a href="#" class="button -md -blue-1 bg-blue-1-05 text-blue-1">
-                        More <div class="icon-arrow-top-right ml-15"></div>
-                    </a>
-                </div>
             </div>
             <div class="row y-gap-30 pt-40 sm:pt-20">
                 @foreach (var activity in Model.TrendingTours)
@@ -210,43 +190,38 @@
                                             </div>
                                         }
                                     }
-                                            <div class="cardImage__wishlist">
-                                                <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                                    <i class="icon-heart text-12"></i>
-                                                </button>
-                                            </div>
-                                            @* Add any additional badges or labels here based on activity properties *@
-                                        </div>
-                            </div>
-                            <div class="activityCard__content mt-10">
-                                <div class="text-14 lh-14 text-light-1 mb-5">6+ hours</div>
-                                <h4 class="activityCard__title lh-16 fw-500 text-dark-1 text-18">
-                                    <span>@activity.DestinationName</span>
-                                </h4>
-                                <p class="text-light-1 text-14 lh-14 mt-5">@activity.Country</p>
-                                <div class="row justify-between items-center pt-10">
-                                    <div class="col-auto">
-                                        <div class="d-flex items-center">
-                                            <div class="icon-star text-yellow-1 text-10 mr-5"></div>
-                                            <div class="text-14 text-light-1">
-                                                <span class="text-15 text-dark-1 fw-500">4.82</span>
-                                                94 reviews
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="text-14 text-light-1">
-                                            From <span class="text-16 fw-500 text-dark-1">@string.Format("{0:N0}", activity.Price) PKR</span>
-                                        </div>
+                                    <div class="cardImage__wishlist">
+                                        <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                            <i class="icon-heart text-12"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </a>
-                    </div>
+                            <div class="d-flex items-center lh-14 mb-5 mt-10">
+                                <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @activity.Destination_Duration</div>
+                                <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @activity.Language</div>
+                            </div>
+                            <div class="activityCard__content mt-10">
+                                <h4 class="activityCard__title lh-16 fw-500 text-dark-1 text-18">
+                                    <span>@activity.DestinationName</span>
+                                </h4>
+                            </div>
+                            <p class="text-light-1 text-14 lh-14 mt-5">@activity.Country</p>
+                            <div class="row justify-between items-center pt-10">
+                                <div class="col-auto">
+                                    <div class="text-14 text-light-1">
+                                        From
+                                        <span class="text-blue-1">@string.Format("{0:N0}", activity.Price) PKR</span>
+                                    </div>
+                                </div>
+                            </div>
+                    </a>
+                </div>
                 }
             </div>
         </div>
     </section>
+
 
 
     <section class="layout-pt-lg layout-pb-md">
@@ -254,119 +229,34 @@
             <div class="row justify-center text-center">
                 <div class="col-auto">
                     <div class="sectionTitle -md">
-                        <h2 class="sectionTitle__title">Get inspiration for your next trip</h2>
-                        <p class=" sectionTitle__text mt-5 sm:mt-0">Interdum et malesuada fames</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row y-gap-30 pt-40">
-
-                <div class="col-lg-4 col-sm-6">
-
-                    <a href="#" class="blogCard -type-1 d-block ">
-                        <div class="blogCard__image">
-                            <div class="ratio ratio-4:3 rounded-4 rounded-8">
-                                <img class="img-ratio js-lazy" src="#" data-src="/Template/img/blog/1.png" alt="image">
-                            </div>
-                        </div>
-
-                        <div class="mt-20">
-                            <h4 class="text-dark-1 text-18 fw-500">10 European ski destinations you should visit this winter</h4>
-                            <div class="text-light-1 text-15 lh-14 mt-5">April 06, 2022</div>
-                        </div>
-                    </a>
-
-                </div>
-
-                <div class="col-lg-4 col-sm-6">
-
-                    <a href="#" class="blogCard -type-1 d-block ">
-                        <div class="blogCard__image">
-                            <div class="ratio ratio-4:3 rounded-4 rounded-8">
-                                <img class="img-ratio js-lazy" src="#" data-src="/Template/img/blog/2.png" alt="image">
-                            </div>
-                        </div>
-
-                        <div class="mt-20">
-                            <h4 class="text-dark-1 text-18 fw-500">Booking travel during Corona: good advice in an uncertain time</h4>
-                            <div class="text-light-1 text-15 lh-14 mt-5">April 06, 2022</div>
-                        </div>
-                    </a>
-
-                </div>
-
-                <div class="col-lg-4 col-sm-6">
-
-                    <a href="#" class="blogCard -type-1 d-block ">
-                        <div class="blogCard__image">
-                            <div class="ratio ratio-4:3 rounded-4 rounded-8">
-                                <img class="img-ratio js-lazy" src="#" data-src="/Template/img/blog/2.png" alt="image">
-                            </div>
-                        </div>
-
-                        <div class="mt-20">
-                            <h4 class="text-dark-1 text-18 fw-500">Where can I go? 5 amazing countries that are open right now</h4>
-                            <div class="text-light-1 text-15 lh-14 mt-5">April 06, 2022</div>
-                        </div>
-                    </a>
-
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section class="layout-pt-md layout-pb-lg">
-        <div class="container">
-            <div class="row">
-                <div class="col-auto">
-                    <div class="sectionTitle -md">
-                        <h2 class="sectionTitle__title">Our Latest Announcements</h2>
-                        <p class=" sectionTitle__text mt-5 sm:mt-0">Checkout Our Announcement For More Detail's About ExploreLocal</p>
+                        <h2 class="sectionTitle__title">Our Latest Updates</h2>
                     </div>
                 </div>
             </div>
             @if (Model.Announcement != null && Model.Announcement.Count > 0)
             {
-                foreach (var announcement in Model.Announcement)
-                {
-                    <div class="row y-gap-30 pt-40">
-                        <div class="col-lg-6">
-                            <div class="rounded-4 border-light">
-                                <div class="d-flex flex-wrap y-gap-30">
-                                    <div class="col-auto">
-                                        <div class="ratio ratio-1:1 w-200">
-                                            <img src="@Url.Content(announcement.Announcement_image)" alt="image" class="img-ratio">
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="d-flex flex-column justify-center h-full px-30 py-20">
-                                            <h3 class="text-18 fw-500">@Url.Content(announcement.Announcement_headline)</h3>
-                                            <p class="text-15 mt-5">@Url.Content(announcement.Announcement_description)</p>
-                                        </div>
+                <div class="row y-gap-30 pt-40">
+                    @foreach (var announcement in Model.Announcement)
+                    {
+                        <div class="col-lg-4 col-sm-6">
+                            <a href="#" class="blogCard -type-1 d-block">
+                                <div class="blogCard__image">
+                                    <div class="ratio ratio-4:3 rounded-4 rounded-8">
+                                        <img class="img-ratio js-lazy" src="@Url.Content(announcement.Announcement_image)" alt="image">
                                     </div>
                                 </div>
-                            </div>
+                                <div class="mt-20">
+                                    <h4 class="text-dark-1 text-18 fw-500">@announcement.Announcement_headline</h4>
+                                    <div class="text-light-1 text-15 lh-14 mt-5">@announcement.Announcement_description</div>
+                                </div>
+                            </a>
                         </div>
-                    </div>
-                }
-            }
-
-
-
-            <div class="row justify-center mt-40">
-                <div class="col-auto">
-
-                    <a href="#" class="button h-50 w-250 -outline-blue-1 text-blue-1">
-                        Explore more <div class="icon-arrow-top-right ml-15"></div>
-                    </a>
-
+                    }
                 </div>
-            </div>
+            }
         </div>
     </section>
+
 
     <section class="layout-pt-lg layout-pb-lg bg-light-2">
         <div class="container">

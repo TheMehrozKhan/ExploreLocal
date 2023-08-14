@@ -5,12 +5,9 @@ using System.Web;
 
 namespace ExploreLocal.Models
 {
-    public class IndexViewModel
+    public class SearchViewModel
     {
-        public Tbl_User User { get; set; }
+        public List<Tbl_Destination> SelectedVenueTours { get; set; }
         public List<Tbl_Venue> Venues { get; set; }
-        public List<Tbl_Destination> Destinations { get; set; }
-
     }
-
 }

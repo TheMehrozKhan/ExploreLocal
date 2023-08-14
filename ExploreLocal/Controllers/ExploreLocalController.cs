@@ -19,16 +19,16 @@ namespace ExploreLocal.Controllers
             TempData["ToastMessage"] = "Hi, " + user.FirstName + " " + user.LastName + " You Successfully Logged In!";
             ViewBag.ToastMessage = TempData["ToastMessage"];
 
-            // Retrieve the list of venues from the database
             using (var db = new ExploreLocalEntities())
             {
                 List<Tbl_Venue> venues = db.Tbl_Venue.ToList();
+                List<Tbl_Destination> destinations = db.Tbl_Destination.ToList(); 
 
-                // Create the view model and pass the user and venues to the view
                 var viewModel = new IndexViewModel
                 {
                     User = user,
-                    Venues = venues
+                    Venues = venues,
+                    Destinations = destinations
                 };
 
                 return View(viewModel);
@@ -36,9 +36,31 @@ namespace ExploreLocal.Controllers
         }
 
 
+        public ActionResult SearchDestinations(int? selectedVenueId, string searchQuery)
+        {
+            if (selectedVenueId == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var selectedVenueTours = db.Tbl_Destination
+                .Where(t => t.FK_Venue_Id == selectedVenueId && t.TourStatus == true)
+                .ToList();
+
+            var venues = db.Tbl_Venue.ToList();
+
+            var viewModel = new SearchViewModel
+            {
+                SelectedVenueTours = selectedVenueTours,
+                Venues = venues
+            };
+
+            return View("SearchResults", viewModel);
+        }
+
+
         public ActionResult Destinations(int id)
         {
-            // Fetch the selected venue tours and venue details
             var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id && t.TourStatus == true).ToList();
             var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
 
@@ -53,7 +75,7 @@ namespace ExploreLocal.Controllers
                         Destination = destination,
                         BookingsCount = bookings.Count()
                     })
-                .Where(x => x.Destination.TourStatus == true) // Add condition for approved tours
+                .Where(x => x.Destination.TourStatus == true) 
                 .OrderByDescending(x => x.BookingsCount)
                 .Select(x => x.Destination)
                 .Take(4)
@@ -70,7 +92,7 @@ namespace ExploreLocal.Controllers
                         Destination = destination,
                         LatestBookingDate = bookings.Max(b => b.BookingDate)
                     })
-                .Where(x => x.Destination.TourStatus == true) // Add condition for approved tours
+                .Where(x => x.Destination.TourStatus == true) 
                 .OrderByDescending(x => x.LatestBookingDate)
                 .Select(x => x.Destination)
                 .Take(4)
@@ -92,10 +114,8 @@ namespace ExploreLocal.Controllers
         }
 
 
-
         public ActionResult DestinationDetails(int id)
         {
-            // Retrieve destination details
             Tbl_Destination p = db.Tbl_Destination.Where(x => x.DestinationID == id).SingleOrDefault();
 
             var destinationDetailsViewModel = new DestinationDetailsViewModel
@@ -115,7 +135,6 @@ namespace ExploreLocal.Controllers
                 Destination_Highlights = p.Destination_Highlights
             };
 
-            // Retrieve expert details
             Tbl_Expert expert = db.Tbl_Expert.Where(e => e.ExpertId == p.FK_Expert_Id).SingleOrDefault();
             if (expert != null)
             {
@@ -129,7 +148,6 @@ namespace ExploreLocal.Controllers
                 destinationDetailsViewModel.ExpertProfileImage = "./Content/img/Default.png";
             }
 
-            // Retrieve venue details
             Tbl_Venue venue = db.Tbl_Venue.Where(x => x.Venue_id == p.FK_Venue_Id).SingleOrDefault();
             if (venue != null)
             {
@@ -143,7 +161,6 @@ namespace ExploreLocal.Controllers
             var randomTours = db.Tbl_Destination.Where(x => x.DestinationID != id).OrderBy(x => Guid.NewGuid()).Take(4).ToList();
             ViewBag.RandomTours = randomTours;
 
-            // Pass the view model to the view
             return View(destinationDetailsViewModel);
         }
 
