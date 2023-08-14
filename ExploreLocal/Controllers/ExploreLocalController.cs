@@ -30,7 +30,6 @@ namespace ExploreLocal.Controllers
                     Venues = venues,
                     Destinations = destinations
                 };
-
                 return View(viewModel);
             }
         }
@@ -42,19 +41,16 @@ namespace ExploreLocal.Controllers
             {
                 return RedirectToAction("Index");
             }
-
             var selectedVenueTours = db.Tbl_Destination
                 .Where(t => t.FK_Venue_Id == selectedVenueId && t.TourStatus == true)
                 .ToList();
 
             var venues = db.Tbl_Venue.ToList();
-
             var viewModel = new SearchViewModel
             {
                 SelectedVenueTours = selectedVenueTours,
                 Venues = venues
             };
-
             return View("SearchResults", viewModel);
         }
 
@@ -63,8 +59,6 @@ namespace ExploreLocal.Controllers
         {
             var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id && t.TourStatus == true).ToList();
             var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
-
-            // Fetch most popular tours
             var mostPopularTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_BookingHistory,
@@ -80,8 +74,6 @@ namespace ExploreLocal.Controllers
                 .Select(x => x.Destination)
                 .Take(4)
                 .ToList();
-
-            // Fetch trending tours
             var trendingTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_BookingHistory,
@@ -97,9 +89,7 @@ namespace ExploreLocal.Controllers
                 .Select(x => x.Destination)
                 .Take(4)
                 .ToList();
-
             var announcements = db.Tbl_Announcement.Where(t => t.Announcement_status == null).ToList();
-
             var viewModel = new ToursViewModel
             {
                 SelectedVenueTours = selectedVenueTours,
@@ -109,7 +99,6 @@ namespace ExploreLocal.Controllers
                 SelectedVenueDescription = selectedVenue?.Venue_Description,
                 Announcement = announcements
             };
-
             return View(viewModel);
         }
 
@@ -117,7 +106,6 @@ namespace ExploreLocal.Controllers
         public ActionResult DestinationDetails(int id)
         {
             Tbl_Destination p = db.Tbl_Destination.Where(x => x.DestinationID == id).SingleOrDefault();
-
             var destinationDetailsViewModel = new DestinationDetailsViewModel
             {
                 DestinationID = p.DestinationID,
@@ -134,7 +122,6 @@ namespace ExploreLocal.Controllers
                 Destination_Duration = p.Destination_Duration,
                 Destination_Highlights = p.Destination_Highlights
             };
-
             Tbl_Expert expert = db.Tbl_Expert.Where(e => e.ExpertId == p.FK_Expert_Id).SingleOrDefault();
             if (expert != null)
             {
@@ -147,7 +134,6 @@ namespace ExploreLocal.Controllers
                 destinationDetailsViewModel.ExpertName = "No Expert Found";
                 destinationDetailsViewModel.ExpertProfileImage = "./Content/img/Default.png";
             }
-
             Tbl_Venue venue = db.Tbl_Venue.Where(x => x.Venue_id == p.FK_Venue_Id).SingleOrDefault();
             if (venue != null)
             {
@@ -157,30 +143,24 @@ namespace ExploreLocal.Controllers
             {
                 destinationDetailsViewModel.Venue_name = "No Venue Found";
             }
-
             var randomTours = db.Tbl_Destination.Where(x => x.DestinationID != id).OrderBy(x => Guid.NewGuid()).Take(4).ToList();
             ViewBag.RandomTours = randomTours;
-
             return View(destinationDetailsViewModel);
         }
 
         [HttpGet]
         public ActionResult BookingForm(int destinationId, int expertId, int userId)
         {
-            // Check if the user is logged in
             if (Session["u_id"] == null)
             {
                 return RedirectToAction("Login");
             }
-
-            // Create the BookingViewModel with the destinationId, expertId, and userId
             var viewModel = new BookingViewModel
             {
                 DestinationId = destinationId,
                 ExpertID = expertId,
                 UserId = userId
             };
-
             return View(viewModel);
         }
 
@@ -193,7 +173,6 @@ namespace ExploreLocal.Controllers
                 {
                     using (var db = new ExploreLocalEntities())
                     {
-                        // Create a new instance of the Tbl_Bookings model and set the BookingId
                         var booking = new Tbl_Bookings
                         {
                             DestinationId = viewModel.DestinationId,
@@ -211,22 +190,17 @@ namespace ExploreLocal.Controllers
                             ContactNumber = viewModel.ContactNumber
                         };
 
-                        // Save the booking to the database
                         db.Tbl_Bookings.Add(booking);
                         db.SaveChanges();
 
-                        // Redirect the user to the BookingSuccess view
                         return RedirectToAction("BookingSuccess", new { id = booking.BookingId });
                     }
                 }
                 catch (Exception ex)
                 {
-                    // If there's an error, you can handle it here or display an error message to the user
                     ViewBag.Error = "An error occurred while submitting the booking: " + ex.Message;
                 }
             }
-
-            // If the model is not valid or there's an error, return the BookingForm view with the provided data so the user can correct any issues
             return View("BookingForm", viewModel);
         }
 
@@ -234,25 +208,19 @@ namespace ExploreLocal.Controllers
         {
             if (id == null)
             {
-                // If the booking ID is not provided, return a redirect to an error page or handle it as you prefer
                 return RedirectToAction("Error");
             }
-
             using (var db = new ExploreLocalEntities())
             {
                 var booking = db.Tbl_Bookings.Find(id);
                 if (booking != null)
                 {
-                    // Retrieve the user's information based on the UserId associated with the booking
                     var user = db.Tbl_User.Find(booking.UserId);
 
-                    // Retrieve the destination information based on the DestinationId associated with the booking
                     var destination = db.Tbl_Destination.Find(booking.DestinationId);
 
-                    // Retrieve the expert information based on the ExpertID associated with the booking
                     var expert = db.Tbl_Expert.Find(booking.ExpertID);
 
-                    // Controller code
                     if (user != null && destination != null && expert != null)
                     {
                         ViewBag.Booking = booking;
@@ -272,33 +240,22 @@ namespace ExploreLocal.Controllers
         {
             if (bookingId == null)
             {
-                // If the booking ID is not provided, return a redirect to an error page or handle it as you prefer
                 return RedirectToAction("Error");
             }
-
             int bookingIdValue = bookingId.Value;
-
-            // Retrieve the booking details and associated data from the database
             using (var db = new ExploreLocalEntities())
             {
-                var booking = db.Tbl_Bookings.Find(bookingIdValue); // Use the extracted int value
+                var booking = db.Tbl_Bookings.Find(bookingIdValue);
                 if (booking == null)
                 {
-                    // If the booking is not found, return a redirect to an error page or handle it as you prefer
                     return RedirectToAction("Error");
                 }
 
-                // Retrieve the user's information based on the UserId associated with the booking
                 var user = db.Tbl_User.Find(booking.UserId);
-
-                // Retrieve the destination information based on the DestinationId associated with the booking
                 var destination = db.Tbl_Destination.Find(booking.DestinationId);
 
-                // Retrieve the expert information based on the ExpertID associated with the booking
                 var expert = db.Tbl_Expert.Find(booking.ExpertID);
 
-                // Controller code
-                // ...
                 if (user != null && destination != null && expert != null)
                 {
                     ViewBag.Booking = booking;
@@ -306,22 +263,16 @@ namespace ExploreLocal.Controllers
                     ViewBag.Destination = destination;
                     ViewBag.Expert = expert;
 
-                    // Render the view to a string without passing the viewModel
                     string htmlContent = RenderViewToString("InvoiceTemplate");
 
-                    // Generate the PDF from the HTML content
                     byte[] invoicePdf = GenerateInvoicePdf(htmlContent);
                     return File(invoicePdf, "application/pdf", "Invoice.pdf");
                 }
-                // ...
 
             }
-
-            return RedirectToAction("Error"); // If something went wrong, redirect to an error page or handle it as you prefer
+            return RedirectToAction("Error"); 
         }
 
-
-        // Helper method to generate the invoice PDF
         private byte[] GenerateInvoicePdf(string htmlContent)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -331,10 +282,7 @@ namespace ExploreLocal.Controllers
                 PdfDocument pdfDoc = new PdfDocument(writer);
                 HtmlConverter.ConvertToPdf(htmlContent, pdfDoc, converterProperties);
 
-                // Close the document after converting the HTML content
                 pdfDoc.Close();
-
-                // Return the contents of the MemoryStream
                 return ms.ToArray();
             }
         }
@@ -357,7 +305,6 @@ namespace ExploreLocal.Controllers
         {
             if (bookingId == null)
             {
-                // If the booking ID is not provided, return a redirect to an error page or handle it as you prefer
                 return RedirectToAction("Error");
             }
 
@@ -366,13 +313,9 @@ namespace ExploreLocal.Controllers
                 var booking = db.Tbl_Bookings.Find(bookingId);
                 if (booking != null)
                 {
-                    // Retrieve the user's information based on the UserId associated with the booking
                     var user = db.Tbl_User.Find(booking.UserId);
-
-                    // Retrieve the destination information based on the DestinationId associated with the booking
                     var destination = db.Tbl_Destination.Find(booking.DestinationId);
 
-                    // Retrieve the expert information based on the ExpertID associated with the booking
                     var expert = db.Tbl_Expert.Find(booking.ExpertID);
 
                     // Controller code
@@ -589,7 +532,7 @@ namespace ExploreLocal.Controllers
                 Destination_Duration = pr.Destination_Duration,
                 Destination_Highlights = pr.Destination_Highlights,
                 FK_Expert_Id = Convert.ToInt32(Session["expert_id"].ToString()),
-                TourStatus = false // Set the status to false (pending) when the tour is uploaded
+                TourStatus = false 
             };
 
             if (imagePaths.Count > 0)
@@ -638,22 +581,18 @@ namespace ExploreLocal.Controllers
                 return View();
             }
 
-            // Retrieve booked tours for the user
             List<Tbl_Bookings> userBookings = db.Tbl_Bookings
                 .Where(b => b.UserId == id)
                 .ToList();
 
-            // Fetch the associated Destination for each booking
             foreach (var booking in userBookings)
             {
                 booking.Tbl_Destination = db.Tbl_Destination.Find(booking.DestinationId);
 
-                // Determine the tour state based on start and end dates
                 booking.TourState = GetTourState(booking.Tbl_Destination.StartDate, booking.Tbl_Destination.EndDate);
             }
 
-            // Pass the user and their bookings to the view
-            ViewBag.ProfileNotFound = false; // Set to false when profileUser is found
+            ViewBag.ProfileNotFound = false; 
             ViewBag.UserBookings = userBookings;
             return View(profileUser);
         }
@@ -729,16 +668,13 @@ namespace ExploreLocal.Controllers
             int expertId;
             if (id == null || (int)id == Convert.ToInt32(Session["expert_id"]))
             {
-                // If id is not provided or it's the currently logged-in expert, use the logged-in expert's ID
                 expertId = Convert.ToInt32(Session["expert_id"]);
             }
             else
             {
-                // Otherwise, use the provided expert ID
                 expertId = (int)id;
             }
 
-            // Retrieve the expert's profile data
             Tbl_Expert profileUser = db.Tbl_Expert.FirstOrDefault(u => u.ExpertId == expertId);
 
             if (profileUser == null)
@@ -747,33 +683,27 @@ namespace ExploreLocal.Controllers
                 return View();
             }
 
-            // Retrieve the expert's bookings
             var expertBookings = db.Tbl_Bookings
                 .Where(b => b.ExpertID == expertId)
                 .ToList();
 
-            // Fetch the associated Destination for each booking and determine the tour state
             foreach (var booking in expertBookings)
             {
                 booking.Tbl_Destination = db.Tbl_Destination.Find(booking.DestinationId);
                 booking.TourState = GetTourState(booking.Tbl_Destination.StartDate, booking.Tbl_Destination.EndDate);
             }
 
-            // Retrieve the expert's uploaded tours
             var expertUploadedTours = db.Tbl_Destination
                 .Where(t => t.FK_Expert_Id == expertId)
                 .ToList();
 
             int totalUploadedTours = expertUploadedTours.Count;
 
-            // Calculate the total booking amount for the expert
             decimal totalBookingAmount = expertBookings.Sum(b => b.Tbl_Destination?.Price ?? 0);
 
-            // Pass the additional data to the view
             ViewBag.TotalUploadedTours = totalUploadedTours;
             ViewBag.TotalBookingAmount = totalBookingAmount;
 
-            // Pass the expert's profile data, bookings, and uploaded tours to the view
             ViewBag.ProfileUser = profileUser;
             ViewBag.ExpertBookings = expertBookings;
             ViewBag.ExpertUploadedTours = expertUploadedTours;
@@ -784,38 +714,27 @@ namespace ExploreLocal.Controllers
 
         public ActionResult DeleteTour(int id)
         {
-            // Find the tour with the given DestinationId
             var tourToDelete = db.Tbl_Destination.FirstOrDefault(t => t.DestinationID == id);
 
             if (tourToDelete == null)
             {
-                // Tour not found, show an error message or redirect to an error page
-                // For simplicity, let's redirect to the ExpertDashboard with an error message
                 TempData["ErrorMessage"] = "Tour not found.";
                 return RedirectToAction("ExpertDashboard");
             }
 
-            // Check for data dependencies (e.g., bookings) before deleting the tour
             var hasDependencies = db.Tbl_Bookings.Any(b => b.DestinationId == id);
 
             if (hasDependencies)
             {
-                // If there are bookings or any other dependent data, prevent deletion and show an error message
                 TempData["ErrorMessage"] = "Cannot delete the tour. It has associated bookings.";
                 return RedirectToAction("ExpertDashboard");
             }
 
-            // Now, remove the tour itself
             db.Tbl_Destination.Remove(tourToDelete);
-
-            // Save changes to the database
             db.SaveChanges();
-
-            // Redirect to the ExpertDashboard with a success message
             TempData["SuccessMessage"] = "Tour successfully deleted.";
             return RedirectToAction("ExpertDashboard");
         }
-
 
 
         [HttpGet]
