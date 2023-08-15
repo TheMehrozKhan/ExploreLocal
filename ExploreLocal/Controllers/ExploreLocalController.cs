@@ -45,10 +45,16 @@ namespace ExploreLocal.Controllers
                 .Where(t => t.FK_Venue_Id == selectedVenueId && t.TourStatus == true)
                 .ToList();
 
+            var selectedVenueName = db.Tbl_Venue
+                .Where(v => v.Venue_id == selectedVenueId)
+                .Select(v => v.Venue_name)
+                .FirstOrDefault();
+
             var venues = db.Tbl_Venue.ToList();
             var viewModel = new SearchViewModel
             {
                 SelectedVenueTours = selectedVenueTours,
+                SelectedVenueName = selectedVenueName,
                 Venues = venues
             };
             return View("SearchResults", viewModel);
@@ -103,7 +109,7 @@ namespace ExploreLocal.Controllers
         }
 
 
-        public ActionResult DestinationDetails(int id)
+        public ActionResult DestinationDetails(int? id)
         {
             Tbl_Destination p = db.Tbl_Destination.Where(x => x.DestinationID == id).SingleOrDefault();
             var destinationDetailsViewModel = new DestinationDetailsViewModel
@@ -365,6 +371,7 @@ namespace ExploreLocal.Controllers
                 Session["u_id"] = us.UserID.ToString();
                 Session["u_email"] = us.Email;
                 Session["u_name"] = us.FirstName;
+                Session["u_image"] = us.ProfileImage;
                 TempData["ToastMessage"] = "Hi, " + us.FirstName + us.LastName + " You Successfully Logged In!";
                 return RedirectToAction("Index");
             }

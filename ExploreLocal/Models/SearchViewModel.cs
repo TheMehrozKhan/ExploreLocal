@@ -8,6 +8,8 @@ namespace ExploreLocal.Models
     public class SearchViewModel
     {
         public List<Tbl_Destination> SelectedVenueTours { get; set; }
+        public string SelectedVenueName { get; set; } 
         public List<Tbl_Venue> Venues { get; set; }
     }
+
 }

@@ -164,17 +164,34 @@
                     <div class="col-auto">
                         <div class="d-flex items-center">
                             <div class="header__buttons d-flex items-center is-menu-opened-hide">
-                                @if (Session["u_id"] != null) 
+                                <style>
+                                    .user-profile-image {
+                                        width: 45px;
+                                        height: 45px;
+                                        border-radius: 50%;
+                                        object-fit: cover;
+                                        cursor: pointer;
+                                        margin-right: 25px;
+                                    }
+                                    .thelink {
+                                        background-image: url(../../Content/img/564.jpg);
+                                    }
+                                </style>
+                                @if (Session["u_id"] != null)
                                 {
-                                    <a href="@Url.Action("UserProfile","ExploreLocal", new { id = Convert.ToInt32(Session["u_id"]) })" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none">Your Profile</a>
-                                    <a href="@Url.Action("Logout","ExploreLocal")" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none" id="thebtn">Logout</a>
+                                    var userId = Convert.ToInt32(Session["u_id"]);
+                                    var userProfileImage = Session["u_image"]?.ToString();
+                                    <a href="@Url.Action("UserProfile","ExploreLocal", new { id = userId } )" class="thelink">
+                                        <img src="@Url.Content(@userProfileImage)" alt="User Profile Image" class="user-profile-image" />
+                                    </a>
+                                    <a href="@Url.Action("Logout", "ExploreLocal")" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none" id="thebtn">Logout</a>
                                 }
-                                else if (Session["expert_id"] != null) 
+                                else if (Session["expert_id"] != null)
                                 {
                                     <a href="@Url.Action("ExpertDashboard","ExploreLocal", new { id = Convert.ToInt32(Session["expert_id"]) })" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none">Dashboard</a>
                                     <a href="@Url.Action("Logout","ExploreLocal")" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none" id="thebtn">Logout</a>
                                 }
-                                else 
+                                else
                                 {
                                     <a href="@Url.Action("Expert","ExploreLocal")" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none">Become An Expert</a>
                                     <a href="@Url.Action("Register","ExploreLocal")" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none" id="thebtn">Sign In / Register</a>
@@ -185,8 +202,6 @@
                 </div>
             </div>
         </header>
-
-
         @RenderBody()
         <footer class="footer -type-2 bg-blue-1 text-white">
             <div class="container">

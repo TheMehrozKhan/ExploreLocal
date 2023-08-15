@@ -1,18 +1,69 @@
 ﻿@model ExploreLocal.Models.SearchViewModel
+
 <h2>Search Results</h2>
-<div class="container" style="margin-top:150px;">
-    @if (Model.SelectedVenueTours.Any())
-    {
-        <ul>
-            @foreach (var tour in Model.SelectedVenueTours)
+<section class="layout-pt-md layout-pb-md">
+    <div class="container">
+        <div class="row y-gap-20 justify-between items-end">
+            <div class="col-auto">
+                <div class="sectionTitle -md">
+                    <h2 class="sectionTitle__title">Total Tours Found: @Model.SelectedVenueTours.Count</h2>
+                    @if (!string.IsNullOrEmpty(Model.SelectedVenueName))
+                    {
+                        <p>Your Selected Venue: @Model.SelectedVenueName</p>
+                    }
+                </div>
+
+            </div>
+        </div>
+        <hr />
+        <div class="row y-gap-30 pt-40 sm:pt-20">
+            @if (Model.SelectedVenueTours != null && Model.SelectedVenueTours.Count > 0)
             {
-                <li>@tour.DestinationName</li>
-                <!-- Display other tour details as needed -->
+                foreach (var tour in Model.SelectedVenueTours)
+                {
+                    <div class="col-xl-3 col-lg-3 col-sm-6">
+                        <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
+                            <div class="hotelsCard__image">
+                                <div class="cardImage ratio ratio-1:1">
+                                    @if (!string.IsNullOrEmpty(tour.Image))
+                                    {
+                                        var imagePaths = tour.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                        foreach (var imagePath in imagePaths)
+                                        {
+                                            var imageUrl = Url.Content(imagePath);
+                                            <div class="cardImage__content">
+                                                <img class="rounded-4 col-12" src="@imageUrl" alt="Tour Image">
+                                            </div>
+                                        }
+                                    }
+                                    <div class="cardImage__wishlist">
+                                        <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                            <i class="icon-heart text-12"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hotelsCard__content mt-10">
+                                <div class="d-flex items-center lh-14 mb-5 mt-10">
+                                    <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @tour.Destination_Duration</div>
+                                    <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @tour.Language</div>
+                                </div>
+                                <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
+                                    <span>@tour.DestinationName</span>
+                                </h4>
+                                <p class="text-light-1 lh-14 text-14 mt-5">@tour.Country</p>
+                                <div class="d-flex items-center mt-20">
+                                </div>
+                                <div class="mt-5">
+                                    <div class="fw-500">
+                                        Starting from <span class="text-blue-1">@string.Format("{0:N0}", tour.Price) PKR</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
             }
-        </ul>
-    }
-    else
-    {
-        <p>No items found.</p>
-    }
-</div>
+        </div>
+    </div>
+</section>
