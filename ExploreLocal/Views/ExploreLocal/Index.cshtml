@@ -337,11 +337,13 @@
                                                         </div>
                                                     }
                                                 }
-                                                <div class="cardImage__wishlist">
-                                                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                            <div class="cardImage__wishlist">
+                                                <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                                    <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = destination.DestinationID })" class="action-card action-wishlist">
                                                         <i class="icon-heart text-12"></i>
-                                                    </button>
-                                                </div>
+                                                    </a>
+                                                </button>
+                                            </div>
                                                 <div class="cardImage__leftBadge">
                                                     <div class="py-5 px-15 rounded-right-4 text-12 lh-16 fw-500 uppercase bg-dark-1 text-white">
                                                         LIKELY TO SELL OUT*

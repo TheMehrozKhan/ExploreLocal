@@ -228,12 +228,21 @@
                             });
                         </script>
 
+                        <div class="cardImage__wishlist">
+                            <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = tour.DestinationID })" class="action-card action-wishlist">
+                                    <i class="icon-heart text-12"></i>
+                                </a>
+                            </button>
+                        </div>
+
 
 
                         <div class="col-auto">
                             <button class="button px-15 py-10 -blue-1 bg-light-2">
-                                <i class="icon-heart mr-10"></i>
-                                Save
+                                <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = tour.DestinationID })" class="action-card action-wishlist">
+                                    <i class="icon-heart mr-10"></i>
+                                 </a>
                             </button>
                         </div>
                     </div>
