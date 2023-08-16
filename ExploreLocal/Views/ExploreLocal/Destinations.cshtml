@@ -86,7 +86,9 @@
                                         <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @tour.Language</div>
                                     </div>
                                     <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                                        <span>@tour.DestinationName</span>
+                                        <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
+                                            <span>@tour.DestinationName</span>
+                                        </a>
                                     </h4>
                                     <p class="text-light-1 lh-14 text-14 mt-5">@tour.Country</p>
                                     <div class="d-flex items-center mt-20">

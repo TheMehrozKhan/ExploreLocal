@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿﻿@using ExploreLocal.Models
+<!DOCTYPE html>
 <html lang="en" data-x="html" data-x-toggle="html-overflow-hidden">
 <head>
     <meta charset="UTF-8">
@@ -173,12 +174,26 @@
                                         cursor: pointer;
                                         margin-right: 25px;
                                     }
+
                                     .thelink {
                                         background-image: url(../../Content/img/564.jpg);
                                     }
                                 </style>
                                 @if (Session["u_id"] != null)
                                 {
+                            <a href="@Url.Action("View_Wishlist","ExploreLocal")" style="text-decoration:none;margin:15px;">
+                                <i class="icon-heart" style="font-size: 17px;margin-top:3px;margin-right:3px;"></i>
+                                @{
+                                    if (Session["u_id"] != null)
+                                    {
+                                        var userItems = Session["Wishlist"] as List<Wishlist>;
+                                        var userCountValue = userItems?.Count ?? 0;
+                                        <span class="cart-count" style="width: 20px; height: 20px; border-radius: 50%; color: white; text-decoration: none; position: relative; bottom: 8px; color:#F76B6A;">
+                                            @userCountValue
+                                        </span>
+                                    }
+                                }
+                            </a>
                                     var userId = Convert.ToInt32(Session["u_id"]);
                                     var userProfileImage = Session["u_image"]?.ToString();
                                     <a href="@Url.Action("UserProfile","ExploreLocal", new { id = userId } )" class="thelink">

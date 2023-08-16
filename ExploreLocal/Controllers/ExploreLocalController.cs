@@ -787,7 +787,6 @@ namespace ExploreLocal.Controllers
             }
             return View(user);
         }
-
         public ActionResult Add_Wishlist(int? id)
         {
             if (Session["u_id"] == null)
