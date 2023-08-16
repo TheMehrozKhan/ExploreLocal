@@ -368,8 +368,10 @@
                                                 <div class="text-14 text-light-1 destination-date">@Html.Raw(destination.StartDate)</div>
                                             </div>
                                             <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
-                                                <span>@destination.DestinationName</span>
-                                            </h4>
+                                                <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = destination.DestinationID })" class="hotelsCard -type-1 ">
+                                                    <span>@destination.DestinationName</span>
+                                                 </a>
+                                                </h4>
                                             <p class="text-light-1 lh-14 text-14 mt-5">@destination.Country</p>
                                             <div class="row justify-between items-center pt-15">
                                                 <div class="col-auto">

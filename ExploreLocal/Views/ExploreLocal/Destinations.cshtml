@@ -149,7 +149,10 @@
                                     <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @tour.Language</div>
                                 </div>
                                 <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
-                                    <span>@tour.DestinationName</span>
+                                    <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
+
+                                        <span>@tour.DestinationName</span>
+</a>
                                 </h4>
                                 <p class="text-light-1 lh-14 text-14 mt-5">@tour.Country</p>
                                 <div class="row justify-between items-center pt-15">
@@ -211,7 +214,10 @@
                             </div>
                             <div class="activityCard__content mt-10">
                                 <h4 class="activityCard__title lh-16 fw-500 text-dark-1 text-18">
-                                    <span>@activity.DestinationName</span>
+                                    <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = activity.DestinationID })" class="hotelsCard -type-1 ">
+
+                                        <span>@activity.DestinationName</span>
+                                        </a>
                                 </h4>
                             </div>
                             <p class="text-light-1 text-14 lh-14 mt-5">@activity.Country</p>
