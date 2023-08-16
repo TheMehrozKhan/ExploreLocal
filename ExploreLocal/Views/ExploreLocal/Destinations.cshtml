@@ -52,9 +52,7 @@
                 </div>
             </div>
             <div class="row y-gap-30 pt-40 sm:pt-20">
-                @if (Model.SelectedVenueTours != null && Model.SelectedVenueTours.Count > 0)
-                {
-                    foreach (var tour in Model.SelectedVenueTours)
+                    @foreach (var tour in Model.SelectedVenueTours)
                     {
                         <div class="col-xl-3 col-lg-3 col-sm-6">
                             <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
@@ -102,7 +100,6 @@
                             </a>
                         </div>
                     }
-                }
             </div>
         </div>
     </section>
@@ -201,7 +198,7 @@
                                     }
                                 <div class="cardImage__wishlist">
                                     <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
-                                        <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = tour.DestinationID })" class="action-card action-wishlist">
+                                        <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = activity.DestinationID })" class="action-card action-wishlist">
                                             <i class="icon-heart text-12"></i>
                                         </a>
                                     </button>

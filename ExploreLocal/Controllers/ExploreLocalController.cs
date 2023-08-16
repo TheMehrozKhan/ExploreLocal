@@ -22,7 +22,7 @@ namespace ExploreLocal.Controllers
             using (var db = new ExploreLocalEntities())
             {
                 List<Tbl_Venue> venues = db.Tbl_Venue.ToList();
-                List<Tbl_Destination> destinations = db.Tbl_Destination.ToList(); 
+                List<Tbl_Destination> destinations = db.Tbl_Destination.Where(t => t.TourStatus == true).ToList(); 
 
                 var viewModel = new IndexViewModel
                 {
