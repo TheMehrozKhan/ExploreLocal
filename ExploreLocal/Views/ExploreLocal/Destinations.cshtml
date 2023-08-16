@@ -71,11 +71,13 @@
                                                 </div>
                                             }
                                         }
-                                        <div class="cardImage__wishlist">
-                                            <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                    <div class="cardImage__wishlist">
+                                        <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                            <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = tour.DestinationID })" class="action-card action-wishlist">
                                                 <i class="icon-heart text-12"></i>
-                                            </button>
-                                        </div>
+                                            </a>
+                                        </button>
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="hotelsCard__content mt-10">

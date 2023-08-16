@@ -788,6 +788,80 @@ namespace ExploreLocal.Controllers
             return View(user);
         }
 
+        public ActionResult Add_Wishlist(int? id)
+        {
+            if (Session["u_id"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            Tbl_Destination p = db.Tbl_Destination.Where(x => x.DestinationID == id).SingleOrDefault();
+            if (p == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            List<Wishlist> userItems = Session["wishlist"] as List<Wishlist>;
+
+            if (userItems == null)
+            {
+                userItems = new List<Wishlist>();
+            }
+
+            Wishlist existingItem = userItems.FirstOrDefault(item => item.DestinationID == id);
+
+            if (existingItem != null)
+            {
+                existingItem.o_qty++;
+                existingItem.o_bill = existingItem.Price * existingItem.o_qty;
+            }
+            else
+            {
+                Wishlist ca = new Wishlist();
+                ca.DestinationID = p.DestinationID;
+                ca.DestinationName = p.DestinationName;
+                ca.Price = Convert.ToInt32(p.Price);
+                ca.Image = p.Image;
+                ca.Destination_Duration = p.Destination_Duration;
+                ca.Country = p.Country;
+                ca.Language = p.Language;
+
+
+                userItems.Add(ca);
+            }
+
+            int cartCount = userItems.Count;
+            ViewBag.CartCount = cartCount;
+
+            Session["wishlist"] = userItems;
+
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+
+        public ActionResult View_Wishlist()
+        {
+            if (Session["u_id"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            List<Wishlist> userItems = Session["Wishlist"] as List<Wishlist>;
+
+            if (userItems == null)
+            {
+                userItems = new List<Wishlist>();
+            }
+
+            ViewBag.WishlistCount = userItems.Count;
+
+            return View(userItems);
+        }
+
         public string uploadimage(HttpPostedFileBase file)
         {
             Random r = new Random();
