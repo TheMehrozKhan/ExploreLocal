@@ -14,7 +14,7 @@ namespace ExploreLocal.Controllers
     public class AdminController : Controller
     {
         ExploreLocalEntities db = new ExploreLocalEntities();
-        public ActionResult Index()
+        public ActionResult Layout()
         {
             return View();
         }

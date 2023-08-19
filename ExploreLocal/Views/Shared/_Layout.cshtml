@@ -175,7 +175,7 @@
                                         margin-right: 25px;
                                     }
 
-                                    .thelink {
+                                    .theendlink {
                                         background-image: url(../../Content/img/564.jpg);
                                     }
                                 </style>
@@ -196,7 +196,7 @@
                             </a>
                                     var userId = Convert.ToInt32(Session["u_id"]);
                                     var userProfileImage = Session["u_image"]?.ToString();
-                                    <a href="@Url.Action("UserProfile","ExploreLocal", new { id = userId } )" class="thelink">
+                                    <a href="@Url.Action("UserProfile","ExploreLocal", new { id = userId } )" class="theendlink">
                                         <img src="@Url.Content(@userProfileImage)" alt="User Profile Image" class="user-profile-image" />
                                     </a>
                                     <a href="@Url.Action("Logout", "ExploreLocal")" class="button h-50 px-30 fw-400 text-14 -blue-1 bg-white text-dark-1 sm:d-none" id="thebtn">Logout</a>
