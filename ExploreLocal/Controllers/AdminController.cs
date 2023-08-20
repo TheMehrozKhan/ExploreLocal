@@ -42,18 +42,115 @@ namespace ExploreLocal.Controllers
             }
             return View();
         }
-
-        [HttpGet]
         public ActionResult Admin_Panel()
         {
             if (Session["ad_id"] == null)
             {
                 return RedirectToAction("Login");
             }
+
+            List<Tbl_Bookings> bookings = db.Tbl_Bookings.ToList();
+
+            var revenueData = CalculateRevenueData(bookings);
+            var expenseData = CalculateExpenseData(bookings);
+
             ViewBag.ToastMessage = TempData["ToastMessage"];
+
+            ViewBag.RevenueData = revenueData;
+            ViewBag.ExpenseData = expenseData;
+
+            double totalEarnings = CalculateTotalEarnings(bookings);
+            ViewBag.TotalEarnings = totalEarnings.ToString("C"); 
+
+            double earningsThisMonth = CalculateEarningsThisMonth(bookings);
+            ViewBag.EarningsThisMonth = earningsThisMonth.ToString("C"); 
+
+            double expenseThisMonth = CalculateExpenseThisMonth(bookings);
+            ViewBag.ExpenseThisMonth = expenseThisMonth.ToString("C"); 
+
             return View();
         }
-       
+
+        private double CalculateTotalEarnings(List<Tbl_Bookings> bookings)
+        {
+            var totalEarnings = bookings.Sum(booking =>
+            {
+                var destinationPrice = db.Tbl_Destination
+                    .Where(d => d.DestinationID == booking.DestinationId)
+                    .Select(d => d.Price)
+                    .FirstOrDefault();
+
+                return ((booking.NumberOfAdults ?? 0) * (double)destinationPrice) + ((booking.NumberOfChildren ?? 0) * (double)destinationPrice);
+            });
+
+            return totalEarnings;
+        }
+
+        private double CalculateEarningsThisMonth(List<Tbl_Bookings> bookings)
+        {
+            DateTime currentDate = DateTime.Now;
+            var earningsThisMonth = bookings
+                .Where(booking => booking.BookingDate.HasValue && booking.BookingDate.Value.Month == currentDate.Month)
+                .Sum(booking =>
+                {
+                    var destinationPrice = db.Tbl_Destination
+                        .Where(d => d.DestinationID == booking.DestinationId)
+                        .Select(d => d.Price)
+                        .FirstOrDefault();
+
+                    return ((booking.NumberOfAdults ?? 0) * (double)destinationPrice) + ((booking.NumberOfChildren ?? 0) * (double)destinationPrice);
+                });
+
+            return earningsThisMonth;
+        }
+
+        private double CalculateExpenseThisMonth(List<Tbl_Bookings> bookings)
+        {
+            DateTime currentDate = DateTime.Now;
+            double fixedExpenseRate = 10.0; // Replace with your actual fixed expense rate
+
+            var expenseThisMonth = bookings
+                .Where(booking => booking.BookingDate.HasValue && booking.BookingDate.Value.Month == currentDate.Month)
+                .Sum(booking => (booking.NumberOfAdults ?? 0) + (booking.NumberOfChildren ?? 0) * fixedExpenseRate);
+
+            return expenseThisMonth;
+        }
+
+
+
+        private List<double> CalculateRevenueData(List<Tbl_Bookings> bookings)
+        {
+            List<double> revenueData = new List<double>();
+
+            foreach (var booking in bookings)
+            {
+                var destinationPrice = db.Tbl_Destination.Where(d => d.DestinationID == booking.DestinationId).Select(d => d.Price).FirstOrDefault();
+
+                double revenue = ((booking.NumberOfAdults ?? 0) * (double)destinationPrice) + ((booking.NumberOfChildren ?? 0) * (double)destinationPrice);
+                revenueData.Add(revenue);
+            }
+
+            return revenueData;
+        }
+
+        private List<double> CalculateExpenseData(List<Tbl_Bookings> bookings)
+        {
+            List<double> expenseData = new List<double>();
+
+            // Define the fixed expense rate (modify this according to your needs)
+            double fixedExpenseRate = 10.0; // Replace with your actual fixed expense rate
+
+            foreach (var booking in bookings)
+            {
+                double expense = (booking.NumberOfAdults ?? 0) + (booking.NumberOfChildren ?? 0) * fixedExpenseRate;
+                expenseData.Add(expense);
+            }
+
+            return expenseData;
+        }
+
+
+
         public ActionResult Logout()
         {
             Session.Clear();
@@ -236,7 +333,7 @@ namespace ExploreLocal.Controllers
             {
                 Tbl_Venue ca = new Tbl_Venue();
                 ca.Venue_name = cat.Venue_name;
-                ca.Venue_Country = cat.Venue_Country; 
+                ca.Venue_Country = cat.Venue_Country;
                 ca.Venue_img = path;
                 ca.Venue_Description = cat.Venue_Description;
                 ca.Admin_id = Convert.ToInt32(Session["ad_id"].ToString());
