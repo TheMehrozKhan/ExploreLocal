@@ -60,16 +60,30 @@ namespace ExploreLocal.Controllers
             ViewBag.ExpenseData = expenseData;
 
             double totalEarnings = CalculateTotalEarnings(bookings);
-            ViewBag.TotalEarnings = totalEarnings.ToString("C"); 
+            ViewBag.TotalEarnings = totalEarnings.ToString("C");
 
             double earningsThisMonth = CalculateEarningsThisMonth(bookings);
-            ViewBag.EarningsThisMonth = earningsThisMonth.ToString("C"); 
+            ViewBag.EarningsThisMonth = earningsThisMonth.ToString("C");
 
             double expenseThisMonth = CalculateExpenseThisMonth(bookings);
-            ViewBag.ExpenseThisMonth = expenseThisMonth.ToString("C"); 
+            ViewBag.ExpenseThisMonth = expenseThisMonth.ToString("C");
 
-            return View();
+            int currentYear = DateTime.Now.Year;
+            double totalYearlyBookings = CalculateTotalYearlyBookings(bookings, currentYear);
+            ViewBag.TotalYearlyBookings = totalYearlyBookings.ToString("C");
+
+            List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
+            return View(ExpertList);
         }
+
+
+        private double CalculateTotalYearlyBookings(List<Tbl_Bookings> bookings, int targetYear)
+        {
+            var yearlyBookings = bookings.Where(booking => booking.BookingDate.HasValue && booking.BookingDate.Value.Year == targetYear).ToList();
+            double totalYearlyBookings = CalculateTotalEarnings(yearlyBookings);
+            return totalYearlyBookings;
+        }
+
 
         private double CalculateTotalEarnings(List<Tbl_Bookings> bookings)
         {
@@ -149,7 +163,11 @@ namespace ExploreLocal.Controllers
             return expenseData;
         }
 
-
+        public ActionResult AllExperts()
+        {
+            List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
+            return View(ExpertList);
+        }
 
         public ActionResult Logout()
         {
@@ -282,12 +300,6 @@ namespace ExploreLocal.Controllers
             }
 
             return RedirectToAction("ExpertTourRequests");
-        }
-
-        public ActionResult AllExperts()
-        {
-            List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
-            return View(ExpertList);
         }
 
         public ActionResult ExpertDelete(int expertId)
