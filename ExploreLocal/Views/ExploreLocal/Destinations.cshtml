@@ -70,9 +70,26 @@
                                             }
                                         }
                                     <div class="cardImage__wishlist">
-                                        <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                        <style>
+
+                                            #theicon 
+                                            {
+                                                background-color: #3554D1;
+                                            }
+
+                                            #theicon:hover {
+                                                background-color: white;
+                                            }
+                                            #thehearticon {
+                                                color: white;
+                                            }
+                                            #thehearticon:hover {
+                                                color: black;
+                                            }
+                                        </style>
+                                        <button class="button size-30 rounded-full shadow-2" id="theicon">
                                             <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = tour.DestinationID })" class="action-card action-wishlist">
-                                                <i class="icon-heart text-12"></i>
+                                                <i class="icon-heart text-12" id="thehearticon"></i>
                                             </a>
                                         </button>
                                     </div>
@@ -132,9 +149,27 @@
                                         }
                                     }
                                 <div class="cardImage__wishlist">
-                                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                    <style>
+
+                                        #theicon {
+                                            background-color: #3554D1;
+                                        }
+
+                                            #theicon:hover {
+                                                background-color: white;
+                                            }
+
+                                        #thehearticon {
+                                            color: white;
+                                        }
+
+                                            #thehearticon:hover {
+                                                color: black;
+                                            }
+                                    </style>
+                                    <button class="button size-30 rounded-full shadow-2" id="theicon">
                                         <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = tour.DestinationID })" class="action-card action-wishlist">
-                                            <i class="icon-heart text-12"></i>
+                                            <i class="icon-heart text-12" id="thehearticon"></i>
                                         </a>
                                     </button>
                                 </div>
@@ -197,9 +232,27 @@
                                         }
                                     }
                                 <div class="cardImage__wishlist">
-                                    <button class="button -blue-1 bg-white size-30 rounded-full shadow-2">
+                                    <style>
+
+                                        #theicon {
+                                            background-color: #3554D1;
+                                        }
+
+                                            #theicon:hover {
+                                                background-color: white;
+                                            }
+
+                                        #thehearticon {
+                                            color: white;
+                                        }
+
+                                            #thehearticon:hover {
+                                                color: black;
+                                            }
+                                    </style>
+                                    <button class="button size-30 rounded-full shadow-2" id="theicon">
                                         <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = activity.DestinationID })" class="action-card action-wishlist">
-                                            <i class="icon-heart text-12"></i>
+                                            <i class="icon-heart text-12" id="thehearticon" ></i>
                                         </a>
                                     </button>
                                 </div>

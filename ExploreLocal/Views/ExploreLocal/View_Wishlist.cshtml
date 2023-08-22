@@ -1,55 +1,68 @@
 ﻿<h2>Your Wishlist</h2>
 <section class="layout-pt-md layout-pb-md">
     <div class="container">
-        <div class="row y-gap-20 justify-between items-end">
-            <div class="col-auto">
-                <div class="sectionTitle -md">
-                    <h2 class="sectionTitle__title">@Session["u_name"] Favourite Tours</h2>
-                </div>
-            </div>
+        <div class="col-auto d-flex justify-content-center mt-5 mb-15">
+            <h2 style="text-align:center;margin-left:100px;">@Session["u_name"] Favourite Tours</h2>
+            <img src="~/Content/img/AirPlane.png" height="150" width="150" style="position:relative;bottom:13px;"/>
         </div>
-        <hr />
         <div class="row y-gap-30 pt-40 sm:pt-20">
             @if (Model != null && Model.Count > 0)
             {
                 foreach (var item in Model)
                 {
-            <div class="col-xl-3 col-lg-3 col-sm-6">
-                <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = item.DestinationID })" class="hotelsCard -type-1 ">
-                    <div class="hotelsCard__image">
-                        <div class="cardImage ratio ratio-1:1">
-                            @if (!string.IsNullOrEmpty(item.Image))
+                    <div class="col-xl-3 col-lg-3 col-sm-6" style="box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;padding:25px;">
+                        <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = item.DestinationID })" class="hotelsCard -type-1 ">
+                            <div class="hotelsCard__image">
+                                <div class="cardImage ratio ratio-1:1">
+                                    @if (!string.IsNullOrEmpty(item.Image))
                                     {
                                         var imagePaths = item.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                                         foreach (var imagePath in imagePaths)
                                         {
                                             var imageUrl = Url.Content(imagePath);
-                            <div class="cardImage__content">
-                                <img class="rounded-4 col-12" src="@imageUrl" alt="Tour Image">
-                            </div>
+                                            <div class="cardImage__content">
+                                                <img class="rounded-4 col-12" src="@imageUrl" alt="Tour Image">
+                                            </div>
                                         }
                                     }
-                        </div>
-                    </div>
-                    <div class="hotelsCard__content mt-10">
-                        <div class="d-flex items-center lh-14 mb-5 mt-10">
-                            <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @item.Destination_Duration</div>
-                            <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @item.Language</div>
-                        </div>
-                        <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                            <span>@item.DestinationName</span>
-                        </h4>
-                        <p class="text-light-1 lh-14 text-14 mt-5">@item.Country</p>
-                        <div class="d-flex items-center mt-20">
-                        </div>
-                        <div class="mt-5">
-                            <div class="fw-500">
-                                Starting from <span class="text-blue-1">@string.Format("{0:N0}", item.Price) PKR</span>
+                                </div>
                             </div>
-                        </div>
+                            <div class="hotelsCard__content mt-10">
+                                <div class="d-flex items-center lh-14 mb-5 mt-10">
+                                    <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @item.Destination_Duration</div>
+                                    <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @item.Language</div>
+                                </div>
+                                <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
+                                    <span>@item.DestinationName</span>
+                                </h4>
+                                <p class="text-light-1 lh-14 text-14 mt-5">@item.Country</p>
+                                <div class="d-flex items-center mt-20">
+                                </div>
+                                <div class="mt-5">
+                                    <div class="fw-500">
+                                        Starting from <span class="text-blue-1">@string.Format("{0:N0}", item.Price) PKR</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <style>
+                                .thekhtmdiv {
+                                    background-color: #3554D1;
+                                    color: white;
+                                    border-radius: 5px;
+                                    padding: 5px;
+                                    transition: 0.2s;
+                                }
+
+                                    .thekhtmdiv:hover {
+                                        background-color: darkorange;
+                                        font-size: 16.5px;
+                                    }
+                            </style>
+                            <div class="mt-5 text-center thekhtmdiv">
+                                <a href="@Url.Action("RemoveFromWishlist", "ExploreLocal", new { id = item.DestinationID })" class="btn btn-danger" style="color:white;">Remove from Wishlist</a>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
                 }
             }
         </div>

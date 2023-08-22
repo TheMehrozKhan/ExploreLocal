@@ -324,7 +324,6 @@ namespace ExploreLocal.Controllers
 
                     var expert = db.Tbl_Expert.Find(booking.ExpertID);
 
-                    // Controller code
                     if (user != null && destination != null && expert != null)
                     {
                         ViewBag.Booking = booking;
@@ -860,6 +859,35 @@ namespace ExploreLocal.Controllers
 
             return View(userItems);
         }
+
+        public ActionResult RemoveFromWishlist(int? id)
+        {
+            if (Session["u_id"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            List<Wishlist> userItems = Session["wishlist"] as List<Wishlist>;
+
+            if (userItems != null)
+            {
+                Wishlist itemToRemove = userItems.FirstOrDefault(item => item.DestinationID == id);
+                if (itemToRemove != null)
+                {
+                    userItems.Remove(itemToRemove);
+                }
+            }
+
+            Session["wishlist"] = userItems;
+
+            return RedirectToAction("View_Wishlist");
+        }
+
 
         public string uploadimage(HttpPostedFileBase file)
         {
