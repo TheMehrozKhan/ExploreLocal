@@ -400,67 +400,67 @@
             </div>
             @if (Model.Announcement != null && Model.Announcement.Count > 0)
             {
-        <div class="row y-gap-30 pt-40">
-            @foreach (var announcement in Model.Announcement)
-            {
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="blogCard -type-1 d-block">
-                        <div class="blogCard__image">
-                            <div class="ratio ratio-4:3 rounded-4 rounded-8">
-                                <img class="img-ratio js-lazy" src="@Url.Content(announcement.Announcement_image)" alt="image">
-                            </div>
+                <div class="row y-gap-30 pt-40">
+                    @foreach (var announcement in Model.Announcement)
+                    {
+                        <div class="col-lg-4 col-sm-6">
+                            <a href="#" class="blogCard -type-1 d-block">
+                                <div class="blogCard__image">
+                                    <div class="ratio ratio-4:3 rounded-4 rounded-8">
+                                        <img class="img-ratio js-lazy" src="@Url.Content(announcement.Announcement_image)" alt="image">
+                                    </div>
+                                </div>
+                                <div class="mt-20">
+                                    <h4 class="text-dark-1 text-18 fw-500">@announcement.Announcement_headline</h4>
+                                    <div class="text-light-1 text-15 lh-14 mt-5">@announcement.Announcement_description</div>
+                                    <button class="mt-15 button px-15 py-10" id="shareButton" style="width:100%;background-color:#3554D1;color:white;">
+                                        <i class="icon-share mr-10"></i>
+                                        View More
+                                    </button>
+                                </div>
+                            </a>
                         </div>
-                        <div class="mt-20">
-                            <h4 class="text-dark-1 text-18 fw-500">@announcement.Announcement_headline</h4>
-                            <div class="text-light-1 text-15 lh-14 mt-5">@announcement.Announcement_description</div>
-                            <button class="mt-15 button px-15 py-10" id="shareButton" style="width:100%;background-color:#3554D1;color:white;">
-                                <i class="icon-share mr-10"></i>
-                                View More
-                            </button>
-                        </div>
-                    </a>
-                </div>
-                <div id="sharePopup" class="modal">
-                    <div class="modal__content" style=" border-radius: 1.5rem;width:520px;">
-                        <div class="closeButtonWrapper">
-                            <button class="closeButton" id="closePopup">
-                                &times;
-                            </button>
-                        </div>
-                        <div class="container" style="margin-bottom:10px;text-align:center;">
-                            <h4 style="font-size:21px;font-weight:500;"> Complete Details of Our Announcement </h4>
-                        </div>
-                        <div class="container">
-                            <div class="blogCard__image">
-                                <div class="ratio ratio-4:3 rounded-4 rounded-8">
-                                    <img class="img-ratio js-lazy" src="@Url.Content(announcement.Announcement_image)" alt="image">
+                        <div id="sharePopup" class="modal">
+                            <div class="modal__content" style=" border-radius: 1.5rem;width:520px;">
+                                <div class="closeButtonWrapper">
+                                    <button class="closeButton" id="closePopup">
+                                        &times;
+                                    </button>
+                                </div>
+                                <div class="container" style="margin-bottom:10px;text-align:center;">
+                                    <h4 style="font-size:21px;font-weight:500;"> Complete Details of Our Announcement </h4>
+                                </div>
+                                <div class="container">
+                                    <div class="blogCard__image">
+                                        <div class="ratio ratio-4:3 rounded-4 rounded-8">
+                                            <img class="img-ratio js-lazy" src="@Url.Content(announcement.Announcement_image)" alt="image">
+                                        </div>
+                                    </div>
+                                    <div class="mt-20">
+                                        <h4 class="text-dark-1 text-18 fw-500">@announcement.Announcement_headline</h4>
+                                        <div class="text-light-1 text-15 lh-14 mt-5">@announcement.Announcement_description</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="mt-20">
-                                <h4 class="text-dark-1 text-18 fw-500">@announcement.Announcement_headline</h4>
-                                <div class="text-light-1 text-15 lh-14 mt-5">@announcement.Announcement_description</div>                             
-                            </div>
                         </div>
-                    </div>
+                        <script>
+                            document.getElementById('shareButton').addEventListener('click', function () {
+                                document.getElementById('sharePopup').style.display = 'block';
+                            });
+
+                            window.onclick = function (event) {
+                                var sharePopup = document.getElementById('sharePopup');
+                                if (event.target == sharePopup) {
+                                    sharePopup.style.display = 'none';
+                                }
+                            };
+
+                            document.getElementById('closePopup').addEventListener('click', function () {
+                                document.getElementById('sharePopup').style.display = 'none';
+                            });
+                        </script>
+                    }
                 </div>
-                <script>
-                    document.getElementById('shareButton').addEventListener('click', function () {
-                    document.getElementById('sharePopup').style.display = 'block';
-                    });
-
-                    window.onclick = function (event) {
-                        var sharePopup = document.getElementById('sharePopup');
-                        if (event.target == sharePopup) {
-                            sharePopup.style.display = 'none';
-                        }
-                    };
-
-                    document.getElementById('closePopup').addEventListener('click', function () {
-                        document.getElementById('sharePopup').style.display = 'none';
-                    });
-                </script>
-            }
-        </div>
             }
         </div>
     </section>
@@ -471,8 +471,8 @@
         <div class="container">
             <div class="row y-gap-40 justify-between">
                 <div class="col-xl-5 col-lg-6">
-                    <h2 class="text-30">What our customers are<br> saying us?</h2>
-                    <p class="mt-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo.</p>
+                    <h2 class="text-30">What our customers are<br> saying about us?</h2>
+                    <p class="mt-20">Read some of the testimonials from our satisfied customers who have experienced our amazing tours and services.</p>
 
                     <div class="row y-gap-30 pt-60 lg:pt-40">
                         <div class="col-sm-5 col-6">
@@ -485,17 +485,11 @@
                             <div class="text-light-1 lh-15">Overall rating</div>
 
                             <div class="d-flex x-gap-5 items-center pt-10">
-
                                 <div class="icon-star text-blue-1 text-10"></div>
-
                                 <div class="icon-star text-blue-1 text-10"></div>
-
                                 <div class="icon-star text-blue-1 text-10"></div>
-
                                 <div class="icon-star text-blue-1 text-10"></div>
-
                                 <div class="icon-star text-blue-1 text-10"></div>
-
                             </div>
                         </div>
                     </div>
@@ -504,50 +498,46 @@
                 <div class="col-lg-6">
                     <div class="overflow-hidden js-section-slider" data-scrollbar data-slider-cols="base-1">
                         <div class="swiper-wrapper">
-
+                            <!-- Customer Testimonial 1 -->
                             <div class="swiper-slide">
                                 <div class="row items-center x-gap-30 y-gap-20">
                                     <div class="col-auto">
                                         <img src="/Template/img/avatars/1.png" alt="image">
                                     </div>
-
                                     <div class="col-auto">
-                                        <h5 class="text-16 fw-500">Annette Black</h5>
-                                        <div class="text-15 text-light-1 lh-15">UX / UI Designer</div>
+                                        <h5 class="text-16 fw-500">John Doe</h5>
+                                        <div class="text-15 text-light-1 lh-15">Adventurer</div>
                                     </div>
                                 </div>
-
-                                <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">The place is in a great location in Gumbet. The area is safe and beautiful. The apartment was comfortable and the host was kind and responsive to our requests.</p>
+                                <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">I had an incredible experience on the tour. The guides were knowledgeable and friendly, and the destinations were breathtaking. I highly recommend this tour to anyone looking for an unforgettable adventure!</p>
                             </div>
 
+                            <!-- Customer Testimonial 2 -->
                             <div class="swiper-slide">
                                 <div class="row items-center x-gap-30 y-gap-20">
                                     <div class="col-auto">
-                                        <img src="/Template/img/avatars/1.png" alt="image">
+                                        <img src="/Template/img/avatars/2.png" alt="image">
                                     </div>
-
                                     <div class="col-auto">
-                                        <h5 class="text-16 fw-500">Annette Black</h5>
-                                        <div class="text-15 text-light-1 lh-15">UX / UI Designer</div>
+                                        <h5 class="text-16 fw-500">Jane Smith</h5>
+                                        <div class="text-15 text-light-1 lh-15">Nature Enthusiast</div>
                                     </div>
                                 </div>
-
-                                <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">The place is in a great location in Gumbet. The area is safe and beautiful. The apartment was comfortable and the host was kind and responsive to our requests.</p>
+                                <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">The tour exceeded my expectations in every way. From the stunning landscapes to the knowledgeable guides, everything was perfect. I can't wait to book another tour with this company!</p>
                             </div>
 
+                            <!-- Customer Testimonial 3 -->
                             <div class="swiper-slide">
                                 <div class="row items-center x-gap-30 y-gap-20">
                                     <div class="col-auto">
-                                        <img src="/Template/img/avatars/1.png" alt="image">
+                                        <img src="/Template/img/avatars/3.png" alt="image" style="border-radius:50%;">
                                     </div>
-
                                     <div class="col-auto">
-                                        <h5 class="text-16 fw-500">Annette Black</h5>
-                                        <div class="text-15 text-light-1 lh-15">UX / UI Designer</div>
+                                        <h5 class="text-16 fw-500">Jessica Johnson</h5>
+                                        <div class="text-15 text-light-1 lh-15">Travel Enthusiast</div>
                                     </div>
                                 </div>
-
-                                <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">The place is in a great location in Gumbet. The area is safe and beautiful. The apartment was comfortable and the host was kind and responsive to our requests.</p>
+                                <p class="text-18 fw-500 text-dark-1 mt-30 sm:mt-20">The tour was a perfect blend of adventure and relaxation. The guides were attentive to our needs and the activities were well-organized. I had an amazing time and would recommend it to everyone!</p>
                             </div>
 
                         </div>
@@ -555,7 +545,7 @@
                         <div class="d-flex items-center mt-60 sm:mt-20">
                             <div class="text-dark-1 fw-500">01</div>
                             <div class="slider-scrollbar bg-border ml-20 mr-20 w-max-300 js-scrollbar"></div>
-                            <div class="text-dark-1 fw-500">05</div>
+                            <div class="text-dark-1 fw-500">03</div>
                         </div>
                     </div>
                 </div>
@@ -563,19 +553,18 @@
         </div>
     </section>
 
+
     <section class="layout-pt-lg layout-pb-md">
         <div class="container">
             <div class="row y-gap-20">
                 <div class="col-lg-4">
-                    <h2 class="text-30 fw-500">
-                        FAQs about<br>
-                        London
-                    </h2>
+                    <h2 class="text-22 fw-500">FAQs About<br> Visting Our Tours</h2>
                 </div>
 
                 <div class="col-lg-8">
                     <div class="accordion -simple row y-gap-20 js-accordion">
 
+                        <!-- FAQ Item 1 -->
                         <div class="col-12">
                             <div class="accordion__item px-20 py-20 border-light rounded-4">
                                 <div class="accordion__button d-flex items-center">
@@ -583,18 +572,17 @@
                                         <i class="icon-plus"></i>
                                         <i class="icon-minus"></i>
                                     </div>
-
-                                    <div class="button text-dark-1">What do I need to hire a car?</div>
+                                    <div class="button text-dark-1">How do I book a tour?</div>
                                 </div>
-
                                 <div class="accordion__content">
                                     <div class="pt-20 pl-60">
-                                        <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                                        <p class="text-15">Booking a tour is easy! Simply navigate to the tour's page on our website, select your desired tour date, and click the "Book Now" button. You'll be prompted to provide your contact and payment information to secure your booking. Once the booking is confirmed, you'll receive a confirmation email with all the details.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- FAQ Item 2 -->
                         <div class="col-12">
                             <div class="accordion__item px-20 py-20 border-light rounded-4">
                                 <div class="accordion__button d-flex items-center">
@@ -602,18 +590,17 @@
                                         <i class="icon-plus"></i>
                                         <i class="icon-minus"></i>
                                     </div>
-
-                                    <div class="button text-dark-1">How old do I have to be to rent a car?</div>
+                                    <div class="button text-dark-1">What should I bring for the tour?</div>
                                 </div>
-
                                 <div class="accordion__content">
                                     <div class="pt-20 pl-60">
-                                        <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                                        <p class="text-15">We recommend bringing comfortable clothing and footwear suitable for the tour activities. Additionally, don't forget to bring essentials like sunscreen, a hat, a reusable water bottle, and any necessary medications. Depending on the tour, you might also need to bring a camera, binoculars, or other equipment.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- FAQ Item 3 -->
                         <div class="col-12">
                             <div class="accordion__item px-20 py-20 border-light rounded-4">
                                 <div class="accordion__button d-flex items-center">
@@ -621,18 +608,17 @@
                                         <i class="icon-plus"></i>
                                         <i class="icon-minus"></i>
                                     </div>
-
-                                    <div class="button text-dark-1">Can I book a hire car for someone else?</div>
+                                    <div class="button text-dark-1">Is transportation provided for the tour?</div>
                                 </div>
-
                                 <div class="accordion__content">
                                     <div class="pt-20 pl-60">
-                                        <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                                        <p class="text-15">Transportation options vary depending on the tour. Some tours may include transportation, while others may require you to arrange your own transportation to the starting point. Be sure to check the tour details to see if transportation is provided or if you need to make your own arrangements.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- FAQ Item 4 -->
                         <div class="col-12">
                             <div class="accordion__item px-20 py-20 border-light rounded-4">
                                 <div class="accordion__button d-flex items-center">
@@ -640,18 +626,17 @@
                                         <i class="icon-plus"></i>
                                         <i class="icon-minus"></i>
                                     </div>
-
-                                    <div class="button text-dark-1">How do I find the cheapest car hire deal?</div>
+                                    <div class="button text-dark-1">Can I cancel or reschedule my booking?</div>
                                 </div>
-
                                 <div class="accordion__content">
                                     <div class="pt-20 pl-60">
-                                        <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                                        <p class="text-15">Yes, you can cancel or reschedule your booking. However, cancellation and rescheduling policies vary by tour. It's recommended to review the specific terms and conditions of the tour before making a booking. If you need to make changes, please contact our customer support team for assistance.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- FAQ Item 5 -->
                         <div class="col-12">
                             <div class="accordion__item px-20 py-20 border-light rounded-4">
                                 <div class="accordion__button d-flex items-center">
@@ -659,17 +644,16 @@
                                         <i class="icon-plus"></i>
                                         <i class="icon-minus"></i>
                                     </div>
-
-                                    <div class="button text-dark-1">What should I look for when I&#39;m choosing a car?</div>
+                                    <div class="button text-dark-1">What happens in case of bad weather?</div>
                                 </div>
-
                                 <div class="accordion__content">
                                     <div class="pt-20 pl-60">
-                                        <p class="text-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+                                        <p class="text-15">In the event of bad weather, the safety of our participants is our top priority. Tour cancellations due to weather conditions are rare but may occur. If your tour is canceled, our customer support team will contact you to discuss rescheduling or refund options. Please check the tour details for specific weather-related policies.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
 
                     </div>
                 </div>
