@@ -4,6 +4,22 @@
         width: 100%;
         height: 400px;
     }
+
+    #theicon {
+        background-color: #3554D1;
+    }
+
+    #theicon:hover {
+        background-color: white;
+    }
+
+    #thehearticon {
+        color: white;
+    }
+
+        #thehearticon:hover {
+            color: black;
+        }
 </style>
 <body>
     <main style="margin-top:120px;">
@@ -63,55 +79,55 @@
                         <div class="swiper-wrapper">
                             @foreach (var tour in Model.SelectedVenueTours)
                             {
-                            <div class="swiper-slide">
-                                <div class="hotelsCard -type-1">
-                                    <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard__link">
-                                        <div class="hotelsCard__image">
-                                            <div class="cardImage ratio ratio-1:1">
-                                                @if (!string.IsNullOrEmpty(tour.Image))
-                                                {
-                                                    var imagePaths = tour.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                                                    foreach (var imagePath in imagePaths)
+                                <div class="swiper-slide">
+                                    <div class="hotelsCard -type-1">
+                                        <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard__link">
+                                            <div class="hotelsCard__image">
+                                                <div class="cardImage ratio ratio-1:1">
+                                                    @if (!string.IsNullOrEmpty(tour.Image))
                                                     {
-                                                        var imageUrl = Url.Content(imagePath);
-                                                        <div class="cardImage__content">
-                                                            <img class="rounded-4 col-12" src="@imageUrl" alt="Tour Image">
-                                                        </div>
+                                                        var imagePaths = tour.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                                        foreach (var imagePath in imagePaths)
+                                                        {
+                                                            var imageUrl = Url.Content(imagePath);
+                                                            <div class="cardImage__content">
+                                                                <img class="rounded-4 col-12" src="@imageUrl" alt="Tour Image">
+                                                            </div>
+                                                        }
                                                     }
-                                                }
-                                                <div class="cardImage__wishlist">
-                                                    <button class="button size-30 rounded-full shadow-2" id="theicon">
-                                                        <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = tour.DestinationID })" class="action-card action-wishlist">
-                                                            <i class="icon-heart text-12" id="thehearticon"></i>
-                                                        </a>
-                                                    </button>
+                                                    <div class="cardImage__wishlist">
+                                                        <button class="button size-30 rounded-full shadow-2" id="theicon">
+                                                            <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = tour.DestinationID })" class="action-card action-wishlist">
+                                                                <i class="icon-heart text-12" id="thehearticon"></i>
+                                                            </a>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="hotelsCard__content mt-10">
-                                            <div class="d-flex items-center lh-14 mb-5 mt-10">
-                                                <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @tour.Destination_Duration</div>
-                                                <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @tour.Language</div>
-                                            </div>
-                                            <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
-                                                <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
-                                                    <span>@tour.DestinationName</span>
-                                                </a>
-                                            </h4>
-                                            <p class="text-light-1 lh-14 text-14 mt-5">@tour.Country</p>
-                                            <div class="d-flex items-center mt-20">
-                                            </div>
-                                            <div class="mt-5">
-                                                <div class="fw-500">
-                                                    Starting from <span class="text-blue-1">@string.Format("{0:N0}", tour.Price) PKR</span>
+                                            <div class="hotelsCard__content mt-10">
+                                                <div class="d-flex items-center lh-14 mb-5 mt-10">
+                                                    <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @tour.Destination_Duration</div>
+                                                    <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @tour.Language</div>
+                                                </div>
+                                                <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
+                                                    <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
+                                                        <span>@tour.DestinationName</span>
+                                                    </a>
+                                                </h4>
+                                                <p class="text-light-1 lh-14 text-14 mt-5">@tour.Country</p>
+                                                <div class="d-flex items-center mt-20">
+                                                </div>
+                                                <div class="mt-5">
+                                                    <div class="fw-500">
+                                                        Starting from <span class="text-blue-1">@string.Format("{0:N0}", tour.Price) PKR</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </a>
                                     </div>
                                 </div>
-                                }
-                            </div>
+                            }
+                        </div>
                         <div class="d-flex x-gap-15 items-center justify-center pt-40 sm:pt-20">
                             <div class="col-auto">
                                 <button class="d-flex items-center text-24 arrow-left-hover js-hotels-prev">
@@ -140,80 +156,86 @@
                     <div class="col-auto">
                         <div class="sectionTitle -md">
                             <h2 class="sectionTitle__title">Most Popular Tours</h2>
+                            <p class="sectionTitle__text mt-5 sm:mt-0">This is Our Best Favourite Tours</p>
                         </div>
                     </div>
                 </div>
                 <div class="row y-gap-30 pt-40 sm:pt-20">
-                    @foreach (var tour in Model.MostPopularTours)
-                    {
-                        <div class="col-xl-3 col-lg-3 col-sm-6">
-                            <a href="@Url.Action("TourDetails", "Tour", new { id = tour.DestinationID })" class="tourCard -type-1 rounded-4 ">
-                                <div class="tourCard__image">
-                                    <div class="cardImage ratio ratio-1:1">
-                                        @if (!string.IsNullOrEmpty(tour.Image))
-                                        {
-                                            var imagePaths = tour.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                                            foreach (var imagePath in imagePaths)
-                                            {
-                                                var imageUrl = Url.Content(imagePath);
-                                                <div class="cardImage__content">
-                                                    <img class="rounded-4 col-12" src="@imageUrl" alt="image">
+                    <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-4 lg-3 md-2 sm-2 base-1" data-nav-prev="js-hotels-prev" data-pagination="js-hotels-pag" data-nav-next="js-hotels-next">
+                        <div class="swiper-wrapper">
+                            @foreach (var tour in Model.MostPopularTours)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="hotelsCard -type-1">
+                                        <a href="@Url.Action("TourDetails", "Tour", new { id = tour.DestinationID })" class="hotelsCard__link">
+                                            <div class="hotelsCard__image">
+                                                <div class="cardImage ratio ratio-1:1">
+                                                    @if (!string.IsNullOrEmpty(tour.Image))
+                                                    {
+                                                        var imagePaths = tour.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                                        foreach (var imagePath in imagePaths)
+                                                        {
+                                                            var imageUrl = Url.Content(imagePath);
+                                                            <div class="cardImage__content">
+                                                                <img class="rounded-4 col-12" src="@imageUrl" alt="image">
+                                                            </div>
+                                                        }
+                                                    }
+                                                    <div class="cardImage__wishlist">
+                                                        <button class="button size-30 rounded-full shadow-2" id="theicon">
+                                                            <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = tour.DestinationID })" class="action-card action-wishlist">
+                                                                <i class="icon-heart text-12" id="thehearticon"></i>
+                                                            </a>
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            }
-                                        }
-                                        <div class="cardImage__wishlist">
-                                            <style>
-
-                                                #theicon {
-                                                    background-color: #3554D1;
-                                                }
-
-                                                    #theicon:hover {
-                                                        background-color: white;
-                                                    }
-
-                                                #thehearticon {
-                                                    color: white;
-                                                }
-
-                                                    #thehearticon:hover {
-                                                        color: black;
-                                                    }
-                                            </style>
-                                            <button class="button size-30 rounded-full shadow-2" id="theicon">
-                                                <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = tour.DestinationID })" class="action-card action-wishlist">
-                                                    <i class="icon-heart text-12" id="thehearticon"></i>
-                                                </a>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tourCard__content mt-10">
-                                    <div class="d-flex items-center lh-14 mb-5 mt-10">
-                                        <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @tour.Destination_Duration</div>
-                                        <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @tour.Language</div>
-                                    </div>
-                                    <h4 class="tourCard__title text-dark-1 text-18 lh-16 fw-500">
-                                        <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
-
-                                            <span>@tour.DestinationName</span>
-                                        </a>
-                                    </h4>
-                                    <p class="text-light-1 lh-14 text-14 mt-5">@tour.Country</p>
-                                    <div class="row justify-between items-center pt-15">
-                                        <div class="col-auto">
-                                            <div class="text-14 text-light-1">
-                                                From
-                                                <span class="text-blue-1">@string.Format("{0:N0}", tour.Price) PKR</span>
                                             </div>
-                                        </div>
+                                            <div class="hotelsCard__content mt-10">
+                                                <div class="d-flex items-center lh-14 mb-5 mt-10">
+                                                    <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @tour.Destination_Duration</div>
+                                                    <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @tour.Language</div>
+                                                </div>
+                                                <h4 class="hotelsCard__title text-dark-1 text-18 lh-16 fw-500">
+                                                    <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = tour.DestinationID })" class="hotelsCard -type-1 ">
+
+                                                        <span>@tour.DestinationName</span>
+                                                    </a>
+                                                </h4>
+                                                <p class="text-light-1 lh-14 text-14 mt-5">@tour.Country</p>
+                                                <div class="row justify-between items-center pt-15">
+                                                    <div class="col-auto">
+                                                        <div class="text-14 text-light-1">
+                                                            From
+                                                            <span class="text-blue-1">@string.Format("{0:N0}", tour.Price) PKR</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                            </a>
+                            }
                         </div>
-                    }
+                        <div class="d-flex x-gap-15 items-center justify-center pt-40 sm:pt-20">
+                            <div class="col-auto">
+                                <button class="d-flex items-center text-24 arrow-left-hover js-hotels-prev">
+                                    <i class="icon icon-arrow-left"></i>
+                                </button>
+                            </div>
+
+                            <div class="col-auto">
+                                <div class="pagination -dots text-border js-hotels-pag"></div>
+                            </div>
+
+                            <div class="col-auto">
+                                <button class="d-flex items-center text-24 arrow-right-hover js-hotels-next">
+                                    <i class="icon icon-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                </div>
         </section>
 
 
