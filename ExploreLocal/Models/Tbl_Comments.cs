@@ -12,28 +12,22 @@ namespace ExploreLocal.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_User
+    public partial class Tbl_Comments
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tbl_User()
+        public Tbl_Comments()
         {
-            this.Tbl_Bookings = new HashSet<Tbl_Bookings>();
-            this.Tbl_Comments = new HashSet<Tbl_Comments>();
             this.Tbl_Replies = new HashSet<Tbl_Replies>();
         }
     
-        public int UserID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Location { get; set; }
-        public string ProfileImage { get; set; }
+        public int CommentId { get; set; }
+        public Nullable<int> DestinationId { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public string CommentText { get; set; }
+        public Nullable<System.DateTime> CommentDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Bookings> Tbl_Bookings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Comments> Tbl_Comments { get; set; }
+        public virtual Tbl_Destination Tbl_Destination { get; set; }
+        public virtual Tbl_User Tbl_User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Replies> Tbl_Replies { get; set; }
     }

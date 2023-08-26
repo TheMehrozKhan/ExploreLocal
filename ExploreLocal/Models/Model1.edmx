@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ExploreLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ExploreLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Tbl_Admin">
           <Key>
             <PropertyRef Name="Admin_Id" />
@@ -24,24 +24,6 @@
           <Property Name="Announcement_image" Type="varchar(max)" />
           <Property Name="Announcement_status" Type="bit" />
         </EntityType>
-        <EntityType Name="Tbl_BookingHistory">
-          <Key>
-            <PropertyRef Name="BookingId" />
-          </Key>
-          <Property Name="BookingId" Type="int" Nullable="false" />
-          <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="DestinationId" Type="int" Nullable="false" />
-          <Property Name="NumberOfAdults" Type="int" Nullable="false" />
-          <Property Name="NumberOfChildren" Type="int" Nullable="false" />
-          <Property Name="BookingDate" Type="datetime" Nullable="false" />
-          <Property Name="CreditCardNumber" Type="varchar(max)" Nullable="false" />
-          <Property Name="PIN" Type="int" Nullable="false" />
-          <Property Name="CVV" Type="int" Nullable="false" />
-          <Property Name="CardHolderName" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="TotalAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="PaymentStatus" Type="bit" Nullable="false" />
-          <Property Name="BookingStatus" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="Tbl_Bookings">
           <Key>
             <PropertyRef Name="BookingId" />
@@ -60,6 +42,16 @@
           <Property Name="FullName" Type="varchar" MaxLength="100" />
           <Property Name="Email" Type="varchar" MaxLength="100" />
           <Property Name="ContactNumber" Type="int" />
+        </EntityType>
+        <EntityType Name="Tbl_Comments">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DestinationId" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="CommentText" Type="nvarchar(max)" />
+          <Property Name="CommentDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Tbl_Destination">
           <Key>
@@ -95,25 +87,15 @@
           <Property Name="ExpertLocation" Type="varchar" MaxLength="100" />
           <Property Name="ExperPassword" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="Tbl_Reviews">
+        <EntityType Name="Tbl_Replies">
           <Key>
-            <PropertyRef Name="ReviewID" />
+            <PropertyRef Name="ReplyId" />
           </Key>
-          <Property Name="ReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="int" />
-          <Property Name="DestinationID" Type="int" />
-          <Property Name="Rating" Type="int" />
-          <Property Name="Comment" Type="varchar" MaxLength="500" />
-          <Property Name="ReviewDate" Type="date" />
-        </EntityType>
-        <EntityType Name="Tbl_SavedDestinations">
-          <Key>
-            <PropertyRef Name="SavedID" />
-          </Key>
-          <Property Name="SavedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="int" />
-          <Property Name="DestinationID" Type="int" />
-          <Property Name="SaveDate" Type="date" />
+          <Property Name="ReplyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CommentId" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="ReplyText" Type="nvarchar(max)" />
+          <Property Name="ReplyDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Tbl_User">
           <Key>
@@ -163,6 +145,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Tbl_Comme__Desti__0F2D40CE">
+          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
+          <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Destination">
+              <PropertyRef Name="DestinationID" />
+            </Principal>
+            <Dependent Role="Tbl_Comments">
+              <PropertyRef Name="DestinationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Comme__UserI__10216507">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
+          <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_Comments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Tbl_Desti__FK_Ex__2739D489">
           <End Role="Tbl_Expert" Type="Self.Tbl_Expert" Multiplicity="0..1" />
           <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="*" />
@@ -187,51 +193,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Revie__Desti__7D439ABD">
-          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
-          <End Role="Tbl_Reviews" Type="Self.Tbl_Reviews" Multiplicity="*" />
+        <Association Name="FK__Tbl_Repli__Comme__16CE6296">
+          <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="0..1" />
+          <End Role="Tbl_Replies" Type="Self.Tbl_Replies" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tbl_Destination">
-              <PropertyRef Name="DestinationID" />
+            <Principal Role="Tbl_Comments">
+              <PropertyRef Name="CommentId" />
             </Principal>
-            <Dependent Role="Tbl_Reviews">
-              <PropertyRef Name="DestinationID" />
+            <Dependent Role="Tbl_Replies">
+              <PropertyRef Name="CommentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Revie__UserI__7C4F7684">
+        <Association Name="FK__Tbl_Repli__UserI__17C286CF">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
-          <End Role="Tbl_Reviews" Type="Self.Tbl_Reviews" Multiplicity="*" />
+          <End Role="Tbl_Replies" Type="Self.Tbl_Replies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="Tbl_Reviews">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Tbl_Saved__Desti__797309D9">
-          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
-          <End Role="Tbl_SavedDestinations" Type="Self.Tbl_SavedDestinations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Destination">
-              <PropertyRef Name="DestinationID" />
-            </Principal>
-            <Dependent Role="Tbl_SavedDestinations">
-              <PropertyRef Name="DestinationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Tbl_Saved__UserI__787EE5A0">
-          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
-          <End Role="Tbl_SavedDestinations" Type="Self.Tbl_SavedDestinations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Tbl_SavedDestinations">
-              <PropertyRef Name="UserID" />
+            <Dependent Role="Tbl_Replies">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -262,12 +244,11 @@
         <EntityContainer Name="ExploreLocalModelStoreContainer">
           <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Announcement" EntityType="Self.Tbl_Announcement" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_BookingHistory" EntityType="Self.Tbl_BookingHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Bookings" EntityType="Self.Tbl_Bookings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Comments" EntityType="Self.Tbl_Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Destination" EntityType="Self.Tbl_Destination" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Expert" EntityType="Self.Tbl_Expert" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_Reviews" EntityType="Self.Tbl_Reviews" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_SavedDestinations" EntityType="Self.Tbl_SavedDestinations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Replies" EntityType="Self.Tbl_Replies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_User" EntityType="Self.Tbl_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Venue" EntityType="Self.Tbl_Venue" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="DestinationId" Association="Self.DestinationId">
@@ -278,6 +259,14 @@
             <End Role="Tbl_Expert" EntitySet="Tbl_Expert" />
             <End Role="Tbl_Bookings" EntitySet="Tbl_Bookings" />
           </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Comme__Desti__0F2D40CE" Association="Self.FK__Tbl_Comme__Desti__0F2D40CE">
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+            <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Comme__UserI__10216507" Association="Self.FK__Tbl_Comme__UserI__10216507">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
+          </AssociationSet>
           <AssociationSet Name="FK__Tbl_Desti__FK_Ex__2739D489" Association="Self.FK__Tbl_Desti__FK_Ex__2739D489">
             <End Role="Tbl_Expert" EntitySet="Tbl_Expert" />
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
@@ -286,21 +275,13 @@
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Revie__Desti__7D439ABD" Association="Self.FK__Tbl_Revie__Desti__7D439ABD">
-            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
-            <End Role="Tbl_Reviews" EntitySet="Tbl_Reviews" />
+          <AssociationSet Name="FK__Tbl_Repli__Comme__16CE6296" Association="Self.FK__Tbl_Repli__Comme__16CE6296">
+            <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
+            <End Role="Tbl_Replies" EntitySet="Tbl_Replies" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Revie__UserI__7C4F7684" Association="Self.FK__Tbl_Revie__UserI__7C4F7684">
+          <AssociationSet Name="FK__Tbl_Repli__UserI__17C286CF" Association="Self.FK__Tbl_Repli__UserI__17C286CF">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_Reviews" EntitySet="Tbl_Reviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Saved__Desti__797309D9" Association="Self.FK__Tbl_Saved__Desti__797309D9">
-            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
-            <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Saved__UserI__787EE5A0" Association="Self.FK__Tbl_Saved__UserI__787EE5A0">
-            <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
+            <End Role="Tbl_Replies" EntitySet="Tbl_Replies" />
           </AssociationSet>
           <AssociationSet Name="FK__Tbl_Venue__Admin__5CD6CB2B" Association="Self.FK__Tbl_Venue__Admin__5CD6CB2B">
             <End Role="Tbl_Admin" EntitySet="Tbl_Admin" />
@@ -311,7 +292,8 @@
             <End Role="Tbl_Bookings" EntitySet="Tbl_Bookings" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ExploreLocalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -335,24 +317,6 @@
           <Property Name="Announcement_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Announcement_status" Type="Boolean" />
         </EntityType>
-        <EntityType Name="Tbl_BookingHistory">
-          <Key>
-            <PropertyRef Name="BookingId" />
-          </Key>
-          <Property Name="BookingId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="DestinationId" Type="Int32" Nullable="false" />
-          <Property Name="NumberOfAdults" Type="Int32" Nullable="false" />
-          <Property Name="NumberOfChildren" Type="Int32" Nullable="false" />
-          <Property Name="BookingDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreditCardNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PIN" Type="Int32" Nullable="false" />
-          <Property Name="CVV" Type="Int32" Nullable="false" />
-          <Property Name="CardHolderName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <Property Name="PaymentStatus" Type="Boolean" Nullable="false" />
-          <Property Name="BookingStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
         <EntityType Name="Tbl_Bookings">
           <Key>
             <PropertyRef Name="BookingId" />
@@ -375,6 +339,19 @@
           <NavigationProperty Name="Tbl_Expert" Relationship="Self.ExpertID" FromRole="Tbl_Bookings" ToRole="Tbl_Expert" />
           <NavigationProperty Name="Tbl_User" Relationship="Self.UserId" FromRole="Tbl_Bookings" ToRole="Tbl_User" />
         </EntityType>
+        <EntityType Name="Tbl_Comments">
+          <Key>
+            <PropertyRef Name="CommentId" />
+          </Key>
+          <Property Name="CommentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DestinationId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="CommentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommentDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Comme__Desti__0F2D40CE" FromRole="Tbl_Comments" ToRole="Tbl_Destination" />
+          <NavigationProperty Name="Tbl_User" Relationship="Self.FK__Tbl_Comme__UserI__10216507" FromRole="Tbl_Comments" ToRole="Tbl_User" />
+          <NavigationProperty Name="Tbl_Replies" Relationship="Self.FK__Tbl_Repli__Comme__16CE6296" FromRole="Tbl_Comments" ToRole="Tbl_Replies" />
+        </EntityType>
         <EntityType Name="Tbl_Destination">
           <Key>
             <PropertyRef Name="DestinationID" />
@@ -396,10 +373,9 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TourStatus" Type="Boolean" />
           <NavigationProperty Name="Tbl_Bookings" Relationship="Self.DestinationId" FromRole="Tbl_Destination" ToRole="Tbl_Bookings" />
+          <NavigationProperty Name="Tbl_Comments" Relationship="Self.FK__Tbl_Comme__Desti__0F2D40CE" FromRole="Tbl_Destination" ToRole="Tbl_Comments" />
           <NavigationProperty Name="Tbl_Expert" Relationship="Self.FK__Tbl_Desti__FK_Ex__2739D489" FromRole="Tbl_Destination" ToRole="Tbl_Expert" />
           <NavigationProperty Name="Tbl_Venue" Relationship="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Destination" ToRole="Tbl_Venue" />
-          <NavigationProperty Name="Tbl_Reviews" Relationship="Self.FK__Tbl_Revie__Desti__7D439ABD" FromRole="Tbl_Destination" ToRole="Tbl_Reviews" />
-          <NavigationProperty Name="Tbl_SavedDestinations" Relationship="Self.FK__Tbl_Saved__Desti__797309D9" FromRole="Tbl_Destination" ToRole="Tbl_SavedDestinations" />
         </EntityType>
         <EntityType Name="Tbl_Expert">
           <Key>
@@ -416,29 +392,17 @@
           <NavigationProperty Name="Tbl_Bookings" Relationship="Self.ExpertID" FromRole="Tbl_Expert" ToRole="Tbl_Bookings" />
           <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Desti__FK_Ex__2739D489" FromRole="Tbl_Expert" ToRole="Tbl_Destination" />
         </EntityType>
-        <EntityType Name="Tbl_Reviews">
+        <EntityType Name="Tbl_Replies">
           <Key>
-            <PropertyRef Name="ReviewID" />
+            <PropertyRef Name="ReplyId" />
           </Key>
-          <Property Name="ReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="DestinationID" Type="Int32" />
-          <Property Name="Rating" Type="Int32" />
-          <Property Name="Comment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ReviewDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Revie__Desti__7D439ABD" FromRole="Tbl_Reviews" ToRole="Tbl_Destination" />
-          <NavigationProperty Name="Tbl_User" Relationship="Self.FK__Tbl_Revie__UserI__7C4F7684" FromRole="Tbl_Reviews" ToRole="Tbl_User" />
-        </EntityType>
-        <EntityType Name="Tbl_SavedDestinations">
-          <Key>
-            <PropertyRef Name="SavedID" />
-          </Key>
-          <Property Name="SavedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" />
-          <Property Name="DestinationID" Type="Int32" />
-          <Property Name="SaveDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Saved__Desti__797309D9" FromRole="Tbl_SavedDestinations" ToRole="Tbl_Destination" />
-          <NavigationProperty Name="Tbl_User" Relationship="Self.FK__Tbl_Saved__UserI__787EE5A0" FromRole="Tbl_SavedDestinations" ToRole="Tbl_User" />
+          <Property Name="ReplyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CommentId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ReplyText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReplyDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tbl_Comments" Relationship="Self.FK__Tbl_Repli__Comme__16CE6296" FromRole="Tbl_Replies" ToRole="Tbl_Comments" />
+          <NavigationProperty Name="Tbl_User" Relationship="Self.FK__Tbl_Repli__UserI__17C286CF" FromRole="Tbl_Replies" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_User">
           <Key>
@@ -452,8 +416,8 @@
           <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ProfileImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Tbl_Bookings" Relationship="Self.UserId" FromRole="Tbl_User" ToRole="Tbl_Bookings" />
-          <NavigationProperty Name="Tbl_Reviews" Relationship="Self.FK__Tbl_Revie__UserI__7C4F7684" FromRole="Tbl_User" ToRole="Tbl_Reviews" />
-          <NavigationProperty Name="Tbl_SavedDestinations" Relationship="Self.FK__Tbl_Saved__UserI__787EE5A0" FromRole="Tbl_User" ToRole="Tbl_SavedDestinations" />
+          <NavigationProperty Name="Tbl_Comments" Relationship="Self.FK__Tbl_Comme__UserI__10216507" FromRole="Tbl_User" ToRole="Tbl_Comments" />
+          <NavigationProperty Name="Tbl_Replies" Relationship="Self.FK__Tbl_Repli__UserI__17C286CF" FromRole="Tbl_User" ToRole="Tbl_Replies" />
         </EntityType>
         <EntityType Name="Tbl_Venue">
           <Key>
@@ -517,6 +481,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Tbl_Comme__Desti__0F2D40CE">
+          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
+          <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Destination">
+              <PropertyRef Name="DestinationID" />
+            </Principal>
+            <Dependent Role="Tbl_Comments">
+              <PropertyRef Name="DestinationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Comme__UserI__10216507">
+          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
+          <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_Comments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Tbl_Repli__Comme__16CE6296">
+          <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="0..1" />
+          <End Role="Tbl_Replies" Type="Self.Tbl_Replies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Comments">
+              <PropertyRef Name="CommentId" />
+            </Principal>
+            <Dependent Role="Tbl_Replies">
+              <PropertyRef Name="CommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Tbl_Desti__FK_Ex__2739D489">
           <End Role="Tbl_Expert" Type="Self.Tbl_Expert" Multiplicity="0..1" />
           <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="*" />
@@ -541,63 +541,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Revie__Desti__7D439ABD">
-          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
-          <End Role="Tbl_Reviews" Type="Self.Tbl_Reviews" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Destination">
-              <PropertyRef Name="DestinationID" />
-            </Principal>
-            <Dependent Role="Tbl_Reviews">
-              <PropertyRef Name="DestinationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Tbl_Saved__Desti__797309D9">
-          <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
-          <End Role="Tbl_SavedDestinations" Type="Self.Tbl_SavedDestinations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Destination">
-              <PropertyRef Name="DestinationID" />
-            </Principal>
-            <Dependent Role="Tbl_SavedDestinations">
-              <PropertyRef Name="DestinationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Tbl_Revie__UserI__7C4F7684">
+        <Association Name="FK__Tbl_Repli__UserI__17C286CF">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
-          <End Role="Tbl_Reviews" Type="Self.Tbl_Reviews" Multiplicity="*" />
+          <End Role="Tbl_Replies" Type="Self.Tbl_Replies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tbl_User">
               <PropertyRef Name="UserID" />
             </Principal>
-            <Dependent Role="Tbl_Reviews">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Tbl_Saved__UserI__787EE5A0">
-          <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
-          <End Role="Tbl_SavedDestinations" Type="Self.Tbl_SavedDestinations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Tbl_SavedDestinations">
-              <PropertyRef Name="UserID" />
+            <Dependent Role="Tbl_Replies">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ExploreLocalEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" />
           <EntitySet Name="Tbl_Announcement" EntityType="Self.Tbl_Announcement" />
-          <EntitySet Name="Tbl_BookingHistory" EntityType="Self.Tbl_BookingHistory" />
           <EntitySet Name="Tbl_Bookings" EntityType="Self.Tbl_Bookings" />
+          <EntitySet Name="Tbl_Comments" EntityType="Self.Tbl_Comments" />
           <EntitySet Name="Tbl_Destination" EntityType="Self.Tbl_Destination" />
           <EntitySet Name="Tbl_Expert" EntityType="Self.Tbl_Expert" />
-          <EntitySet Name="Tbl_Reviews" EntityType="Self.Tbl_Reviews" />
-          <EntitySet Name="Tbl_SavedDestinations" EntityType="Self.Tbl_SavedDestinations" />
+          <EntitySet Name="Tbl_Replies" EntityType="Self.Tbl_Replies" />
           <EntitySet Name="Tbl_User" EntityType="Self.Tbl_User" />
           <EntitySet Name="Tbl_Venue" EntityType="Self.Tbl_Venue" />
           <AssociationSet Name="FK__Tbl_Venue__Admin__5CD6CB2B" Association="Self.FK__Tbl_Venue__Admin__5CD6CB2B">
@@ -616,6 +579,18 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Bookings" EntitySet="Tbl_Bookings" />
           </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Comme__Desti__0F2D40CE" Association="Self.FK__Tbl_Comme__Desti__0F2D40CE">
+            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
+            <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Comme__UserI__10216507" Association="Self.FK__Tbl_Comme__UserI__10216507">
+            <End Role="Tbl_User" EntitySet="Tbl_User" />
+            <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Tbl_Repli__Comme__16CE6296" Association="Self.FK__Tbl_Repli__Comme__16CE6296">
+            <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
+            <End Role="Tbl_Replies" EntitySet="Tbl_Replies" />
+          </AssociationSet>
           <AssociationSet Name="FK__Tbl_Desti__FK_Ex__2739D489" Association="Self.FK__Tbl_Desti__FK_Ex__2739D489">
             <End Role="Tbl_Expert" EntitySet="Tbl_Expert" />
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
@@ -624,21 +599,9 @@
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Revie__Desti__7D439ABD" Association="Self.FK__Tbl_Revie__Desti__7D439ABD">
-            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
-            <End Role="Tbl_Reviews" EntitySet="Tbl_Reviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Saved__Desti__797309D9" Association="Self.FK__Tbl_Saved__Desti__797309D9">
-            <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
-            <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Revie__UserI__7C4F7684" Association="Self.FK__Tbl_Revie__UserI__7C4F7684">
+          <AssociationSet Name="FK__Tbl_Repli__UserI__17C286CF" Association="Self.FK__Tbl_Repli__UserI__17C286CF">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_Reviews" EntitySet="Tbl_Reviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Saved__UserI__787EE5A0" Association="Self.FK__Tbl_Saved__UserI__787EE5A0">
-            <End Role="Tbl_User" EntitySet="Tbl_User" />
-            <End Role="Tbl_SavedDestinations" EntitySet="Tbl_SavedDestinations" />
+            <End Role="Tbl_Replies" EntitySet="Tbl_Replies" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -660,30 +623,11 @@
           <EntitySetMapping Name="Tbl_Announcement">
             <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Announcement">
               <MappingFragment StoreEntitySet="Tbl_Announcement">
-                <ScalarProperty Name="Announcement_status" ColumnName="Announcement_status" />
                 <ScalarProperty Name="Announcement_id" ColumnName="Announcement_id" />
                 <ScalarProperty Name="Announcement_headline" ColumnName="Announcement_headline" />
                 <ScalarProperty Name="Announcement_description" ColumnName="Announcement_description" />
                 <ScalarProperty Name="Announcement_image" ColumnName="Announcement_image" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_BookingHistory">
-            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_BookingHistory">
-              <MappingFragment StoreEntitySet="Tbl_BookingHistory">
-                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
-                <ScalarProperty Name="NumberOfAdults" ColumnName="NumberOfAdults" />
-                <ScalarProperty Name="NumberOfChildren" ColumnName="NumberOfChildren" />
-                <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
-                <ScalarProperty Name="CreditCardNumber" ColumnName="CreditCardNumber" />
-                <ScalarProperty Name="PIN" ColumnName="PIN" />
-                <ScalarProperty Name="CVV" ColumnName="CVV" />
-                <ScalarProperty Name="CardHolderName" ColumnName="CardHolderName" />
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
-                <ScalarProperty Name="BookingStatus" ColumnName="BookingStatus" />
+                <ScalarProperty Name="Announcement_status" ColumnName="Announcement_status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -704,6 +648,17 @@
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Comments">
+            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Comments">
+              <MappingFragment StoreEntitySet="Tbl_Comments">
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CommentText" ColumnName="CommentText" />
+                <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -743,25 +698,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Reviews">
-            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Reviews">
-              <MappingFragment StoreEntitySet="Tbl_Reviews">
-                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_SavedDestinations">
-            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_SavedDestinations">
-              <MappingFragment StoreEntitySet="Tbl_SavedDestinations">
-                <ScalarProperty Name="SavedID" ColumnName="SavedID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
-                <ScalarProperty Name="SaveDate" ColumnName="SaveDate" />
+          <EntitySetMapping Name="Tbl_Replies">
+            <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Replies">
+              <MappingFragment StoreEntitySet="Tbl_Replies">
+                <ScalarProperty Name="ReplyId" ColumnName="ReplyId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ReplyText" ColumnName="ReplyText" />
+                <ScalarProperty Name="ReplyDate" ColumnName="ReplyDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,4 +1,7 @@
 ﻿@model ExploreLocal.Models.ToursViewModel
+<head>
+    <title>Our Destinations - ExploreLocal</title>
+</head>
 <style>
     .swiper-container {
         width: 100%;
@@ -9,9 +12,9 @@
         background-color: #3554D1;
     }
 
-    #theicon:hover {
-        background-color: white;
-    }
+        #theicon:hover {
+            background-color: white;
+        }
 
     #thehearticon {
         color: white;
@@ -20,6 +23,57 @@
         #thehearticon:hover {
             color: black;
         }
+
+    .w-360 {
+        margin-left: 30px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index: 9999;
+    }
+
+    .modal__content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-top: 120px;
+        padding-bottom: 120px;
+    }
+
+    .closeButtonWrapper {
+        position: fixed;
+        top: 10px;
+        right: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 45px;
+        width: 45px;
+        border-radius: 50%;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+    }
+
+    .closeButton {
+        font-size: 30px;
+        font-weight: 100;
+        cursor: pointer;
+        color: #1c1c1b;
+    }
 </style>
 <body>
     <main style="margin-top:120px;">
@@ -161,7 +215,7 @@
                     </div>
                 </div>
                 <div class="row y-gap-30 pt-40 sm:pt-20">
-                    <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-4 lg-3 md-2 sm-2 base-1" data-nav-prev="js-hotels-prev" data-pagination="js-hotels-pag" data-nav-next="js-hotels-next">
+                    <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-4 lg-3 md-2 sm-2 base-1" data-nav-prev="js-popular-prev" data-pagination="js-popular-pag" data-nav-next="js-popular-next">
                         <div class="swiper-wrapper">
                             @foreach (var tour in Model.MostPopularTours)
                             {
@@ -218,26 +272,25 @@
                         </div>
                         <div class="d-flex x-gap-15 items-center justify-center pt-40 sm:pt-20">
                             <div class="col-auto">
-                                <button class="d-flex items-center text-24 arrow-left-hover js-hotels-prev">
+                                <button class="d-flex items-center text-24 arrow-left-hover js-popular-prev">
                                     <i class="icon icon-arrow-left"></i>
                                 </button>
                             </div>
 
                             <div class="col-auto">
-                                <div class="pagination -dots text-border js-hotels-pag"></div>
+                                <div class="pagination -dots text-border js-popular-pag"></div>
                             </div>
 
                             <div class="col-auto">
-                                <button class="d-flex items-center text-24 arrow-right-hover js-hotels-next">
+                                <button class="d-flex items-center text-24 arrow-right-hover js-popular-next">
                                     <i class="icon icon-arrow-right"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
         </section>
-
 
         <section class="layout-pt-md layout-pb-md">
             <div class="container">
@@ -249,180 +302,99 @@
                     </div>
                 </div>
                 <div class="row y-gap-30 pt-40 sm:pt-20">
-                    @foreach (var activity in Model.TrendingTours)
-                    {
-                        <div class="col-xl-3 col-lg-3 col-sm-6">
-                            <a href="@Url.Action("ActivityDetails", "Activity", new { id = activity.DestinationID })" class="activityCard -type-1 rounded-4 ">
-                                <div class="activityCard__image">
-                                    <div class="cardImage ratio ratio-1:1">
-                                        @if (!string.IsNullOrEmpty(activity.Image))
-                                        {
-                                            var imagePaths = activity.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                                            foreach (var imagePath in imagePaths)
-                                            {
-                                                var imageUrl = Url.Content(imagePath);
-                                                <div class="cardImage__content">
-                                                    <img class="rounded-4 col-12" src="@imageUrl" alt="image">
+                    <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-4 lg-3 md-2 sm-2 base-1" data-nav-prev="js-activity-prev" data-pagination="js-activity-pag" data-nav-next="js-activity-next">
+                        <div class="swiper-wrapper">
+                            @foreach (var activity in Model.TrendingTours)
+                            {
+                                <div class="swiper-slide">
+                                    <a href="@Url.Action("ActivityDetails", "Activity", new { id = activity.DestinationID })" class="activityCard -type-1 rounded-4 ">
+                                        <div class="activityCard__image">
+                                            <div class="cardImage ratio ratio-1:1">
+                                                @if (!string.IsNullOrEmpty(activity.Image))
+                                                {
+                                                    var imagePaths = activity.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                                    foreach (var imagePath in imagePaths)
+                                                    {
+                                                        var imageUrl = Url.Content(imagePath);
+                                                        <div class="cardImage__content">
+                                                            <img class="rounded-4 col-12" src="@imageUrl" alt="image">
+                                                        </div>
+                                                    }
+                                                }
+                                                <div class="cardImage__wishlist">
+                                                    <style>
+
+                                                        #theicon {
+                                                            background-color: #3554D1;
+                                                        }
+
+                                                            #theicon:hover {
+                                                                background-color: white;
+                                                            }
+
+                                                        #thehearticon {
+                                                            color: white;
+                                                        }
+
+                                                            #thehearticon:hover {
+                                                                color: black;
+                                                            }
+                                                    </style>
+                                                    <button class="button size-30 rounded-full shadow-2" id="theicon">
+                                                        <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = activity.DestinationID })" class="action-card action-wishlist">
+                                                            <i class="icon-heart text-12" id="thehearticon"></i>
+                                                        </a>
+                                                    </button>
                                                 </div>
-                                            }
-                                        }
-                                        <div class="cardImage__wishlist">
-                                            <style>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex items-center lh-14 mb-5 mt-10">
+                                            <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @activity.Destination_Duration</div>
+                                            <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @activity.Language</div>
+                                        </div>
+                                        <div class="activityCard__content mt-10">
+                                            <h4 class="activityCard__title lh-16 fw-500 text-dark-1 text-18">
+                                                <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = activity.DestinationID })" class="hotelsCard -type-1 ">
 
-                                                #theicon {
-                                                    background-color: #3554D1;
-                                                }
-
-                                                    #theicon:hover {
-                                                        background-color: white;
-                                                    }
-
-                                                #thehearticon {
-                                                    color: white;
-                                                }
-
-                                                    #thehearticon:hover {
-                                                        color: black;
-                                                    }
-                                            </style>
-                                            <button class="button size-30 rounded-full shadow-2" id="theicon">
-                                                <a href="@Url.Action("Add_Wishlist", "ExploreLocal", new { id = activity.DestinationID })" class="action-card action-wishlist">
-                                                    <i class="icon-heart text-12" id="thehearticon"></i>
+                                                    <span>@activity.DestinationName</span>
                                                 </a>
-                                            </button>
+                                            </h4>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex items-center lh-14 mb-5 mt-10">
-                                    <div class="text-14 text-light-1"><span style="font-weight:600;"> Duration:</span> @activity.Destination_Duration</div>
-                                    <div class="text-14 text-light-1" style="margin-left:8px;"><span style="font-weight:600;"> Language:</span> @activity.Language</div>
-                                </div>
-                                <div class="activityCard__content mt-10">
-                                    <h4 class="activityCard__title lh-16 fw-500 text-dark-1 text-18">
-                                        <a href="@Url.Action("DestinationDetails", "ExploreLocal", new { id = activity.DestinationID })" class="hotelsCard -type-1 ">
-
-                                            <span>@activity.DestinationName</span>
-                                        </a>
-                                    </h4>
-                                </div>
-                                <p class="text-light-1 text-14 lh-14 mt-5">@activity.Country</p>
-                                <div class="row justify-between items-center pt-10">
-                                    <div class="col-auto">
-                                        <div class="text-14 text-light-1">
-                                            From
-                                            <span class="text-blue-1">@string.Format("{0:N0}", activity.Price) PKR</span>
+                                        <p class="text-light-1 text-14 lh-14 mt-5">@activity.Country</p>
+                                        <div class="row justify-between items-center pt-10">
+                                            <div class="col-auto">
+                                                <div class="text-14 text-light-1">
+                                                    From
+                                                    <span class="text-blue-1">@string.Format("{0:N0}", activity.Price) PKR</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
-                            </a>
+                            }
                         </div>
-                    }
+                        <div class="d-flex x-gap-15 items-center justify-center pt-40 sm:pt-20">
+                            <div class="col-auto">
+                                <button class="d-flex items-center text-24 arrow-left-hover js-activity-prev">
+                                    <i class="icon icon-arrow-left"></i>
+                                </button>
+                            </div>
+
+                            <div class="col-auto">
+                                <div class="pagination -dots text-border js-activity-pag"></div>
+                            </div>
+
+                            <div class="col-auto">
+                                <button class="d-flex items-center text-24 arrow-right-hover js-activity-next">
+                                    <i class="icon icon-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
-        <style>
-            .w-360 {
-                margin-left: 30px;
-            }
 
-            /* Social Share Popup Styles */
-            .modal {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.6);
-                z-index: 9999;
-            }
-
-            .modal__content {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background-color: #fff;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                padding-left: 0px;
-                padding-right: 0px;
-                padding-top: 120px;
-                padding-bottom: 120px;
-            }
-
-            .socialButton {
-                display: block;
-                justify-content: center;
-                align-items: center;
-                padding-top: 20px;
-                padding-bottom: 20px;
-                margin-bottom: 10px;
-                color: #fff;
-                text-align: center;
-                border-radius: 8px;
-            }
-
-                /* Add your custom styles for social sharing buttons */
-                .socialButton.-facebook {
-                    background-color: #3b5998;
-                    margin-bottom: 20px;
-                    transition: 0.2s ease-in-out;
-                    box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;
-                }
-
-                    .socialButton.-facebook:hover {
-                        font-size: 18px;
-                    }
-
-                .socialButton.-twitter {
-                    background-color: #1da1f2;
-                    margin-bottom: 20px;
-                    transition: 0.2s ease-in-out;
-                    box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;
-                }
-
-                    .socialButton.-twitter:hover {
-                        font-size: 18px;
-                    }
-
-                .socialButton.-linkedin {
-                    background-color: #0077b5;
-                    margin-bottom: 20px;
-                    transition: 0.2s ease-in-out;
-                    box-shadow: rgba(17, 12, 46, 0.1) 0px 48px 100px 0px;
-                }
-
-                    .socialButton.-linkedin:hover {
-                        font-size: 18px;
-                    }
-
-                .socialButton:hover {
-                    color: white;
-                }
-
-            .closeButtonWrapper {
-                position: fixed;
-                top: 10px;
-                right: 20px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 45px;
-                width: 45px;
-                border-radius: 50%;
-                background-color: white;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
-                z-index: 9999;
-            }
-
-            .closeButton {
-                font-size: 30px;
-                font-weight: 100;
-                cursor: pointer;
-                color: #1c1c1b;
-            }
-        </style>
         <section class="layout-pt-lg layout-pb-md">
             <div class="container">
                 <div class="row justify-center text-center">
@@ -435,34 +407,55 @@
                 @if (Model.Announcement != null && Model.Announcement.Count > 0)
                 {
                     <div class="row y-gap-30 pt-40">
+                        <div class="relative overflow-hidden pt-40 sm:pt-20 js-section-slider" data-gap="30" data-scrollbar data-slider-cols="xl-3 lg-3 md-2 sm-2 base-1" data-nav-prev="js-announcement-prev" data-pagination="js-announcement-pag" data-nav-next="js-announcement-next">
+                            <div class="swiper-wrapper">
+                                @foreach (var announcement in Model.Announcement)
+                                {
+                                    <div class="swiper-slide">
+                                        <a href="#sharepopup_@announcement.Announcement_id" class="blogCard -type-1 d-block">
+                                            <div class="blogCard__image">
+                                                <div class="ratio ratio-4:3 rounded-4 rounded-8">
+                                                    <img class="img-ratio js-lazy" src="@Url.Content(announcement.Announcement_image)" alt="image">
+                                                </div>
+                                            </div>
+                                            <div class="mt-20">
+                                                <h4 class="text-dark-1 text-18 fw-500">@announcement.Announcement_headline</h4>
+                                                <div class="text-light-1 text-15 lh-14 mt-5">@announcement.Announcement_description</div>
+                                                <button class="mt-15 button px-15 py-10" id="shareButton_@announcement.Announcement_id" style="width:100%;background-color:#3554D1;color:white;">
+                                                    <i class="icon-share mr-10"></i>
+                                                    View More
+                                                </button>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                            <div class="d-flex x-gap-15 items-center justify-center pt-40 sm:pt-20">
+                                <div class="col-auto">
+                                    <button class="d-flex items-center text-24 arrow-left-hover js-announcement-prev">
+                                        <i class="icon icon-arrow-left"></i>
+                                    </button>
+                                </div>
+
+                                <div class="col-auto">
+                                    <div class="pagination -dots text-border js-announcement-pag"></div>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button class="d-flex items-center text-24 arrow-right-hover js-announcement-next">
+                                        <i class="icon icon-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         @foreach (var announcement in Model.Announcement)
                         {
-                            <div class="col-lg-4 col-sm-6">
-                                <a href="#" class="blogCard -type-1 d-block">
-                                    <div class="blogCard__image">
-                                        <div class="ratio ratio-4:3 rounded-4 rounded-8">
-                                            <img class="img-ratio js-lazy" src="@Url.Content(announcement.Announcement_image)" alt="image">
-                                        </div>
-                                    </div>
-                                    <div class="mt-20">
-                                        <h4 class="text-dark-1 text-18 fw-500">@announcement.Announcement_headline</h4>
-                                        <div class="text-light-1 text-15 lh-14 mt-5">@announcement.Announcement_description</div>
-                                        <button class="mt-15 button px-15 py-10" id="shareButton" style="width:100%;background-color:#3554D1;color:white;">
-                                            <i class="icon-share mr-10"></i>
-                                            View More
-                                        </button>
-                                    </div>
-                                </a>
-                            </div>
-                            <div id="sharePopup" class="modal">
-                                <div class="modal__content" style=" border-radius: 1.5rem;width:520px;">
+                            <div id="sharepopup_@announcement.Announcement_id" class="modal">
+                                <div class="modal__content" style="border-radius: 0.8rem;width:520px;">
                                     <div class="closeButtonWrapper">
-                                        <button class="closeButton" id="closePopup">
+                                        <button class="closeButton" id="closePopup_@announcement.Announcement_id">
                                             &times;
                                         </button>
-                                    </div>
-                                    <div class="container" style="margin-bottom:10px;text-align:center;">
-                                        <h4 style="font-size:21px;font-weight:500;"> Complete Details of Our Announcement </h4>
                                     </div>
                                     <div class="container">
                                         <div class="blogCard__image">
@@ -478,20 +471,20 @@
                                 </div>
                             </div>
                             <script>
-                                document.getElementById('shareButton').addEventListener('click', function () {
-                                    document.getElementById('sharePopup').style.display = 'block';
-                                });
+                                document.getElementById('shareButton_@announcement.Announcement_id').addEventListener('click', function () {
+                            document.getElementById('sharepopup_@announcement.Announcement_id').style.display = 'block';
+                        });
 
-                                window.onclick = function (event) {
-                                    var sharePopup = document.getElementById('sharePopup');
-                                    if (event.target == sharePopup) {
-                                        sharePopup.style.display = 'none';
-                                    }
-                                };
+                        window.onclick = function (event) {
+                            var sharePopup = document.getElementById('sharepopup_@announcement.Announcement_id');
+                            if (event.target == sharePopup) {
+                                sharePopup.style.display = 'none';
+                            }
+                        };
 
-                                document.getElementById('closePopup').addEventListener('click', function () {
-                                    document.getElementById('sharePopup').style.display = 'none';
-                                });
+                        document.getElementById('closePopup_@announcement.Announcement_id').addEventListener('click', function () {
+                            document.getElementById('sharepopup_@announcement.Announcement_id').style.display = 'none';
+                        });
                             </script>
                         }
                     </div>
@@ -575,19 +568,11 @@
                                 </div>
 
                             </div>
-
-                            <div class="d-flex items-center mt-60 sm:mt-20">
-                                <div class="text-dark-1 fw-500">01</div>
-                                <div class="slider-scrollbar bg-border ml-20 mr-20 w-max-300 js-scrollbar"></div>
-                                <div class="text-dark-1 fw-500">03</div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-
         <section class="layout-pt-lg layout-pb-md">
             <div class="container">
                 <div class="row y-gap-20">

@@ -67,7 +67,7 @@ namespace ExploreLocal.Controllers
             var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
             var mostPopularTours = db.Tbl_Destination
                 .GroupJoin(
-                    db.Tbl_BookingHistory,
+                    db.Tbl_Bookings,
                     destination => destination.DestinationID,
                     booking => booking.DestinationId,
                     (destination, bookings) => new
@@ -82,7 +82,7 @@ namespace ExploreLocal.Controllers
                 .ToList();
             var trendingTours = db.Tbl_Destination
                 .GroupJoin(
-                    db.Tbl_BookingHistory,
+                    db.Tbl_Bookings,
                     destination => destination.DestinationID,
                     booking => booking.DestinationId,
                     (destination, bookings) => new

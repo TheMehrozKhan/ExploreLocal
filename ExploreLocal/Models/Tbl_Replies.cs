@@ -12,14 +12,15 @@ namespace ExploreLocal.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_SavedDestinations
+    public partial class Tbl_Replies
     {
-        public int SavedID { get; set; }
-        public Nullable<int> UserID { get; set; }
-        public Nullable<int> DestinationID { get; set; }
-        public Nullable<System.DateTime> SaveDate { get; set; }
+        public int ReplyId { get; set; }
+        public Nullable<int> CommentId { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public string ReplyText { get; set; }
+        public Nullable<System.DateTime> ReplyDate { get; set; }
     
-        public virtual Tbl_Destination Tbl_Destination { get; set; }
+        public virtual Tbl_Comments Tbl_Comments { get; set; }
         public virtual Tbl_User Tbl_User { get; set; }
     }
 }

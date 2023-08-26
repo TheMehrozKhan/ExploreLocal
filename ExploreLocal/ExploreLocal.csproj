@@ -260,10 +260,10 @@
     <Compile Include="Models\Tbl_Announcement.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tbl_BookingHistory.cs">
+    <Compile Include="Models\Tbl_Bookings.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tbl_Bookings.cs">
+    <Compile Include="Models\Tbl_Comments.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Destination.cs">
@@ -272,10 +272,7 @@
     <Compile Include="Models\Tbl_Expert.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tbl_Reviews.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Tbl_SavedDestinations.cs">
+    <Compile Include="Models\Tbl_Replies.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_User.cs">
@@ -827,13 +824,6 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap-select-country.min.js" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="AdminTemplate\dist\css\icons\crypto-icons\cryptocoins.ttf" />
     <Content Include="AdminTemplate\dist\css\icons\crypto-icons\cryptocoins.woff" />
     <Content Include="AdminTemplate\dist\css\icons\crypto-icons\cryptocoins.woff2" />
@@ -865,6 +855,13 @@
     <Content Include="AdminTemplate\dist\libs\summernote\dist\font\summernote.woff" />
     <Content Include="AdminTemplate\dist\libs\summernote\dist\font\summernote.woff2" />
     <Content Include="AdminTemplate\dist\libs\summernote\dist\font\summernoted41d.eot" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

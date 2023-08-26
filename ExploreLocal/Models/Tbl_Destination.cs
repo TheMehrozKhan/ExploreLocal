@@ -18,8 +18,7 @@ namespace ExploreLocal.Models
         public Tbl_Destination()
         {
             this.Tbl_Bookings = new HashSet<Tbl_Bookings>();
-            this.Tbl_Reviews = new HashSet<Tbl_Reviews>();
-            this.Tbl_SavedDestinations = new HashSet<Tbl_SavedDestinations>();
+            this.Tbl_Comments = new HashSet<Tbl_Comments>();
         }
     
         public int DestinationID { get; set; }
@@ -45,11 +44,9 @@ namespace ExploreLocal.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Bookings> Tbl_Bookings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Comments> Tbl_Comments { get; set; }
         public virtual Tbl_Expert Tbl_Expert { get; set; }
         public virtual Tbl_Venue Tbl_Venue { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Reviews> Tbl_Reviews { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_SavedDestinations> Tbl_SavedDestinations { get; set; }
     }
 }
