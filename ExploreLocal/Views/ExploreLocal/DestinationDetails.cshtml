@@ -764,6 +764,9 @@
                                                                 <img src="@Url.Content(reply.Tbl_User.ProfileImage)" alt="image" height="50" width="50" style="border-radius:50%;">
                                                                 <span>@reply.Tbl_User.FirstName</span>
                                                             </div>
+                                                            <div class="col-auto">
+                                                                <div class="text-14 text-light-1 lh-15" style="margin-left:55px;margin-top:-10px;">@reply.ReplyDate</div>
+                                                            </div>
                                                             <p>@reply.ReplyText</p>
                                                             @if (Session["u_id"] != null && int.TryParse(Session["u_id"].ToString(), out int replyUserId) && replyUserId == reply.UserId)
                                                             {
