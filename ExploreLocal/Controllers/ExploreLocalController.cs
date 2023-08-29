@@ -13,13 +13,13 @@ namespace ExploreLocal.Controllers
 {
     public class ExploreLocalController : Controller
     {
-        ExploreLocalEntities db = new ExploreLocalEntities();
+        ExploreLocalEntities2 db = new ExploreLocalEntities2();
         public ActionResult Index(Tbl_User user)
         {
             TempData["ToastMessage"] = "Hi, " + user.FirstName + " " + user.LastName + " You Successfully Logged In!";
             ViewBag.ToastMessage = TempData["ToastMessage"];
 
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities2())
             {
                 List<Tbl_Venue> venues = db.Tbl_Venue.ToList();
                 List<Tbl_Destination> destinations = db.Tbl_Destination.Where(t => t.TourStatus == true).ToList(); 
@@ -126,7 +126,8 @@ namespace ExploreLocal.Controllers
                 MeetingPoint = p.MeetingPoint,
                 Language = p.Language,
                 Destination_Duration = p.Destination_Duration,
-                Destination_Highlights = p.Destination_Highlights
+                Destination_Highlights = p.Destination_Highlights,
+                Comments = db.Tbl_Comments.Where(c => c.DestinationId == p.DestinationID).ToList()
             };
             Tbl_Expert expert = db.Tbl_Expert.Where(e => e.ExpertId == p.FK_Expert_Id).SingleOrDefault();
             if (expert != null)
@@ -177,7 +178,7 @@ namespace ExploreLocal.Controllers
             {
                 try
                 {
-                    using (var db = new ExploreLocalEntities())
+                    using (var db = new ExploreLocalEntities2())
                     {
                         var booking = new Tbl_Bookings
                         {
@@ -216,7 +217,7 @@ namespace ExploreLocal.Controllers
             {
                 return RedirectToAction("Error");
             }
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities2())
             {
                 var booking = db.Tbl_Bookings.Find(id);
                 if (booking != null)
@@ -249,7 +250,7 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
             int bookingIdValue = bookingId.Value;
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities2())
             {
                 var booking = db.Tbl_Bookings.Find(bookingIdValue);
                 if (booking == null)
@@ -314,7 +315,7 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
 
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities2())
             {
                 var booking = db.Tbl_Bookings.Find(bookingId);
                 if (booking != null)
@@ -470,7 +471,7 @@ namespace ExploreLocal.Controllers
                     ExpertStatus = Convert.ToBoolean(0)
                 };
 
-                using (var db = new ExploreLocalEntities())
+                using (var db = new ExploreLocalEntities2())
                 {
                     db.Tbl_Expert.Add(expert);
                     db.SaveChanges();
@@ -888,6 +889,94 @@ namespace ExploreLocal.Controllers
             return RedirectToAction("View_Wishlist");
         }
 
+        [HttpPost]
+        public ActionResult AddComment(int recipeId, string commentText)
+        {
+            int userId = Convert.ToInt32(Session["u_id"].ToString());
+
+            Tbl_Comments comment = new Tbl_Comments
+            {
+                DestinationId = recipeId,
+                UserId = userId,
+                CommentText = commentText,
+                CommentDate = DateTime.Now
+            };
+
+            db.Tbl_Comments.Add(comment);
+            db.SaveChanges();
+
+            return RedirectToAction("DestinationDetails", new { id = recipeId });
+        }
+
+        [HttpPost]
+        public ActionResult AddReply(int commentId, string replyText)
+        {
+            int userId = Convert.ToInt32(Session["u_id"].ToString());
+
+            Tbl_Replies reply = new Tbl_Replies
+            {
+                CommentId = commentId,
+                UserId = userId,
+                ReplyText = replyText,
+                ReplyDate = DateTime.Now
+            };
+
+
+            Tbl_Comments comment = db.Tbl_Comments.Find(commentId);
+            if (comment != null)
+            {
+                reply.Tbl_Comments = comment;
+                db.Tbl_Replies.Add(reply);
+                db.SaveChanges();
+
+                return RedirectToAction("DestinationDetails", new { id = comment.CommentId });
+            }
+
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            Tbl_Comments ca = db.Tbl_Comments.Where(x => x.CommentId == id).SingleOrDefault();
+            return View(ca);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int? id, Tbl_Venue cat)
+        {
+            Tbl_Comments ca = db.Tbl_Comments.Include("Tbl_Replies").SingleOrDefault(x => x.CommentId == id);
+
+            foreach (var reply in ca.Tbl_Replies.ToList())
+            {
+                db.Tbl_Replies.Remove(reply);
+            }
+
+            db.Tbl_Comments.Remove(ca);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public ActionResult DeleteReply(int? id)
+        {
+            Tbl_Replies ca = db.Tbl_Replies.Where(x => x.ReplyId == id).SingleOrDefault();
+            return View(ca);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteReply(int? id, Tbl_Venue cat)
+        {
+            Tbl_Replies reply = db.Tbl_Replies.Include("Tbl_Comments").SingleOrDefault(x => x.ReplyId == id);
+
+            db.Tbl_Replies.Remove(reply);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
 
         public string uploadimage(HttpPostedFileBase file)
         {

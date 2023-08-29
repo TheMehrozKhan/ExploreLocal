@@ -25,5 +25,7 @@ namespace ExploreLocal.Models
         public int ExpertId { get; set; }
         public string Destination_Duration { get; set; }
         public string Destination_Highlights { get; set; }
+        public List<Tbl_Comments> Comments { get; set; }
+
     }
 }

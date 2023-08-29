@@ -4,9 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8278d45ae7534e7ab86d8d715d15b42f" Name="Diagram1">
+      <Diagram DiagramId="a91a89203427417aaae783b3752f07a1" Name="Diagram1">
+        <EntityTypeShape EntityType="ExploreLocalModel.sysdiagram" Width="1.5" PointX="5.75" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Admin" Width="1.5" PointX="1.5" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Announcement" Width="1.5" PointX="5.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Announcement" Width="1.5" PointX="7.75" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Bookings" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Comments" Width="1.5" PointX="8.25" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Destination" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
@@ -14,16 +15,16 @@
         <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Replies" Width="1.5" PointX="10.5" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="ExploreLocalModel.Tbl_User" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ExploreLocalModel.Tbl_Venue" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Venue__Admin__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Venue__Admin__628FA481" ManuallyRouted="false" />
         <AssociationConnector Association="ExploreLocalModel.DestinationId" ManuallyRouted="false" />
         <AssociationConnector Association="ExploreLocalModel.ExpertID" ManuallyRouted="false" />
         <AssociationConnector Association="ExploreLocalModel.UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Comme__Desti__0F2D40CE" ManuallyRouted="false" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Comme__UserI__10216507" ManuallyRouted="false" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Repli__Comme__16CE6296" ManuallyRouted="false" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ex__2739D489" ManuallyRouted="false" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ve__6FE99F9F" ManuallyRouted="false" />
-        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Repli__UserI__17C286CF" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Comme__Desti__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Comme__UserI__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Repli__Comme__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ex__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Desti__FK_Ve__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="ExploreLocalModel.FK__Tbl_Repli__UserI__619B8048" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

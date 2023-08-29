@@ -8,12 +8,14 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Globalization;
+
 
 namespace ExploreLocal.Controllers
 {
     public class AdminController : Controller
     {
-        ExploreLocalEntities db = new ExploreLocalEntities();
+        ExploreLocalEntities2 db = new ExploreLocalEntities2();
         public ActionResult Layout()
         {
             return View();
@@ -59,22 +61,26 @@ namespace ExploreLocal.Controllers
             ViewBag.RevenueData = revenueData;
             ViewBag.ExpenseData = expenseData;
 
+            CultureInfo pkCulture = new CultureInfo("en-PK");
+            ViewBag.Culture = pkCulture;
+
             double totalEarnings = CalculateTotalEarnings(bookings);
-            ViewBag.TotalEarnings = totalEarnings.ToString("C");
+            ViewBag.TotalEarnings = totalEarnings.ToString("C", pkCulture); // Add "C" to format as currency
 
             double earningsThisMonth = CalculateEarningsThisMonth(bookings);
-            ViewBag.EarningsThisMonth = earningsThisMonth.ToString("C");
+            ViewBag.EarningsThisMonth = earningsThisMonth.ToString("C", pkCulture); // Add "C" to format as currency
 
             double expenseThisMonth = CalculateExpenseThisMonth(bookings);
-            ViewBag.ExpenseThisMonth = expenseThisMonth.ToString("C");
+            ViewBag.ExpenseThisMonth = expenseThisMonth.ToString("C", pkCulture); // Add "C" to format as currency
 
             int currentYear = DateTime.Now.Year;
             double totalYearlyBookings = CalculateTotalYearlyBookings(bookings, currentYear);
-            ViewBag.TotalYearlyBookings = totalYearlyBookings.ToString("C");
+            ViewBag.TotalYearlyBookings = totalYearlyBookings.ToString("C", pkCulture); // Add "C" to format as currency
 
             List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
             return View(ExpertList);
         }
+
 
 
         private double CalculateTotalYearlyBookings(List<Tbl_Bookings> bookings, int targetYear)
@@ -177,7 +183,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertRequests()
         {
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities2())
             {
                 var pendingExperts = db.Tbl_Expert.Where(e => e.ExpertStatus == false).ToList();
                 return View(pendingExperts);
@@ -214,7 +220,7 @@ namespace ExploreLocal.Controllers
             {
                 expert.ExpertStatus = true;
                 db.SaveChanges();
-                SendExpertTourApprovalEmail(expert.ExpertEmail);
+                SendExpertApprovalEmail(expert.ExpertEmail);
             }
 
             return RedirectToAction("ExpertTourRequests");
@@ -222,7 +228,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult RejectExpert(int expertId)
         {
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities2())
             {
                 var expert = db.Tbl_Expert.Find(expertId);
                 if (expert != null)
@@ -237,7 +243,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertTourRequests()
         {
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities2())
             {
                 var pendingTourExperts = db.Tbl_Destination
                     .Where(e => e.TourStatus == false)
@@ -304,7 +310,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertDelete(int expertId)
         {
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities2())
             {
                 var expert = db.Tbl_Expert.Find(expertId);
                 if (expert != null)

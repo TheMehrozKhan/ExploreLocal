@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="ExploreLocalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Tbl_Admin">
           <Key>
             <PropertyRef Name="Admin_Id" />
@@ -145,7 +155,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Comme__Desti__0F2D40CE">
+        <Association Name="FK__Tbl_Comme__Desti__5CD6CB2B">
           <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
           <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -157,7 +167,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Comme__UserI__10216507">
+        <Association Name="FK__Tbl_Comme__UserI__5DCAEF64">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
           <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -169,7 +179,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Desti__FK_Ex__2739D489">
+        <Association Name="FK__Tbl_Desti__FK_Ex__5EBF139D">
           <End Role="Tbl_Expert" Type="Self.Tbl_Expert" Multiplicity="0..1" />
           <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="*" />
           <ReferentialConstraint>
@@ -181,7 +191,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Desti__FK_Ve__6FE99F9F">
+        <Association Name="FK__Tbl_Desti__FK_Ve__5FB337D6">
           <End Role="Tbl_Venue" Type="Self.Tbl_Venue" Multiplicity="0..1" />
           <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="*" />
           <ReferentialConstraint>
@@ -193,7 +203,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Repli__Comme__16CE6296">
+        <Association Name="FK__Tbl_Repli__Comme__60A75C0F">
           <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="0..1" />
           <End Role="Tbl_Replies" Type="Self.Tbl_Replies" Multiplicity="*" />
           <ReferentialConstraint>
@@ -205,7 +215,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Repli__UserI__17C286CF">
+        <Association Name="FK__Tbl_Repli__UserI__619B8048">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
           <End Role="Tbl_Replies" Type="Self.Tbl_Replies" Multiplicity="*" />
           <ReferentialConstraint>
@@ -217,7 +227,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Venue__Admin__5CD6CB2B">
+        <Association Name="FK__Tbl_Venue__Admin__628FA481">
           <End Role="Tbl_Admin" Type="Self.Tbl_Admin" Multiplicity="0..1" />
           <End Role="Tbl_Venue" Type="Self.Tbl_Venue" Multiplicity="*" />
           <ReferentialConstraint>
@@ -242,6 +252,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ExploreLocalModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Announcement" EntityType="Self.Tbl_Announcement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Bookings" EntityType="Self.Tbl_Bookings" Schema="dbo" store:Type="Tables" />
@@ -259,31 +270,31 @@
             <End Role="Tbl_Expert" EntitySet="Tbl_Expert" />
             <End Role="Tbl_Bookings" EntitySet="Tbl_Bookings" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Comme__Desti__0F2D40CE" Association="Self.FK__Tbl_Comme__Desti__0F2D40CE">
+          <AssociationSet Name="FK__Tbl_Comme__Desti__5CD6CB2B" Association="Self.FK__Tbl_Comme__Desti__5CD6CB2B">
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
             <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Comme__UserI__10216507" Association="Self.FK__Tbl_Comme__UserI__10216507">
+          <AssociationSet Name="FK__Tbl_Comme__UserI__5DCAEF64" Association="Self.FK__Tbl_Comme__UserI__5DCAEF64">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Desti__FK_Ex__2739D489" Association="Self.FK__Tbl_Desti__FK_Ex__2739D489">
+          <AssociationSet Name="FK__Tbl_Desti__FK_Ex__5EBF139D" Association="Self.FK__Tbl_Desti__FK_Ex__5EBF139D">
             <End Role="Tbl_Expert" EntitySet="Tbl_Expert" />
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Desti__FK_Ve__6FE99F9F" Association="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F">
+          <AssociationSet Name="FK__Tbl_Desti__FK_Ve__5FB337D6" Association="Self.FK__Tbl_Desti__FK_Ve__5FB337D6">
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Repli__Comme__16CE6296" Association="Self.FK__Tbl_Repli__Comme__16CE6296">
+          <AssociationSet Name="FK__Tbl_Repli__Comme__60A75C0F" Association="Self.FK__Tbl_Repli__Comme__60A75C0F">
             <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
             <End Role="Tbl_Replies" EntitySet="Tbl_Replies" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Repli__UserI__17C286CF" Association="Self.FK__Tbl_Repli__UserI__17C286CF">
+          <AssociationSet Name="FK__Tbl_Repli__UserI__619B8048" Association="Self.FK__Tbl_Repli__UserI__619B8048">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Replies" EntitySet="Tbl_Replies" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Venue__Admin__5CD6CB2B" Association="Self.FK__Tbl_Venue__Admin__5CD6CB2B">
+          <AssociationSet Name="FK__Tbl_Venue__Admin__628FA481" Association="Self.FK__Tbl_Venue__Admin__628FA481">
             <End Role="Tbl_Admin" EntitySet="Tbl_Admin" />
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
           </AssociationSet>
@@ -297,6 +308,16 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ExploreLocalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="Tbl_Admin">
           <Key>
             <PropertyRef Name="Admin_Id" />
@@ -305,7 +326,7 @@
           <Property Name="Admmin_Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Admin_Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Admin_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Tbl_Venue" Relationship="Self.FK__Tbl_Venue__Admin__5CD6CB2B" FromRole="Tbl_Admin" ToRole="Tbl_Venue" />
+          <NavigationProperty Name="Tbl_Venue" Relationship="Self.FK__Tbl_Venue__Admin__628FA481" FromRole="Tbl_Admin" ToRole="Tbl_Venue" />
         </EntityType>
         <EntityType Name="Tbl_Announcement">
           <Key>
@@ -348,9 +369,9 @@
           <Property Name="UserId" Type="Int32" />
           <Property Name="CommentText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CommentDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Comme__Desti__0F2D40CE" FromRole="Tbl_Comments" ToRole="Tbl_Destination" />
-          <NavigationProperty Name="Tbl_User" Relationship="Self.FK__Tbl_Comme__UserI__10216507" FromRole="Tbl_Comments" ToRole="Tbl_User" />
-          <NavigationProperty Name="Tbl_Replies" Relationship="Self.FK__Tbl_Repli__Comme__16CE6296" FromRole="Tbl_Comments" ToRole="Tbl_Replies" />
+          <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Comme__Desti__5CD6CB2B" FromRole="Tbl_Comments" ToRole="Tbl_Destination" />
+          <NavigationProperty Name="Tbl_User" Relationship="Self.FK__Tbl_Comme__UserI__5DCAEF64" FromRole="Tbl_Comments" ToRole="Tbl_User" />
+          <NavigationProperty Name="Tbl_Replies" Relationship="Self.FK__Tbl_Repli__Comme__60A75C0F" FromRole="Tbl_Comments" ToRole="Tbl_Replies" />
         </EntityType>
         <EntityType Name="Tbl_Destination">
           <Key>
@@ -373,9 +394,9 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TourStatus" Type="Boolean" />
           <NavigationProperty Name="Tbl_Bookings" Relationship="Self.DestinationId" FromRole="Tbl_Destination" ToRole="Tbl_Bookings" />
-          <NavigationProperty Name="Tbl_Comments" Relationship="Self.FK__Tbl_Comme__Desti__0F2D40CE" FromRole="Tbl_Destination" ToRole="Tbl_Comments" />
-          <NavigationProperty Name="Tbl_Expert" Relationship="Self.FK__Tbl_Desti__FK_Ex__2739D489" FromRole="Tbl_Destination" ToRole="Tbl_Expert" />
-          <NavigationProperty Name="Tbl_Venue" Relationship="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Destination" ToRole="Tbl_Venue" />
+          <NavigationProperty Name="Tbl_Comments" Relationship="Self.FK__Tbl_Comme__Desti__5CD6CB2B" FromRole="Tbl_Destination" ToRole="Tbl_Comments" />
+          <NavigationProperty Name="Tbl_Expert" Relationship="Self.FK__Tbl_Desti__FK_Ex__5EBF139D" FromRole="Tbl_Destination" ToRole="Tbl_Expert" />
+          <NavigationProperty Name="Tbl_Venue" Relationship="Self.FK__Tbl_Desti__FK_Ve__5FB337D6" FromRole="Tbl_Destination" ToRole="Tbl_Venue" />
         </EntityType>
         <EntityType Name="Tbl_Expert">
           <Key>
@@ -390,7 +411,7 @@
           <Property Name="ExpertLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ExperPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Tbl_Bookings" Relationship="Self.ExpertID" FromRole="Tbl_Expert" ToRole="Tbl_Bookings" />
-          <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Desti__FK_Ex__2739D489" FromRole="Tbl_Expert" ToRole="Tbl_Destination" />
+          <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Desti__FK_Ex__5EBF139D" FromRole="Tbl_Expert" ToRole="Tbl_Destination" />
         </EntityType>
         <EntityType Name="Tbl_Replies">
           <Key>
@@ -401,8 +422,8 @@
           <Property Name="UserId" Type="Int32" />
           <Property Name="ReplyText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ReplyDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tbl_Comments" Relationship="Self.FK__Tbl_Repli__Comme__16CE6296" FromRole="Tbl_Replies" ToRole="Tbl_Comments" />
-          <NavigationProperty Name="Tbl_User" Relationship="Self.FK__Tbl_Repli__UserI__17C286CF" FromRole="Tbl_Replies" ToRole="Tbl_User" />
+          <NavigationProperty Name="Tbl_Comments" Relationship="Self.FK__Tbl_Repli__Comme__60A75C0F" FromRole="Tbl_Replies" ToRole="Tbl_Comments" />
+          <NavigationProperty Name="Tbl_User" Relationship="Self.FK__Tbl_Repli__UserI__619B8048" FromRole="Tbl_Replies" ToRole="Tbl_User" />
         </EntityType>
         <EntityType Name="Tbl_User">
           <Key>
@@ -416,8 +437,8 @@
           <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ProfileImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Tbl_Bookings" Relationship="Self.UserId" FromRole="Tbl_User" ToRole="Tbl_Bookings" />
-          <NavigationProperty Name="Tbl_Comments" Relationship="Self.FK__Tbl_Comme__UserI__10216507" FromRole="Tbl_User" ToRole="Tbl_Comments" />
-          <NavigationProperty Name="Tbl_Replies" Relationship="Self.FK__Tbl_Repli__UserI__17C286CF" FromRole="Tbl_User" ToRole="Tbl_Replies" />
+          <NavigationProperty Name="Tbl_Comments" Relationship="Self.FK__Tbl_Comme__UserI__5DCAEF64" FromRole="Tbl_User" ToRole="Tbl_Comments" />
+          <NavigationProperty Name="Tbl_Replies" Relationship="Self.FK__Tbl_Repli__UserI__619B8048" FromRole="Tbl_User" ToRole="Tbl_Replies" />
         </EntityType>
         <EntityType Name="Tbl_Venue">
           <Key>
@@ -430,10 +451,10 @@
           <Property Name="Venue_status" Type="Int32" />
           <Property Name="Venue_Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Venue_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Tbl_Admin" Relationship="Self.FK__Tbl_Venue__Admin__5CD6CB2B" FromRole="Tbl_Venue" ToRole="Tbl_Admin" />
-          <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F" FromRole="Tbl_Venue" ToRole="Tbl_Destination" />
+          <NavigationProperty Name="Tbl_Admin" Relationship="Self.FK__Tbl_Venue__Admin__628FA481" FromRole="Tbl_Venue" ToRole="Tbl_Admin" />
+          <NavigationProperty Name="Tbl_Destination" Relationship="Self.FK__Tbl_Desti__FK_Ve__5FB337D6" FromRole="Tbl_Venue" ToRole="Tbl_Destination" />
         </EntityType>
-        <Association Name="FK__Tbl_Venue__Admin__5CD6CB2B">
+        <Association Name="FK__Tbl_Venue__Admin__628FA481">
           <End Role="Tbl_Admin" Type="Self.Tbl_Admin" Multiplicity="0..1" />
           <End Role="Tbl_Venue" Type="Self.Tbl_Venue" Multiplicity="*" />
           <ReferentialConstraint>
@@ -481,7 +502,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Comme__Desti__0F2D40CE">
+        <Association Name="FK__Tbl_Comme__Desti__5CD6CB2B">
           <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="0..1" />
           <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -493,7 +514,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Comme__UserI__10216507">
+        <Association Name="FK__Tbl_Comme__UserI__5DCAEF64">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
           <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -505,7 +526,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Repli__Comme__16CE6296">
+        <Association Name="FK__Tbl_Repli__Comme__60A75C0F">
           <End Role="Tbl_Comments" Type="Self.Tbl_Comments" Multiplicity="0..1" />
           <End Role="Tbl_Replies" Type="Self.Tbl_Replies" Multiplicity="*" />
           <ReferentialConstraint>
@@ -517,7 +538,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Desti__FK_Ex__2739D489">
+        <Association Name="FK__Tbl_Desti__FK_Ex__5EBF139D">
           <End Role="Tbl_Expert" Type="Self.Tbl_Expert" Multiplicity="0..1" />
           <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="*" />
           <ReferentialConstraint>
@@ -529,7 +550,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Desti__FK_Ve__6FE99F9F">
+        <Association Name="FK__Tbl_Desti__FK_Ve__5FB337D6">
           <End Role="Tbl_Venue" Type="Self.Tbl_Venue" Multiplicity="0..1" />
           <End Role="Tbl_Destination" Type="Self.Tbl_Destination" Multiplicity="*" />
           <ReferentialConstraint>
@@ -541,7 +562,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Tbl_Repli__UserI__17C286CF">
+        <Association Name="FK__Tbl_Repli__UserI__619B8048">
           <End Role="Tbl_User" Type="Self.Tbl_User" Multiplicity="0..1" />
           <End Role="Tbl_Replies" Type="Self.Tbl_Replies" Multiplicity="*" />
           <ReferentialConstraint>
@@ -553,7 +574,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ExploreLocalEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ExploreLocalEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Tbl_Admin" EntityType="Self.Tbl_Admin" />
           <EntitySet Name="Tbl_Announcement" EntityType="Self.Tbl_Announcement" />
           <EntitySet Name="Tbl_Bookings" EntityType="Self.Tbl_Bookings" />
@@ -563,7 +585,7 @@
           <EntitySet Name="Tbl_Replies" EntityType="Self.Tbl_Replies" />
           <EntitySet Name="Tbl_User" EntityType="Self.Tbl_User" />
           <EntitySet Name="Tbl_Venue" EntityType="Self.Tbl_Venue" />
-          <AssociationSet Name="FK__Tbl_Venue__Admin__5CD6CB2B" Association="Self.FK__Tbl_Venue__Admin__5CD6CB2B">
+          <AssociationSet Name="FK__Tbl_Venue__Admin__628FA481" Association="Self.FK__Tbl_Venue__Admin__628FA481">
             <End Role="Tbl_Admin" EntitySet="Tbl_Admin" />
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
           </AssociationSet>
@@ -579,27 +601,27 @@
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Bookings" EntitySet="Tbl_Bookings" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Comme__Desti__0F2D40CE" Association="Self.FK__Tbl_Comme__Desti__0F2D40CE">
+          <AssociationSet Name="FK__Tbl_Comme__Desti__5CD6CB2B" Association="Self.FK__Tbl_Comme__Desti__5CD6CB2B">
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
             <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Comme__UserI__10216507" Association="Self.FK__Tbl_Comme__UserI__10216507">
+          <AssociationSet Name="FK__Tbl_Comme__UserI__5DCAEF64" Association="Self.FK__Tbl_Comme__UserI__5DCAEF64">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Repli__Comme__16CE6296" Association="Self.FK__Tbl_Repli__Comme__16CE6296">
+          <AssociationSet Name="FK__Tbl_Repli__Comme__60A75C0F" Association="Self.FK__Tbl_Repli__Comme__60A75C0F">
             <End Role="Tbl_Comments" EntitySet="Tbl_Comments" />
             <End Role="Tbl_Replies" EntitySet="Tbl_Replies" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Desti__FK_Ex__2739D489" Association="Self.FK__Tbl_Desti__FK_Ex__2739D489">
+          <AssociationSet Name="FK__Tbl_Desti__FK_Ex__5EBF139D" Association="Self.FK__Tbl_Desti__FK_Ex__5EBF139D">
             <End Role="Tbl_Expert" EntitySet="Tbl_Expert" />
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Desti__FK_Ve__6FE99F9F" Association="Self.FK__Tbl_Desti__FK_Ve__6FE99F9F">
+          <AssociationSet Name="FK__Tbl_Desti__FK_Ve__5FB337D6" Association="Self.FK__Tbl_Desti__FK_Ve__5FB337D6">
             <End Role="Tbl_Venue" EntitySet="Tbl_Venue" />
             <End Role="Tbl_Destination" EntitySet="Tbl_Destination" />
           </AssociationSet>
-          <AssociationSet Name="FK__Tbl_Repli__UserI__17C286CF" Association="Self.FK__Tbl_Repli__UserI__17C286CF">
+          <AssociationSet Name="FK__Tbl_Repli__UserI__619B8048" Association="Self.FK__Tbl_Repli__UserI__619B8048">
             <End Role="Tbl_User" EntitySet="Tbl_User" />
             <End Role="Tbl_Replies" EntitySet="Tbl_Replies" />
           </AssociationSet>
@@ -609,7 +631,18 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ExploreLocalModelStoreContainer" CdmEntityContainer="ExploreLocalEntities">
+        <EntityContainerMapping StorageEntityContainer="ExploreLocalModelStoreContainer" CdmEntityContainer="ExploreLocalEntities2">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ExploreLocalModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Admin">
             <EntityTypeMapping TypeName="ExploreLocalModel.Tbl_Admin">
               <MappingFragment StoreEntitySet="Tbl_Admin">

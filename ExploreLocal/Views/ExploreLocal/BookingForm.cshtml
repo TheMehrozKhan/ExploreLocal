@@ -3,114 +3,222 @@
     ViewBag.Title = "Booking Form";
 }
 <head>
-    <title>Booking Form - Fill Form & Book Your Tour</title>
-    <link href="~/Content/css/BookingForm.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step-by-Step Booking Form</title>
+    <link href="~/Content/css/BookingForm.css" rel="stylesheet">
+    <style>
+        .prev-button,
+        .next-button,
+        .submit-button {
+            display: inline-block !important;
+        }
+        .step-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .step-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px; /* Add spacing between step content and buttons */
+        }
+
+        .prev-button {
+            background-color: #000000;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 8px;
+            color: white;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+            transition:0.2s;
+        }
+
+        .prev-button:hover {
+            font-size:16.5px;
+        }
+
+        .next-button {
+            background-color: dodgerblue;
+            padding-left: 25px;
+            padding-right: 25px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+            transition: 0.2s;
+        }
+
+            .next-button:hover {
+                font-size: 16.5px;
+            }
+
+        .submit-button {
+            background-color: dodgerblue;
+            padding-left: 25px;
+            padding-right: 25px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+        }
+
+            .submit-button:hover {
+                font-size: 16.5px;
+            }
+
+    </style>
 </head>
-<section class="layout-pt-lg layout-pb-lg bg-blue-2">
+<body>
+    <section class="layout-pt-lg layout-pb-lg bg-blue-2">
         <div class="container">
             <div class="row justify-center">
                 <div class="col-xl-6 col-lg-7 col-md-9">
                     <div class="px-50 py-50 sm:px-20 sm:py-20 bg-white shadow-4 rounded-4">
-                        <div class="row y-gap-20">
-                            <div class="col-12">
-                                <h1 class="text-22 fw-500">Booking Form</h1>
-                                <p class="mt-10">Please fill in the form to book the tour.</p>
+                        <div class="step-form-container">
+                            @using (Html.BeginForm("SubmitBooking", "ExploreLocal", new { id = Model.BookingId }, FormMethod.Post, new { id = "bookingForm" }))
+                            {
+                                <!-- Your existing form fields -->
+                                @Html.HiddenFor(model => model.UserId)
+                                @Html.HiddenFor(model => model.DestinationId)
+                                @Html.HiddenFor(model => model.ExpertID)
+
+                            <div class="step" data-step="1">
+                                <h5 style="text-align:center;font-weight:500;margin-bottom:20px;">Fill Out Personal Details</h5>
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.FullName, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.Email, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                                <br />
+                                <div class="form-input">
+                                    @Html.TextBoxFor(model => model.ContactNumber, new { @class = "form-control", required = "required" })
+                                    @Html.LabelFor(model => model.ContactNumber, new { @class = "lh-1 text-14 text-light-1" })
+                                    @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="step-navigation">
+                                    <button type="button" class="prev-button" onclick="showStep(-1)">Previous</button>
+                                    <button type="button" class="next-button" onclick="showStep(1)">Next</button>
+                                </div>
                             </div>
 
-                            <div class="col-12">
-                                @using (Html.BeginForm("SubmitBooking", "ExploreLocal", new { id = Model.BookingId }, FormMethod.Post, new { id = "bookingForm" }))
-                                {
-                                    @Html.HiddenFor(model => model.UserId)
-                                    @Html.HiddenFor(model => model.DestinationId)
-                                    @Html.HiddenFor(model => model.ExpertID)
-
-                                    <div class="form-input">
-                                        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control", required = "required" })
-                                        @Html.LabelFor(model => model.FullName, new { @class = "lh-1 text-14 text-light-1" })
-                                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <div class="form-input">
-                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", required = "required" })
-                                        @Html.LabelFor(model => model.Email, new { @class = "lh-1 text-14 text-light-1" })
-                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <div class="form-input">
-                                        @Html.TextBoxFor(model => model.ContactNumber, new { @class = "form-control", required = "required" })
-                                        @Html.LabelFor(model => model.ContactNumber, new { @class = "lh-1 text-14 text-light-1" })
-                                        @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <div class="form-input">
-                                        @Html.TextBoxFor(model => model.NumberOfAdults, new { @class = "form-control", required = "required" })
-                                        @Html.LabelFor(model => model.NumberOfAdults, new { @class = "lh-1 text-14 text-light-1" })
-                                        @Html.ValidationMessageFor(model => model.NumberOfAdults, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <div class="form-input">
-                                        @Html.TextBoxFor(model => model.NumberOfChildren, new { @class = "form-control", required = "required" })
-                                        @Html.LabelFor(model => model.NumberOfChildren, new { @class = "lh-1 text-14 text-light-1" })
-                                        @Html.ValidationMessageFor(model => model.NumberOfChildren, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <div class="form-input">
-                                        @Html.TextBoxFor(model => model.BookingDate, new { @class = "form-control", type = "date", required = "required" })
-                                        @Html.LabelFor(model => model.BookingDate, new { @class = "lh-1 text-14 text-light-1" })
-                                        @Html.ValidationMessageFor(model => model.BookingDate, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <div class="form-input">
-                                        @Html.TextBoxFor(model => model.CardHolderName, new { @class = "form-control", required = "required" })
-                                        @Html.LabelFor(model => model.CardHolderName, new { @class = "lh-1 text-14 text-light-1" })
-                                        @Html.ValidationMessageFor(model => model.CardHolderName, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <div class="form-input">
-                                        @Html.TextBoxFor(model => model.CreditCardNumber, new { @class = "form-control", required = "required" })
-                                        @Html.LabelFor(model => model.CreditCardNumber, new { @class = "lh-1 text-14 text-light-1" })
-                                        @Html.ValidationMessageFor(model => model.CreditCardNumber, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <div class="form-input">
-                                        @Html.TextBoxFor(model => model.PIN, new { @class = "form-control", required = "required" })
-                                        @Html.LabelFor(model => model.PIN, new { @class = "lh-1 text-14 text-light-1" })
-                                        @Html.ValidationMessageFor(model => model.PIN, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <div class="form-input">
-                                        @Html.TextBoxFor(model => model.CVV, new { @class = "form-control", required = "required" })
-                                        @Html.LabelFor(model => model.CVV, new { @class = "lh-1 text-14 text-light-1" })
-                                        @Html.ValidationMessageFor(model => model.CVV, "", new { @class = "text-danger" })
-
-                                    </div>
-                                    <br />
-                                    <input type="submit" value="Submit Booking" class="button py-20 -dark-1 bg-blue-1 text-white" style="width:100%;" />
-                                }
-                                @if (!string.IsNullOrEmpty(ViewBag.Error))
-                                {
-                                    <div class="container" style="background-color:red;">
-                                        <h1 style="color:white;"> @ViewBag.Error</h1>
-                                    </div>
-                                }
+                                <!-- Repeat the following code for other steps -->
+                        <div class="step" data-step="2" style="display: none;">
+                            <h5 style="text-align:center;font-weight:500;margin-bottom:20px;">Fill Bookings Details</h5>
+                            <div class="form-input">
+                                @Html.TextBoxFor(model => model.NumberOfAdults, new { @class = "form-control", required = "required" })
+                                @Html.LabelFor(model => model.NumberOfAdults, new { @class = "lh-1 text-14 text-light-1" })
+                                @Html.ValidationMessageFor(model => model.NumberOfAdults, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <div class="form-input">
+                                @Html.TextBoxFor(model => model.NumberOfChildren, new { @class = "form-control", required = "required" })
+                                @Html.LabelFor(model => model.NumberOfChildren, new { @class = "lh-1 text-14 text-light-1" })
+                                @Html.ValidationMessageFor(model => model.NumberOfChildren, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <div class="form-input">
+                                @Html.TextBoxFor(model => model.BookingDate, new { @class = "form-control", type = "date", required = "required" })
+                                @Html.LabelFor(model => model.BookingDate, new { @class = "lh-1 text-14 text-light-1" })
+                                @Html.ValidationMessageFor(model => model.BookingDate, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="step-navigation">
+                                <button type="button" class="prev-button" onclick="showStep(-1)">Previous</button>
+                                <button type="button" class="next-button" onclick="showStep(1)">Next</button>
                             </div>
                         </div>
-                        <div class="row y-gap-20 pt-30">
-                            <div class="col-12">
-                                <div class="text-center px-30">By submitting this form, you agree to the Terms of Use and Privacy Policy.</div>
+
+                        <div class="step" data-step="3" style="display: none;">
+                            <h5 style="text-align:center;font-weight:500;margin-bottom:20px;">Fill Out Payment Details</h5>
+                            <div class="form-input">
+                                @Html.TextBoxFor(model => model.CardHolderName, new { @class = "form-control", required = "required" })
+                                @Html.LabelFor(model => model.CardHolderName, new { @class = "lh-1 text-14 text-light-1" })
+                                @Html.ValidationMessageFor(model => model.CardHolderName, "", new { @class = "text-danger" })
                             </div>
+                            <br />
+                            <div class="form-input">
+                                @Html.TextBoxFor(model => model.CreditCardNumber, new { @class = "form-control", required = "required" })
+                                @Html.LabelFor(model => model.CreditCardNumber, new { @class = "lh-1 text-14 text-light-1" })
+                                @Html.ValidationMessageFor(model => model.CreditCardNumber, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <div class="form-input">
+                                @Html.TextBoxFor(model => model.PIN, new { @class = "form-control", required = "required", type = "password" })
+                                @Html.LabelFor(model => model.PIN, new { @class = "lh-1 text-14 text-light-1" })
+                                @Html.ValidationMessageFor(model => model.PIN, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <div class="form-input">
+                                @Html.TextBoxFor(model => model.CVV, new { @class = "form-control", required = "required" })
+                                @Html.LabelFor(model => model.CVV, new { @class = "lh-1 text-14 text-light-1" })
+                                @Html.ValidationMessageFor(model => model.CVV, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="step-navigation">
+                                <button type="button" class="prev-button" onclick="showStep(-1)">Previous</button>
+                                <button type="button" class="submit-button" style="display: none;" onclick="submitForm()">Submit</button>
+                            </div>
+                        </div>
+                                <input type="hidden" id="currentStep" value="0" />
+                            }
+                            @if (!string.IsNullOrEmpty(ViewBag.Error))
+                            {
+                                <div class="container" style="background-color:red;">
+                                    <h1 style="color:white;"> @ViewBag.Error</h1>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
- </section>
+    </section>
+
+    <script>
+        const steps = document.querySelectorAll('.step');
+        const prevButton = document.querySelector('.prev-button');
+        const nextButton = document.querySelector('.next-button');
+        const submitButton = document.querySelector('.submit-button');
+        const currentStepInput = document.getElementById('currentStep');
+        const bookingForm = document.getElementById('bookingForm'); // Get the form element
+
+        let currentStep = parseInt(currentStepInput.value);
+
+        showStep(currentStep);
+
+        function showStep(stepChange) {
+            const newStep = currentStep + stepChange;
+            if (newStep >= 0 && newStep < steps.length) {
+                steps[currentStep].style.display = 'none';
+                steps[newStep].style.display = 'block';
+                currentStep = newStep;
+
+                // Update button visibility
+                prevButton.style.display = currentStep === 0 ? 'none' : 'inline-block';
+                nextButton.style.display = currentStep === steps.length - 2 ? 'inline-block' : 'none';
+                submitButton.style.display = currentStep === steps.length - 1 ? 'inline-block' : 'none';
+
+                // Update the hidden input value
+                currentStepInput.value = currentStep;
+            }
+        }
+
+        function submitForm() {
+            // Manually trigger the form submission
+            bookingForm.submit();
+        }
+    </script>
+</body>

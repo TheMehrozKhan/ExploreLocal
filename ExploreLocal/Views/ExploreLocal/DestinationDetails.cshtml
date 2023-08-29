@@ -553,6 +553,238 @@
                     </div>
                 </section>
             </div>
+
+            <section style="margin-top:50px;">
+                <div class="container">
+                    <div class="row y-gap-30 justify-between">
+                        <div class="col-xl-3">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <h3 class="text-22 fw-500">Leave a Reply</h3>
+                                    <p class="text-15 text-dark-1 mt-5">Your Precious Data Will Not Be Shared.</p>
+                                </div>
+                            </div>
+
+                            <div class="row y-gap-30 pt-30">
+
+                                <div class="col-sm-6">
+                                    <div class="text-15 lh-1 fw-500">Location</div>
+                                    <div class="d-flex x-gap-5 items-center pt-10">
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="text-15 lh-1 fw-500">Staff</div>
+                                    <div class="d-flex x-gap-5 items-center pt-10">
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="text-15 lh-1 fw-500">Cleanliness</div>
+                                    <div class="d-flex x-gap-5 items-center pt-10">
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="text-15 lh-1 fw-500">Value for money</div>
+                                    <div class="d-flex x-gap-5 items-center pt-10">
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="text-15 lh-1 fw-500">Comfort</div>
+                                    <div class="d-flex x-gap-5 items-center pt-10">
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="text-15 lh-1 fw-500">Facilities</div>
+                                    <div class="d-flex x-gap-5 items-center pt-10">
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="text-15 lh-1 fw-500">Free WiFi</div>
+                                    <div class="d-flex x-gap-5 items-center pt-10">
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                        <div class="icon-star text-10 text-yellow-1"></div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-xl-8">
+                            <form id="contactForm" action="@Url.Action("AddComment", "ExploreLocal")" method="post">
+                                <div class="row y-gap-30">
+                                    <div class="col-12">
+
+                                        <div class="form-input ">
+                                            <textarea name="commentText" rows="6" required></textarea>
+                                            <label class="lh-1 text-16 text-light-1">Write Your Comment</label>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="hidden" name="recipeId" value="@Model.DestinationID" />
+                                        <button type="submit" class="button -md -dark-1 bg-blue-1 text-white">
+                                            Post Comment <div class="icon-arrow-top-right ml-15"></div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section style="margin-top:50px;">
+                <div class="container">
+                    <div class="row y-gap-40 justify-between">
+                        <div class="col-xl-3">
+                            <h3 class="text-22 fw-500">Reviews & Comments</h3>
+                            <div class="d-flex items-center mt-20">
+                                <div class="flex-center bg-blue-1 rounded-4 size-70 text-22 fw-600 text-white">4.8</div>
+                                <div class="ml-20">
+                                    <div class="text-16 text-dark-1 fw-500 lh-14">All Comments</div>
+                                    <div class="text-15 text-light-1 lh-14 mt-4">@Model.Comments.Count() Comments:</div>
+                                </div>
+                            </div>
+                        </div>
+                        @foreach (var comment in Model.Comments)
+                        {
+                            <div class="col-xl-8">
+                                <div class="row y-gap-40">
+                                    <div class="col-12">
+                                        <div class="row x-gap-20 y-gap-20 items-center">
+                                            <div class="col-auto">
+                                                <img src="@Url.Content(comment.Tbl_User.ProfileImage)" alt="image" height="50" width="50" style="border-radius:50%;">
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="fw-500 lh-15">@comment.Tbl_User.FirstName</div>
+                                                <div class="text-14 text-light-1 lh-15">@comment.CommentDate</div>
+                                            </div>
+                                        </div>
+                                        <p class="text-15 text-dark-1 mt-10">
+                                            @comment.CommentText
+                                        </p>
+                                        <form class="reply-form" action="@Url.Action("AddReply", "ExploreLocal")" method="post">
+                                            <input type="hidden" name="commentId" value="@comment.CommentId" />
+                                            <textarea name="replyText" placeholder="Add a reply" style="background-color: white; border: none; border-radius: 10px; box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px; height: 80px; width: 350px; padding-left: 8px; padding-top: 8px;"></textarea>
+                                            <br />
+                                            <button type="submit" class="default-btn" style="margin-bottom: 30px; margin-top: 20px; background-color: dodgerblue; border-radius: 8px; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px; color: white; ">Reply</button>
+                                        </form>
+                                        @if (Session["u_id"] != null && int.TryParse(Session["u_id"].ToString(), out int uId) && uId == comment.UserId)
+                                        {
+                                            <a href="@Url.Action("Delete", "ExploreLocal", new { id = comment.CommentId })" style="text-decoration: none; background-color: darkorange; border-radius: 8px; padding-left: 15px; padding-right: 15px; padding-top: 8px; padding-bottom: 8px; color: white;">Delete</a>
+                                        }
+                                        @if (comment.Tbl_Replies.Any())
+                                        {
+                                            <div class="replies" style="margin-left:20px;margin-top:20px;">
+                                                @foreach (var reply in comment.Tbl_Replies)
+                                                {
+                                                    <div class="reply">
+                                                        <div class="reply-content">
+                                                            <div class="reply-author">
+                                                                <img src="@Url.Content(reply.Tbl_User.ProfileImage)" alt="image" height="50" width="50" style="border-radius:50%;">
+                                                                <span>@reply.Tbl_User.FirstName</span>
+                                                            </div>
+                                                            <p>@reply.ReplyText</p>
+                                                            @if (Session["u_id"] != null && int.TryParse(Session["u_id"].ToString(), out int replyUserId) && replyUserId == reply.UserId)
+                                                            {
+                                                                <br />
+                                                                <a href="@Url.Action("DeleteReply", "ExploreLocal", new { id = reply.ReplyId })" style="text-decoration: none; background-color: darkorange; border-radius: 8px; padding-left: 15px; padding-right: 15px; padding-top: 8px; padding-bottom: 8px;color:white;">Delete</a>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </section>
+        </div>
     </section>
     <div class="container">
         <div class="mt-50 border-top-light"></div>
