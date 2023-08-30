@@ -929,6 +929,8 @@
     <Content Include="Views\Admin\Layout.cshtml" />
     <Content Include="Views\ExploreLocal\Delete.cshtml" />
     <Content Include="Views\ExploreLocal\DeleteReply.cshtml" />
+    <Content Include="Views\Admin\Comments.cshtml" />
+    <Content Include="Views\Admin\Replies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

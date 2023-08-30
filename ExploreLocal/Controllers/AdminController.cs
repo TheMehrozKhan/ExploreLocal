@@ -550,6 +550,18 @@ namespace ExploreLocal.Controllers
             return View(userList);
         }
 
+        public ActionResult Comments()
+        {
+            List<Tbl_Comments> userList = db.Tbl_Comments.ToList();
+            return View(userList);
+        }
+
+        public ActionResult Replies()
+        {
+            List<Tbl_Replies> userList = db.Tbl_Replies.ToList();
+            return View(userList);
+        }
+
         public string uploadimage(HttpPostedFileBase file)
         {
             Random r = new Random();

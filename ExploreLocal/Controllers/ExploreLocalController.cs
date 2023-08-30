@@ -921,7 +921,6 @@ namespace ExploreLocal.Controllers
                 ReplyDate = DateTime.Now
             };
 
-
             Tbl_Comments comment = db.Tbl_Comments.Find(commentId);
             if (comment != null)
             {
@@ -929,9 +928,9 @@ namespace ExploreLocal.Controllers
                 db.Tbl_Replies.Add(reply);
                 db.SaveChanges();
 
-                return RedirectToAction("DestinationDetails", new { id = comment.CommentId });
+                // Redirect to the index page after adding the reply.
+                return RedirectToAction("Index"); // Replace "Index" and "ExploreLocal" with your appropriate action and controller names.
             }
-
 
             return RedirectToAction("Index");
         }
