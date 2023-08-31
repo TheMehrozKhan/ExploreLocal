@@ -34,7 +34,6 @@ namespace ExploreLocal.Controllers
             }
         }
 
-
         public ActionResult SearchDestinations(int? selectedVenueId, string searchQuery)
         {
             if (selectedVenueId == null)
@@ -59,7 +58,6 @@ namespace ExploreLocal.Controllers
             };
             return View("SearchResults", viewModel);
         }
-
 
         public ActionResult Destinations(int id)
         {
@@ -892,6 +890,11 @@ namespace ExploreLocal.Controllers
         [HttpPost]
         public ActionResult AddComment(int recipeId, string commentText)
         {
+            if (Session["u_id"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
             int userId = Convert.ToInt32(Session["u_id"].ToString());
 
             Tbl_Comments comment = new Tbl_Comments
@@ -911,6 +914,11 @@ namespace ExploreLocal.Controllers
         [HttpPost]
         public ActionResult AddReply(int commentId, string replyText)
         {
+            if (Session["u_id"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
             int userId = Convert.ToInt32(Session["u_id"].ToString());
 
             Tbl_Replies reply = new Tbl_Replies
@@ -927,13 +935,12 @@ namespace ExploreLocal.Controllers
                 reply.Tbl_Comments = comment;
                 db.Tbl_Replies.Add(reply);
                 db.SaveChanges();
-
-                // Redirect to the index page after adding the reply.
-                return RedirectToAction("Index"); // Replace "Index" and "ExploreLocal" with your appropriate action and controller names.
+                return RedirectToAction("DestinationDetails", new { id = comment.DestinationId });
             }
 
             return RedirectToAction("Index");
         }
+
 
         [HttpGet]
         public ActionResult Delete(int? id)
@@ -957,7 +964,6 @@ namespace ExploreLocal.Controllers
 
             return RedirectToAction("Index");
         }
-
 
         [HttpGet]
         public ActionResult DeleteReply(int? id)
