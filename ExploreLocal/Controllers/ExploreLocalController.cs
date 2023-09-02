@@ -40,8 +40,11 @@ namespace ExploreLocal.Controllers
             {
                 return RedirectToAction("Index");
             }
+
             var selectedVenueTours = db.Tbl_Destination
-                .Where(t => t.FK_Venue_Id == selectedVenueId && t.TourStatus == true)
+                .Where(t => t.FK_Venue_Id == selectedVenueId && t.TourStatus == true &&
+                    (t.DestinationName.ToLower().Contains(searchQuery.ToLower()) ||
+                     t.Description.ToLower().Contains(searchQuery.ToLower()) || t.Destination_Highlights.ToLower().Contains(searchQuery.ToLower()) ))
                 .ToList();
 
             var selectedVenueName = db.Tbl_Venue
@@ -50,19 +53,70 @@ namespace ExploreLocal.Controllers
                 .FirstOrDefault();
 
             var venues = db.Tbl_Venue.ToList();
+
             var viewModel = new SearchViewModel
             {
                 SelectedVenueTours = selectedVenueTours,
                 SelectedVenueName = selectedVenueName,
                 Venues = venues
             };
+
             return View("SearchResults", viewModel);
         }
 
-        public ActionResult Destinations(int id)
+
+        //public ActionResult Destinations(int id)
+        //{
+        //    var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id && t.TourStatus == true).ToList();
+        //    var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
+        //var mostPopularTours = db.Tbl_Destination
+        //    .GroupJoin(
+        //        db.Tbl_Bookings,
+        //        destination => destination.DestinationID,
+        //        booking => booking.DestinationId,
+        //        (destination, bookings) => new
+        //        {
+        //            Destination = destination,
+        //            BookingsCount = bookings.Count()
+        //        })
+        //    .Where(x => x.Destination.TourStatus == true)
+        //    .OrderByDescending(x => x.BookingsCount)
+        //    .Select(x => x.Destination)
+        //    .Take(4)
+        //    .ToList();
+        //var trendingTours = db.Tbl_Destination
+        //    .GroupJoin(
+        //        db.Tbl_Bookings,
+        //        destination => destination.DestinationID,
+        //        booking => booking.DestinationId,
+        //        (destination, bookings) => new
+        //        {
+        //            Destination = destination,
+        //            LatestBookingDate = bookings.Max(b => b.BookingDate)
+        //        })
+        //    .Where(x => x.Destination.TourStatus == true)
+        //    .OrderByDescending(x => x.LatestBookingDate)
+        //    .Select(x => x.Destination)
+        //    .Take(4)
+        //    .ToList();
+        //var announcements = db.Tbl_Announcement.Where(t => t.Announcement_status == null).ToList();
+        //var viewModel = new ToursViewModel
+        //{
+        //    SelectedVenueTours = selectedVenueTours,
+        //    MostPopularTours = mostPopularTours,
+        //    TrendingTours = trendingTours,
+        //    SelectedVenueName = selectedVenue?.Venue_name,
+        //    SelectedVenueDescription = selectedVenue?.Venue_Description,
+        //    Announcement = announcements
+        //};
+        //    return View(viewModel);
+        //}
+
+        public ActionResult Destinations(int id, decimal? minPrice, decimal? maxPrice, string country, string language, string duration)
         {
             var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id && t.TourStatus == true).ToList();
             var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
+
             var mostPopularTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_Bookings,
@@ -73,11 +127,12 @@ namespace ExploreLocal.Controllers
                         Destination = destination,
                         BookingsCount = bookings.Count()
                     })
-                .Where(x => x.Destination.TourStatus == true) 
+                .Where(x => x.Destination.TourStatus == true)
                 .OrderByDescending(x => x.BookingsCount)
                 .Select(x => x.Destination)
                 .Take(4)
                 .ToList();
+
             var trendingTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_Bookings,
@@ -88,12 +143,14 @@ namespace ExploreLocal.Controllers
                         Destination = destination,
                         LatestBookingDate = bookings.Max(b => b.BookingDate)
                     })
-                .Where(x => x.Destination.TourStatus == true) 
+                .Where(x => x.Destination.TourStatus == true)
                 .OrderByDescending(x => x.LatestBookingDate)
                 .Select(x => x.Destination)
                 .Take(4)
                 .ToList();
+
             var announcements = db.Tbl_Announcement.Where(t => t.Announcement_status == null).ToList();
+
             var viewModel = new ToursViewModel
             {
                 SelectedVenueTours = selectedVenueTours,
@@ -101,10 +158,45 @@ namespace ExploreLocal.Controllers
                 TrendingTours = trendingTours,
                 SelectedVenueName = selectedVenue?.Venue_name,
                 SelectedVenueDescription = selectedVenue?.Venue_Description,
-                Announcement = announcements
+                Announcement = announcements,
+                MinPrice = minPrice,
+                MaxPrice = maxPrice,
+                Country = country,
+                Language = language,
+                Duration = duration
             };
+
+            // Apply filters based on the provided parameters
+            if (minPrice != null)
+            {
+                selectedVenueTours = selectedVenueTours.Where(tour => tour.Price >= minPrice).ToList();
+            }
+
+            if (maxPrice != null)
+            {
+                selectedVenueTours = selectedVenueTours.Where(tour => tour.Price <= maxPrice).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(country))
+            {
+                selectedVenueTours = selectedVenueTours.Where(tour => tour.Country != null && tour.Country.IndexOf(country, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(language))
+            {
+                selectedVenueTours = selectedVenueTours.Where(tour => tour.Language != null && tour.Language.IndexOf(language, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(duration))
+            {
+                selectedVenueTours = selectedVenueTours.Where(tour => tour.Destination_Duration == duration).ToList();
+            }
+
+            viewModel.SelectedVenueTours = selectedVenueTours;
+
             return View(viewModel);
         }
+
 
 
         public ActionResult DestinationDetails(int? id)
