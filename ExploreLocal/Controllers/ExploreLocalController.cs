@@ -114,8 +114,34 @@ namespace ExploreLocal.Controllers
 
         public ActionResult Destinations(int id, decimal? minPrice, decimal? maxPrice, string country, string language, string duration)
         {
-            var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id && t.TourStatus == true).ToList();
             var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
+            var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id && t.TourStatus == true).ToList();
+
+            // Apply filters based on the provided parameters
+            if (minPrice != null)
+            {
+                selectedVenueTours = selectedVenueTours.Where(tour => tour.Price >= minPrice).ToList();
+            }
+
+            if (maxPrice != null)
+            {
+                selectedVenueTours = selectedVenueTours.Where(tour => tour.Price <= maxPrice).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(country))
+            {
+                selectedVenueTours = selectedVenueTours.Where(tour => tour.Country != null && tour.Country.IndexOf(country, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(language))
+            {
+                selectedVenueTours = selectedVenueTours.Where(tour => tour.Language != null && tour.Language.IndexOf(language, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(duration))
+            {
+                selectedVenueTours = selectedVenueTours.Where(tour => tour.Destination_Duration == duration).ToList();
+            }
 
             var mostPopularTours = db.Tbl_Destination
                 .GroupJoin(
@@ -163,39 +189,13 @@ namespace ExploreLocal.Controllers
                 MaxPrice = maxPrice,
                 Country = country,
                 Language = language,
-                Duration = duration
+                Duration = duration,
+                NoToursFound = !selectedVenueTours.Any() // Set the flag
             };
-
-            // Apply filters based on the provided parameters
-            if (minPrice != null)
-            {
-                selectedVenueTours = selectedVenueTours.Where(tour => tour.Price >= minPrice).ToList();
-            }
-
-            if (maxPrice != null)
-            {
-                selectedVenueTours = selectedVenueTours.Where(tour => tour.Price <= maxPrice).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(country))
-            {
-                selectedVenueTours = selectedVenueTours.Where(tour => tour.Country != null && tour.Country.IndexOf(country, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(language))
-            {
-                selectedVenueTours = selectedVenueTours.Where(tour => tour.Language != null && tour.Language.IndexOf(language, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(duration))
-            {
-                selectedVenueTours = selectedVenueTours.Where(tour => tour.Destination_Duration == duration).ToList();
-            }
-
-            viewModel.SelectedVenueTours = selectedVenueTours;
 
             return View(viewModel);
         }
+
 
 
 

@@ -18,6 +18,8 @@ namespace ExploreLocal.Models
         public string Country { get; set; }
         public string Language { get; set; }
         public string Duration { get; set; }
+        public bool NoToursFound { get; set; }
+
     }
 
 }
