@@ -86,6 +86,9 @@ namespace ExploreLocal.Controllers
             int totalTours = db.Tbl_Destination.Count();
             ViewBag.TotalTours = totalTours;
 
+            var bestCommentedTours = FetchBestCommentedToursData();
+            ViewBag.BestCommentedToursData = bestCommentedTours;
+
             List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
             return View(ExpertList);
         }
@@ -106,6 +109,36 @@ namespace ExploreLocal.Controllers
             return bestGoingTours;
         }
 
+        private List<BestCommentedTourViewModel> FetchBestCommentedToursData()
+        {
+            var commentedTours = db.Tbl_Destination
+                .Select(t => new
+                {
+                    TourId = t.DestinationID,
+                    CommentCount = t.Tbl_Comments.Count()
+                })
+                .OrderByDescending(t => t.CommentCount)
+                .Take(5) // You can change this to the desired number of top commented tours
+                .ToList();
+
+            var bestCommentedTours = new List<BestCommentedTourViewModel>();
+
+            foreach (var tour in commentedTours)
+            {
+                var tourDetails = db.Tbl_Destination.Find(tour.TourId);
+
+                if (tourDetails != null)
+                {
+                    bestCommentedTours.Add(new BestCommentedTourViewModel
+                    {
+                        TourName = tourDetails.DestinationName,
+                        CommentCount = tour.CommentCount
+                    });
+                }
+            }
+
+            return bestCommentedTours;
+        }
 
 
         private double CalculateTotalYearlyBookings(List<Tbl_Bookings> bookings, int targetYear)
