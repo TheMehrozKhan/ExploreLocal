@@ -65,21 +65,26 @@ namespace ExploreLocal.Controllers
             ViewBag.Culture = pkCulture;
 
             double totalEarnings = CalculateTotalEarnings(bookings);
-            ViewBag.TotalEarnings = totalEarnings.ToString("C", pkCulture); // Add "C" to format as currency
+            ViewBag.TotalEarnings = totalEarnings.ToString("C", pkCulture); 
 
             double earningsThisMonth = CalculateEarningsThisMonth(bookings);
-            ViewBag.EarningsThisMonth = earningsThisMonth.ToString("C", pkCulture); // Add "C" to format as currency
+            ViewBag.EarningsThisMonth = earningsThisMonth.ToString("C", pkCulture); 
 
             double expenseThisMonth = CalculateExpenseThisMonth(bookings);
-            ViewBag.ExpenseThisMonth = expenseThisMonth.ToString("C", pkCulture); // Add "C" to format as currency
+            ViewBag.ExpenseThisMonth = expenseThisMonth.ToString("C", pkCulture); 
 
             int currentYear = DateTime.Now.Year;
             double totalYearlyBookings = CalculateTotalYearlyBookings(bookings, currentYear);
-            ViewBag.TotalYearlyBookings = totalYearlyBookings.ToString("C", pkCulture); // Add "C" to format as currency
+            ViewBag.TotalYearlyBookings = totalYearlyBookings.ToString("C", pkCulture); 
 
             var bestGoingTours = FetchBestGoingToursData();
             ViewBag.BestGoingToursData = bestGoingTours;
 
+            int totalUsers = db.Tbl_User.Count();
+            ViewBag.TotalUsers = totalUsers;
+
+            int totalTours = db.Tbl_Destination.Count();
+            ViewBag.TotalTours = totalTours;
 
             List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
             return View(ExpertList);
