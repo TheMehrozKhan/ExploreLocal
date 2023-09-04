@@ -77,8 +77,28 @@ namespace ExploreLocal.Controllers
             double totalYearlyBookings = CalculateTotalYearlyBookings(bookings, currentYear);
             ViewBag.TotalYearlyBookings = totalYearlyBookings.ToString("C", pkCulture); // Add "C" to format as currency
 
+            var bestGoingTours = FetchBestGoingToursData();
+            ViewBag.BestGoingToursData = bestGoingTours;
+
+
             List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
             return View(ExpertList);
+        }
+
+        private List<BestGoingTourData> FetchBestGoingToursData()
+        {
+            var bestGoingTours = db.Tbl_Destination
+                .GroupBy(t => t.DestinationName)
+                .Select(g => new BestGoingTourData
+                {
+                    DestinationName = g.Key,
+                    BookingsCount = g.Count()
+                })
+                .OrderByDescending(x => x.BookingsCount)
+                .Take(5)
+                .ToList();
+
+            return bestGoingTours;
         }
 
 
@@ -100,10 +120,10 @@ namespace ExploreLocal.Controllers
                     .Select(d => d.Price)
                     .FirstOrDefault();
 
-                return ((booking.NumberOfAdults ?? 0) * (double)destinationPrice) + ((booking.NumberOfChildren ?? 0) * (double)destinationPrice);
+                return ((booking.Tbl_Destination.Price));
             });
 
-            return totalEarnings;
+            return Convert.ToDouble(totalEarnings);
         }
 
         private double CalculateEarningsThisMonth(List<Tbl_Bookings> bookings)
@@ -118,16 +138,16 @@ namespace ExploreLocal.Controllers
                         .Select(d => d.Price)
                         .FirstOrDefault();
 
-                    return ((booking.NumberOfAdults ?? 0) * (double)destinationPrice) + ((booking.NumberOfChildren ?? 0) * (double)destinationPrice);
+                    return ((booking.Tbl_Destination.Price));
                 });
 
-            return earningsThisMonth;
+            return Convert.ToDouble(earningsThisMonth);
         }
 
         private double CalculateExpenseThisMonth(List<Tbl_Bookings> bookings)
         {
             DateTime currentDate = DateTime.Now;
-            double fixedExpenseRate = 10.0; // Replace with your actual fixed expense rate
+            double fixedExpenseRate = 10.0;
 
             var expenseThisMonth = bookings
                 .Where(booking => booking.BookingDate.HasValue && booking.BookingDate.Value.Month == currentDate.Month)
@@ -146,7 +166,7 @@ namespace ExploreLocal.Controllers
             {
                 var destinationPrice = db.Tbl_Destination.Where(d => d.DestinationID == booking.DestinationId).Select(d => d.Price).FirstOrDefault();
 
-                double revenue = ((booking.NumberOfAdults ?? 0) * (double)destinationPrice) + ((booking.NumberOfChildren ?? 0) * (double)destinationPrice);
+                double revenue = Convert.ToDouble(destinationPrice);
                 revenueData.Add(revenue);
             }
 

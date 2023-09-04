@@ -148,33 +148,50 @@
                 <!-- Employee Salary -->
                 <div class="col-lg-4 d-flex align-items-strech">
                     <div class="card w-100">
-                        <div class="card-body">
-                            <div>
-                                <h5 class="card-title fw-semibold mb-1">Employee Salary</h5>
-                                <p class="card-subtitle mb-0">Every month</p>
-                                <div id="salary" class="mb-7 pb-8"></div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                        <div class="bg-light-primary rounded me-8 p-8 d-flex align-items-center justify-content-center">
-                                            <i class="ti ti-grid-dots text-primary fs-6"></i>
-                                        </div>
-                                        <div>
-                                            <p class="fs-3 mb-0 fw-normal">Salary</p>
-                                            <h6 class="fw-semibold text-dark fs-4 mb-0">$36,358</h6>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="bg-light rounded me-8 p-8 d-flex align-items-center justify-content-center">
-                                            <i class="ti ti-grid-dots text-muted fs-6"></i>
-                                        </div>
-                                        <div>
-                                            <p class="fs-3 mb-0 fw-normal">Profit</p>
-                                            <h6 class="fw-semibold text-dark fs-4 mb-0">$5,296</h6>
-                                        </div>
-                                    </div>
+                            <div class="card-body">
+                                <div>
+                                    <h5 class="card-title fw-semibold mb-1">Best Going Tours</h5>
+                                    <p class="card-subtitle mb-0">Every month</p>
+                                    <canvas id="bestGoingToursChart" width="150" height="190"></canvas>
                                 </div>
                             </div>
-                        </div>
+
+                        <script>
+    // Get the data passed from the controller
+    var bestGoingToursData = @Html.Raw(Json.Encode(ViewBag.BestGoingToursData));
+
+    // Extract labels and data for the chart
+    var labels = bestGoingToursData.map(function(item) {
+        return item.DestinationName;
+    });
+
+    var data = bestGoingToursData.map(function(item) {
+        return item.BookingsCount;
+    });
+
+    // Create and render the chart
+    var ctx = document.getElementById('bestGoingToursChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Bookings Count',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Adjust the color as needed
+                borderColor: 'rgba(75, 192, 192, 1)', // Adjust the color as needed
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+                        </script>
                     </div>
                 </div>
                 <!-- Project -->
