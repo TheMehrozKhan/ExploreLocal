@@ -23,7 +23,7 @@
                             @using (Html.BeginForm("Create_Tour", "ExploreLocal", FormMethod.Post, new { enctype = "multipart/form-data", id = "signupform" }))
                             {
                                 <div class="form-input">
-                                    @Html.DropDownListFor(x => x.FK_Venue_Id, ViewBag.categorylist as SelectList, new { @class = "form-control"})
+                                    @Html.DropDownListFor(x => x.FK_Venue_Id, ViewBag.categorylist as SelectList, new { @class = "form-control" })
                                 </div>
 
                                 <br />
@@ -52,7 +52,10 @@
                                 </div>
                                 <br />
 
-                                <div class="form-input">
+                                <div class="form-input" style="position: relative;">
+                                    <a href="https://snipboard.io/cSVgJ7.jpg" target="_blank" style="position: absolute; top: 0; right: 0;">
+                                        <img src="~/Content/img/TheQuestionMark.png" alt="Question Mark" class="question-mark-icon" height="40" width="40" />
+                                    </a>
                                     @Html.TextBoxFor(x => x.GoogleStreetViewURL, new { @class = "form-control", required = "required" })
                                     <span style="color: red">@Html.ValidationMessageFor(x => x.GoogleStreetViewURL)</span>
                                     <label class="lh-1 text-14 text-light-1">Google Street View URL</label>
@@ -98,7 +101,7 @@
                                 <br />
 
                                 <div class="form-input">
-                                    <input type="file" name="imgfiles" id="imgfiles" class="form-control-file" required multiple/>
+                                    <input type="file" name="imgfiles" id="imgfiles" class="form-control-file" required multiple />
                                 </div>
                                 <br />
 

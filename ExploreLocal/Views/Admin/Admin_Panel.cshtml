@@ -148,13 +148,13 @@
                 <!-- Employee Salary -->
                 <div class="col-lg-4 d-flex align-items-strech">
                     <div class="card w-100">
-                            <div class="card-body">
-                                <div>
-                                    <h5 class="card-title fw-semibold mb-1">Best Going Tours</h5>
-                                    <p class="card-subtitle mb-0">Every month</p>
-                                    <canvas id="bestGoingToursChart" width="150" height="190"></canvas>
-                                </div>
+                        <div class="card-body">
+                            <div>
+                                <h5 class="card-title fw-semibold mb-1">Best Going Tours</h5>
+                                <p class="card-subtitle mb-0">Every month</p>
+                                <canvas id="bestGoingToursChart" width="150" height="190"></canvas>
                             </div>
+                        </div>
                         <script>
     // Get the data passed from the controller
     var bestGoingToursData = @Html.Raw(Json.Encode(ViewBag.BestGoingToursData));
@@ -202,14 +202,7 @@
                                 <div class="card-body pb-0 mb-xxl-4 pb-1">
                                     <p class="mb-1 fs-3">Total Users</p>
                                     <h4 class="fw-semibold fs-7">@ViewBag.TotalUsers</h4>
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
-                                            <i class="ti ti-arrow-up-left text-success"></i>
-                                        </span>
-                                        <p class="text-dark fs-3 mb-0">+9%</p>
-                                    </div>
                                 </div>
-                                <div id="customers"></div>
                             </div>
                         </div>
                         <!-- Projects -->
@@ -218,13 +211,6 @@
                                 <div class="card-body">
                                     <p class="mb-1 fs-3">Total Tours</p>
                                     <h4 class="fw-semibold fs-7">@ViewBag.TotalTours</h4>
-                                    <div class="d-flex align-items-center mb-3">
-                                        <span class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
-                                            <i class="ti ti-arrow-up-left text-success"></i>
-                                        </span>
-                                        <p class="text-dark fs-3 mb-0">+9%</p>
-                                    </div>
-                                    <div id="projects"></div>
                                 </div>
                             </div>
                         </div>
@@ -232,37 +218,28 @@
                     <!-- Comming Soon -->
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex align-items-center mb-7 pb-2">
-                                <div class="me-3 pe-1">
-                                    <img src="~/AdminTemplate/dist/images/profile/user-1.jpg" class="shadow-warning rounded-2" alt="" width="72" height="72" />
+                            @foreach (var user in ViewBag.LatestUsers)
+                            {
+                                <div class="d-flex align-items-center mb-7 pb-2">
+                                    <div class="me-3 pe-1">
+                                        <img src="@Url.Content(user.ProfileImageUrl)" class="shadow-warning rounded-2" alt="" width="72" height="72" />
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-semibold fs-5 mb-2">Our New Users </h5>
+                                        <p class="fs-3 mb-0">September 2023</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h5 class="fw-semibold fs-5 mb-2"> Super awesome, Vue coming soon! </h5>
-                                    <p class="fs-3 mb-0">22 March, 2023</p>
-                                </div>
-                            </div>
+                            }
                             <div class="d-flex justify-content-between">
                                 <ul class="hstack mb-0">
-                                    <li class="ms-n8">
-                                        <a href="javascript:void(0)" class="me-1">
-                                            <img src="~/AdminTemplate/dist/images/profile/user-2.jpg" class="rounded-circle border border-2 border-white" width="44" height="44" alt="" />
-                                        </a>
-                                    </li>
-                                    <li class="ms-n8">
-                                        <a href="javascript:void(0)" class="me-1">
-                                            <img src="~/AdminTemplate/dist/images/profile/user-3.jpg" class="rounded-circle border border-2 border-white" width="44" height="44" alt="" />
-                                        </a>
-                                    </li>
-                                    <li class="ms-n8">
-                                        <a href="javascript:void(0)" class="me-1">
-                                            <img src="~/AdminTemplate/dist/images/profile/user-4.jpg" class="rounded-circle border border-2 border-white" width="44" height="44" alt="" />
-                                        </a>
-                                    </li>
-                                    <li class="ms-n8">
-                                        <a href="javascript:void(0)" class="me-1">
-                                            <img src="~/AdminTemplate/dist/images/profile/user-5.jpg" class="rounded-circle border border-2 border-white" width="44" height="44" alt="" />
-                                        </a>
-                                    </li>
+                                    @foreach (var user in ViewBag.OlderUsers)
+                                    {
+                                        <li class="ms-n8">
+                                            <a href="javascript:void(0)" class="me-1">
+                                                <img src="@Url.Content(user.ProfileImageUrl)" class="rounded-circle border border-2 border-white" width="44" height="44" alt="" />
+                                            </a>
+                                        </li>
+                                    }
                                 </ul>
                                 <a href="#" class="bg-light rounded py-1 px-8 d-flex align-items-center text-decoration-none">
                                     <i class="ti ti-message-2 fs-6 text-primary"></i>
@@ -299,127 +276,136 @@
                                 }
                             </div>
                         </div>
-                </div>
-            </div>
-            <!--  Row 3 -->
-            <div class="row">
-                <!-- Weekly Stats -->
-                <div class="col-lg-4 d-flex align-items-strech">
-                    <div class="card w-100">
-                        <div class="card-body">
-                            <h5 class="card-title fw-semibold">Weekly Stats</h5>
-                            <p class="card-subtitle mb-0">Average sales</p>
-                            <div id="stats" class="my-4"></div>
-                            <div class="position-relative">
-                                <div class="d-flex align-items-center justify-content-between mb-7">
-                                    <div class="d-flex">
-                                        <div class="p-6 bg-light-primary rounded me-6 d-flex align-items-center justify-content-center">
-                                            <i class="ti ti-grid-dots text-primary fs-6"></i>
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-1 fs-4 fw-semibold">Top Sales</h6>
-                                            <p class="fs-3 mb-0">Johnathan Doe</p>
-                                        </div>
-                                    </div>
-                                    <div class="bg-light-primary badge">
-                                        <p class="fs-3 text-primary fw-semibold mb-0">+68</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between mb-7">
-                                    <div class="d-flex">
-                                        <div class="p-6 bg-light-success rounded me-6 d-flex align-items-center justify-content-center">
-                                            <i class="ti ti-grid-dots text-success fs-6"></i>
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-1 fs-4 fw-semibold">Best Seller</h6>
-                                            <p class="fs-3 mb-0">MaterialPro Admin</p>
-                                        </div>
-                                    </div>
-                                    <div class="bg-light-success badge">
-                                        <p class="fs-3 text-success fw-semibold mb-0">+68</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex">
-                                        <div class="p-6 bg-light-danger rounded me-6 d-flex align-items-center justify-content-center">
-                                            <i class="ti ti-grid-dots text-danger fs-6"></i>
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-1 fs-4 fw-semibold">Most Commented</h6>
-                                            <p class="fs-3 mb-0">Ample Admin</p>
-                                        </div>
-                                    </div>
-                                    <div class="bg-light-danger badge">
-                                        <p class="fs-3 text-danger fw-semibold mb-0">+68</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <!-- Top Performers -->
-                <div class="col-lg-8 d-flex align-items-strech">
-                    <div class="card w-100">
-                        <div class="card-body">
-                            <div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
-                                <div class="mb-3 mb-sm-0">
-                                    <h5 class="card-title fw-semibold">Our Experts</h5>
-                                    <p class="card-subtitle mb-0">Best Experts</p>
+                <!--  Row 3 -->
+                <div class="row">
+                    <div class="col-lg-14 d-flex align-items-strech justify-content-center">
+                        <div class="card w-100">
+                            <div class="card-body">
+                                <div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
+                                    <div class="mb-3 mb-sm-0">
+                                        <h5 class="card-title fw-semibold">Our Experts</h5>
+                                        <p class="card-subtitle mb-0">Best Experts</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table align-middle text-nowrap mb-0">
-                                    <thead>
-                                        <tr class="text-muted fw-semibold">
-                                            <th scope="col" class="ps-0">Expert Profile</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Location</th>
-                                            <th scope="col">Brief Summary</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (Model != null)
-                                        {
-                                            foreach (var item in Model)
+                                <div class="table-responsive">
+                                    <table class="table align-middle text-nowrap mb-0">
+                                        <thead>
+                                            <tr class="text-muted fw-semibold">
+                                                <th scope="col" class="ps-0">Expert Profile</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Brief Summary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
                                             {
-                                        <tr>
-                                            <td class="ps-0">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-2 pe-1">
-                                                        @if (!string.IsNullOrEmpty(item.ExpertProfileImage))
-                                                        {
-                                                            <img src="@Url.Content(item.ExpertProfileImage)" class="rounded-circle" width="40" height="40" alt="" />
-                                                        }
-                                                        else
-                                                        {
-                                                            <img src="~/Content/img/Default.png" width="40" height="40" class="circle-img" />
-                                                        }
-                                                    </div>
-                                                    <div>
-                                                        <h6 class="fw-semibold mb-1">@item.ExpertName</h6>
-                                                        <p class="fs-2 mb-0 text-muted">Expert</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0 fs-3">@item.ExpertEmail</p>
-                                            </td>
-                                            <td>
-                                                <p class="fs-3 text-dark mb-0">@item.ExpertLocation</p>
-                                            </td>
-                                            <td>
-                                                <p class="fs-3 text-dark mb-0">@item.ExpertBio</p>
-                                            </td>
-                                        </tr>
+                                                foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td class="ps-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="me-2 pe-1">
+                                                                    @if (!string.IsNullOrEmpty(item.ExpertProfileImage))
+                                                                    {
+                                                                        <img src="@Url.Content(item.ExpertProfileImage)" class="rounded-circle" width="40" height="40" alt="" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="~/Content/img/Default.png" width="40" height="40" class="circle-img" />
+                                                                    }
+                                                                </div>
+                                                                <div>
+                                                                    <h6 class="fw-semibold mb-1">@item.ExpertName</h6>
+                                                                    <p class="fs-2 mb-0 text-muted">Expert</p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 fs-3">@item.ExpertEmail</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="fs-3 text-dark mb-0">@item.ExpertLocation</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="fs-3 text-dark mb-0">@item.ExpertBio</p>
+                                                        </td>
+                                                    </tr>
+                                                }
                                             }
-                                        }
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
+                                    <div class="mb-3 mb-sm-0">
+                                        <h5 class="card-title fw-semibold">Our Users</h5>
+                                        <p class="card-subtitle mb-0">All Registered Users</p>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table align-middle text-nowrap mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="ps-0">User Profile</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Password</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (ViewBag.UserList != null)
+                                            {
+                                                foreach (var user in ViewBag.UserList)
+                                                {
+                                                    <tr>
+                                                        <td class="ps-0">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="me-2 pe-1">
+                                                                    @if (!string.IsNullOrEmpty(user.ImageUrl))
+                                                                    {
+                                                                        <img src="@Url.Content(user.ImageUrl)" class="rounded-circle" width="40" height="40" alt="" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="~/Content/img/Default.png" width="40" height="40" class="circle-img" />
+                                                                    }
+                                                                </div>
+                                                                <div>
+                                                                    <h6 class="fw-semibold mb-1">@user.Name</h6>
+                                                                    <p class="fs-2 mb-0 text-muted">User</p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="mb-0 fs-3">@user.Email</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="fs-3 text-dark mb-0">@user.Location</p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="fs-3 text-dark mb-0">@user.Password</p>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
-    </div>
 </body>

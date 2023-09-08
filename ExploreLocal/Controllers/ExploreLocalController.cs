@@ -13,13 +13,13 @@ namespace ExploreLocal.Controllers
 {
     public class ExploreLocalController : Controller
     {
-        ExploreLocalEntities2 db = new ExploreLocalEntities2();
+        ExploreLocalEntities db = new ExploreLocalEntities();
         public ActionResult Index(Tbl_User user)
         {
             TempData["ToastMessage"] = "Hi, " + user.FirstName + " " + user.LastName + " You Successfully Logged In!";
             ViewBag.ToastMessage = TempData["ToastMessage"];
 
-            using (var db = new ExploreLocalEntities2())
+            using (var db = new ExploreLocalEntities())
             {
                 List<Tbl_Venue> venues = db.Tbl_Venue.ToList();
                 List<Tbl_Destination> destinations = db.Tbl_Destination.Where(t => t.TourStatus == true).ToList(); 
@@ -268,7 +268,7 @@ namespace ExploreLocal.Controllers
             {
                 try
                 {
-                    using (var db = new ExploreLocalEntities2())
+                    using (var db = new ExploreLocalEntities())
                     {
                         var booking = new Tbl_Bookings
                         {
@@ -307,7 +307,7 @@ namespace ExploreLocal.Controllers
             {
                 return RedirectToAction("Error");
             }
-            using (var db = new ExploreLocalEntities2())
+            using (var db = new ExploreLocalEntities())
             {
                 var booking = db.Tbl_Bookings.Find(id);
                 if (booking != null)
@@ -340,7 +340,7 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
             int bookingIdValue = bookingId.Value;
-            using (var db = new ExploreLocalEntities2())
+            using (var db = new ExploreLocalEntities())
             {
                 var booking = db.Tbl_Bookings.Find(bookingIdValue);
                 if (booking == null)
@@ -405,7 +405,7 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
 
-            using (var db = new ExploreLocalEntities2())
+            using (var db = new ExploreLocalEntities())
             {
                 var booking = db.Tbl_Bookings.Find(bookingId);
                 if (booking != null)
@@ -561,7 +561,7 @@ namespace ExploreLocal.Controllers
                     ExpertStatus = Convert.ToBoolean(0)
                 };
 
-                using (var db = new ExploreLocalEntities2())
+                using (var db = new ExploreLocalEntities())
                 {
                     db.Tbl_Expert.Add(expert);
                     db.SaveChanges();

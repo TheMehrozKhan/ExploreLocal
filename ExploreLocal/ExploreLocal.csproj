@@ -238,8 +238,10 @@
     <Compile Include="Models\BookingViewModel.cs" />
     <Compile Include="Models\DestinationBookingViewModel.cs" />
     <Compile Include="Models\DestinationDetailsViewModel.cs" />
+    <Compile Include="Models\ExpertModel.cs" />
     <Compile Include="Models\ExpertViewModel.cs" />
     <Compile Include="Models\IndexViewModel.cs" />
+    <Compile Include="Models\LatestUserViewModel.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -256,9 +258,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SearchViewModel.cs" />
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Tbl_Admin.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -287,6 +286,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ToursViewModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\Wishlist.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

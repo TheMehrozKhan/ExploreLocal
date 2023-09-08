@@ -15,7 +15,7 @@ namespace ExploreLocal.Controllers
 {
     public class AdminController : Controller
     {
-        ExploreLocalEntities2 db = new ExploreLocalEntities2();
+        ExploreLocalEntities db = new ExploreLocalEntities();
         public ActionResult Layout()
         {
             return View();
@@ -89,8 +89,91 @@ namespace ExploreLocal.Controllers
             var bestCommentedTours = FetchBestCommentedToursData();
             ViewBag.BestCommentedToursData = bestCommentedTours;
 
+            var latestUsers = FetchLatestUsers();
+            ViewBag.LatestUsers = latestUsers;
+
+            var olderUsers = FetchOlderUsers();
+            ViewBag.OlderUsers = olderUsers;
+
+            List<UserModel> userList = FetchUserData();
+            ViewBag.UserList = userList;
+
             List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
             return View(ExpertList);
+        }
+
+        private List<UserModel> FetchUserData()
+        {
+            var userList = db.Tbl_User.Select(u => new UserModel
+            {
+                Id = u.UserID,
+                Name = u.FirstName + u.LastName,
+                Email = u.Email,
+                Password = u.Password,
+                ImageUrl = u.ProfileImage,
+                Location = u.Location
+            }).ToList();
+
+            return userList;
+        }
+
+        private List<ExpertModel> FetchExpertData()
+        {
+            var expertList = db.Tbl_Expert.Select(e => new ExpertModel
+            {
+                Id = e.ExpertId,
+                ExpertName = e.ExpertName,
+                ExpertEmail = e.ExpertEmail,
+                ExpertPassword = e.ExperPassword,
+                ExpertProfileImage = e.ExpertProfileImage,
+                ExpertLocation = e.ExpertLocation
+            }).ToList();
+
+            return expertList;
+        }
+
+        private List<LatestUserViewModel> FetchOlderUsers()
+        {
+            var olderUsers = db.Tbl_User
+                .OrderBy(u => u.UserID) 
+                .Take(4)
+                .ToList();
+
+            var olderUserViewModels = new List<LatestUserViewModel>();
+
+            foreach (var user in olderUsers)
+            {
+                olderUserViewModels.Add(new LatestUserViewModel
+                {
+                    UserId = user.UserID,
+                    UserName = user.FirstName + user.LastName,
+                    ProfileImageUrl = user.ProfileImage 
+                });
+            }
+
+            return olderUserViewModels;
+        }
+
+        private List<LatestUserViewModel> FetchLatestUsers()
+        {
+            var latestUsers = db.Tbl_User
+         .OrderByDescending(u => u.UserID)
+         .Take(5) 
+         .ToList();
+
+            var latestUserViewModels = new List<LatestUserViewModel>();
+
+            foreach (var user in latestUsers)
+            {
+                latestUserViewModels.Add(new LatestUserViewModel
+                {
+                    UserId = user.UserID,
+                    UserName = user.FirstName + user.LastName,
+                    ProfileImageUrl = user.ProfileImage 
+                });
+            }
+
+            return latestUserViewModels;
         }
 
         private List<BestGoingTourData> FetchBestGoingToursData()
@@ -118,7 +201,7 @@ namespace ExploreLocal.Controllers
                     CommentCount = t.Tbl_Comments.Count()
                 })
                 .OrderByDescending(t => t.CommentCount)
-                .Take(5) // You can change this to the desired number of top commented tours
+                .Take(5) 
                 .ToList();
 
             var bestCommentedTours = new List<BestCommentedTourViewModel>();
@@ -215,8 +298,8 @@ namespace ExploreLocal.Controllers
         {
             List<double> expenseData = new List<double>();
 
-            // Define the fixed expense rate (modify this according to your needs)
-            double fixedExpenseRate = 10.0; // Replace with your actual fixed expense rate
+
+            double fixedExpenseRate = 10.0; 
 
             foreach (var booking in bookings)
             {
@@ -241,7 +324,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertRequests()
         {
-            using (var db = new ExploreLocalEntities2())
+            using (var db = new ExploreLocalEntities())
             {
                 var pendingExperts = db.Tbl_Expert.Where(e => e.ExpertStatus == false).ToList();
                 return View(pendingExperts);
@@ -286,7 +369,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult RejectExpert(int expertId)
         {
-            using (var db = new ExploreLocalEntities2())
+            using (var db = new ExploreLocalEntities())
             {
                 var expert = db.Tbl_Expert.Find(expertId);
                 if (expert != null)
@@ -301,13 +384,12 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertTourRequests()
         {
-            using (var db = new ExploreLocalEntities2())
+            using (var db = new ExploreLocalEntities())
             {
                 var pendingTourExperts = db.Tbl_Destination
                     .Where(e => e.TourStatus == false)
                     .ToList();
 
-                // Fetch the associated Tbl_Expert for each pendingTourExpert
                 foreach (var expert in pendingTourExperts)
                 {
                     expert.Expert = db.Tbl_Expert.FirstOrDefault(e => e.ExpertId == expert.FK_Expert_Id);
@@ -359,7 +441,7 @@ namespace ExploreLocal.Controllers
             Tbl_Destination tour = db.Tbl_Destination.Find(tourId);
             if (tour != null)
             {
-                db.Tbl_Destination.Remove(tour); // Remove the tour from the database (reject)
+                db.Tbl_Destination.Remove(tour); 
                 db.SaveChanges();
             }
 
@@ -368,7 +450,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertDelete(int expertId)
         {
-            using (var db = new ExploreLocalEntities2())
+            using (var db = new ExploreLocalEntities())
             {
                 var expert = db.Tbl_Expert.Find(expertId);
                 if (expert != null)

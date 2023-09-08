@@ -29,7 +29,8 @@ namespace ExploreLocal.Models
         public string Email { get; set; }
         public Nullable<int> ContactNumber { get; set; }
         public string TourState { get; set; }
-    
+
+
         public virtual Tbl_Destination Tbl_Destination { get; set; }
         public virtual Tbl_Expert Tbl_Expert { get; set; }
         public virtual Tbl_User Tbl_User { get; set; }
