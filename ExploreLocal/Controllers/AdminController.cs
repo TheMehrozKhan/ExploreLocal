@@ -15,7 +15,7 @@ namespace ExploreLocal.Controllers
 {
     public class AdminController : Controller
     {
-        ExploreLocalEntities db = new ExploreLocalEntities();
+        ExploreLocalEntities1 db = new ExploreLocalEntities1();
         public ActionResult Layout()
         {
             return View();
@@ -52,52 +52,36 @@ namespace ExploreLocal.Controllers
             }
 
             List<Tbl_Bookings> bookings = db.Tbl_Bookings.ToList();
-
             var revenueData = CalculateRevenueData(bookings);
             var expenseData = CalculateExpenseData(bookings);
-
             ViewBag.ToastMessage = TempData["ToastMessage"];
-
             ViewBag.RevenueData = revenueData;
             ViewBag.ExpenseData = expenseData;
-
             CultureInfo pkCulture = new CultureInfo("en-PK");
             ViewBag.Culture = pkCulture;
-
             double totalEarnings = CalculateTotalEarnings(bookings);
-            ViewBag.TotalEarnings = totalEarnings.ToString("C", pkCulture); 
-
+            ViewBag.TotalEarnings = totalEarnings.ToString("C", pkCulture);
             double earningsThisMonth = CalculateEarningsThisMonth(bookings);
-            ViewBag.EarningsThisMonth = earningsThisMonth.ToString("C", pkCulture); 
-
+            ViewBag.EarningsThisMonth = earningsThisMonth.ToString("C", pkCulture);
             double expenseThisMonth = CalculateExpenseThisMonth(bookings);
-            ViewBag.ExpenseThisMonth = expenseThisMonth.ToString("C", pkCulture); 
-
+            ViewBag.ExpenseThisMonth = expenseThisMonth.ToString("C", pkCulture);
             int currentYear = DateTime.Now.Year;
             double totalYearlyBookings = CalculateTotalYearlyBookings(bookings, currentYear);
-            ViewBag.TotalYearlyBookings = totalYearlyBookings.ToString("C", pkCulture); 
-
+            ViewBag.TotalYearlyBookings = totalYearlyBookings.ToString("C", pkCulture);
             var bestGoingTours = FetchBestGoingToursData();
             ViewBag.BestGoingToursData = bestGoingTours;
-
             int totalUsers = db.Tbl_User.Count();
             ViewBag.TotalUsers = totalUsers;
-
             int totalTours = db.Tbl_Destination.Count();
             ViewBag.TotalTours = totalTours;
-
             var bestCommentedTours = FetchBestCommentedToursData();
             ViewBag.BestCommentedToursData = bestCommentedTours;
-
-            var latestUsers = FetchLatestUsers();
+            var latestUsers = FetchLatestUsers().Take(1);
             ViewBag.LatestUsers = latestUsers;
-
-            var olderUsers = FetchOlderUsers();
+            var olderUsers = FetchOlderUsers().Take(3);
             ViewBag.OlderUsers = olderUsers;
-
             List<UserModel> userList = FetchUserData();
             ViewBag.UserList = userList;
-
             List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
             return View(ExpertList);
         }
@@ -324,7 +308,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertRequests()
         {
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities1())
             {
                 var pendingExperts = db.Tbl_Expert.Where(e => e.ExpertStatus == false).ToList();
                 return View(pendingExperts);
@@ -369,7 +353,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult RejectExpert(int expertId)
         {
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities1())
             {
                 var expert = db.Tbl_Expert.Find(expertId);
                 if (expert != null)
@@ -384,7 +368,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertTourRequests()
         {
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities1())
             {
                 var pendingTourExperts = db.Tbl_Destination
                     .Where(e => e.TourStatus == false)
@@ -450,7 +434,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertDelete(int expertId)
         {
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities1())
             {
                 var expert = db.Tbl_Expert.Find(expertId);
                 if (expert != null)

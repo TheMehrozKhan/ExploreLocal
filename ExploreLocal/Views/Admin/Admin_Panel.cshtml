@@ -10,7 +10,6 @@
     @Html.Partial("Layout")
     <div class="body-wrapper">
         <div class="container-fluid" style="margin-top:50px;">
-            <!--  Row 1 -->
             <div class="row">
                 <div class="col-lg-8 d-flex align-items-strech">
                     <div class="card w-100">
@@ -64,45 +63,42 @@
                     </div>
                 </div>
                 <script>
-    var revenueData = @Html.Raw(Json.Encode(ViewBag.RevenueData));
-    var expenseData = @Html.Raw(Json.Encode(ViewBag.ExpenseData));
-
-    var ctx = document.getElementById('revenueExpenseChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Booking 1', 'Booking 2', 'Booking 3', /* Add more labels here */],
-            datasets: [
-                {
-                    label: 'Revenue',
-                    data: revenueData,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Customize color as needed
-                    borderColor: 'rgba(75, 192, 192, 1)', // Customize color as needed
-                    borderWidth: 1
-                },
-                {
-                    label: 'Expense in PKR',
-                    data: expenseData,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Customize color as needed
-                    borderColor: 'rgba(255, 99, 132, 1)', // Customize color as needed
-                    borderWidth: 1
-                }
-            ]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+                    var revenueData = @Html.Raw(Json.Encode(ViewBag.RevenueData));
+                    var expenseData = @Html.Raw(Json.Encode(ViewBag.ExpenseData));
+                    var ctx = document.getElementById('revenueExpenseChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Booking 1', 'Booking 2', 'Booking 3',],
+                            datasets: [
+                                {
+                                    label: 'Revenue',
+                                    data: revenueData,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Expense in PKR',
+                                    data: expenseData,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
                 </script>
-
                 <div class="col-lg-4">
                     <div class="row">
                         <div class="col-lg-12 col-md-6 col-sm-12">
-                            <!-- Yearly Breakup -->
                             <div class="card overflow-hidden">
                                 <div class="card-body">
                                     <div class="row align-items-center">
@@ -127,7 +123,6 @@
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-6 col-sm-12">
-                            <!-- Monthly Earnings -->
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row alig n-items-start">
@@ -143,9 +138,7 @@
                     </div>
                 </div>
             </div>
-            <!--  Row 2 -->
             <div class="row">
-                <!-- Employee Salary -->
                 <div class="col-lg-4 d-flex align-items-strech">
                     <div class="card w-100">
                         <div class="card-body">
@@ -156,47 +149,39 @@
                             </div>
                         </div>
                         <script>
-    // Get the data passed from the controller
-    var bestGoingToursData = @Html.Raw(Json.Encode(ViewBag.BestGoingToursData));
-
-    // Extract labels and data for the chart
-    var labels = bestGoingToursData.map(function(item) {
-        return item.DestinationName;
-    });
-
-    var data = bestGoingToursData.map(function(item) {
-        return item.BookingsCount;
-    });
-
-    // Create and render the chart
-    var ctx = document.getElementById('bestGoingToursChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Bookings Count',
-                data: data,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Adjust the color as needed
-                borderColor: 'rgba(75, 192, 192, 1)', // Adjust the color as needed
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+                            var bestGoingToursData = @Html.Raw(Json.Encode(ViewBag.BestGoingToursData));
+                            var labels = bestGoingToursData.map(function(item) {
+                                return item.DestinationName;
+                            });
+                            var data = bestGoingToursData.map(function(item) {
+                                return item.BookingsCount;
+                            });
+                            var ctx = document.getElementById('bestGoingToursChart').getContext('2d');
+                            var chart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Bookings Count',
+                                        data: data,
+                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
                         </script>
                     </div>
                 </div>
-                <!-- Project -->
                 <div class="col-lg-4">
                     <div class="row">
-                        <!-- Customers -->
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-body pb-0 mb-xxl-4 pb-1">
@@ -205,7 +190,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Projects -->
                         <div class="col-sm-6">
                             <div class="card">
                                 <div class="card-body">
@@ -215,7 +199,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Comming Soon -->
                     <div class="card">
                         <div class="card-body">
                             @foreach (var user in ViewBag.LatestUsers)
@@ -241,21 +224,20 @@
                                         </li>
                                     }
                                 </ul>
-                                <a href="#" class="bg-light rounded py-1 px-8 d-flex align-items-center text-decoration-none">
-                                    <i class="ti ti-message-2 fs-6 text-primary"></i>
+                                <a href="@Url.Action("RegisteredUser","Admin")" class="bg-light rounded py-1 px-8 d-flex align-items-center text-decoration-none">
+                                    View Full Report
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Selling Products -->
                 <div class="col-lg-4 d-flex align-items-strech">
                     <div class="card bg-primary border-0 w-100">
-                        <div class="card-body pb-0">
+                        <div class="card-body">
                             <h5 class="fw-semibold mb-1 text-white card-title"> Best Commented Tours </h5>
-                            <p class="fs-3 mb-3 text-white">Overview 2023</p>
-                            <div class="text-center mt-3">
-                                <img src="~/AdminTemplate/dist/images/backgrounds/piggy.png" class="img-fluid" alt="" />
+                            <p class="fs-3 text-white">Overview 2023</p>
+                            <div class="text-center" style="position:relative;top:18px;">
+                                <img src="~/AdminTemplate/dist/images/backgrounds/welcome-bg2.png" class="img-fluid" alt="" />
                             </div>
                         </div>
                         <div class="card mx-2 mb-2 mt-n2">
@@ -278,7 +260,6 @@
                         </div>
                     </div>
                 </div>
-                <!--  Row 3 -->
                 <div class="row">
                     <div class="col-lg-14 d-flex align-items-strech justify-content-center">
                         <div class="card w-100">
@@ -341,7 +322,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
@@ -403,9 +383,8 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
+    </div>
 </body>

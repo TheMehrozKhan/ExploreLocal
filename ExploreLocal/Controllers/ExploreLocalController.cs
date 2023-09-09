@@ -13,13 +13,13 @@ namespace ExploreLocal.Controllers
 {
     public class ExploreLocalController : Controller
     {
-        ExploreLocalEntities db = new ExploreLocalEntities();
+        ExploreLocalEntities1 db = new ExploreLocalEntities1();
         public ActionResult Index(Tbl_User user)
         {
             TempData["ToastMessage"] = "Hi, " + user.FirstName + " " + user.LastName + " You Successfully Logged In!";
             ViewBag.ToastMessage = TempData["ToastMessage"];
 
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities1())
             {
                 List<Tbl_Venue> venues = db.Tbl_Venue.ToList();
                 List<Tbl_Destination> destinations = db.Tbl_Destination.Where(t => t.TourStatus == true).ToList(); 
@@ -64,60 +64,11 @@ namespace ExploreLocal.Controllers
             return View("SearchResults", viewModel);
         }
 
-
-        //public ActionResult Destinations(int id)
-        //{
-        //    var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id && t.TourStatus == true).ToList();
-        //    var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
-        //var mostPopularTours = db.Tbl_Destination
-        //    .GroupJoin(
-        //        db.Tbl_Bookings,
-        //        destination => destination.DestinationID,
-        //        booking => booking.DestinationId,
-        //        (destination, bookings) => new
-        //        {
-        //            Destination = destination,
-        //            BookingsCount = bookings.Count()
-        //        })
-        //    .Where(x => x.Destination.TourStatus == true)
-        //    .OrderByDescending(x => x.BookingsCount)
-        //    .Select(x => x.Destination)
-        //    .Take(4)
-        //    .ToList();
-        //var trendingTours = db.Tbl_Destination
-        //    .GroupJoin(
-        //        db.Tbl_Bookings,
-        //        destination => destination.DestinationID,
-        //        booking => booking.DestinationId,
-        //        (destination, bookings) => new
-        //        {
-        //            Destination = destination,
-        //            LatestBookingDate = bookings.Max(b => b.BookingDate)
-        //        })
-        //    .Where(x => x.Destination.TourStatus == true)
-        //    .OrderByDescending(x => x.LatestBookingDate)
-        //    .Select(x => x.Destination)
-        //    .Take(4)
-        //    .ToList();
-        //var announcements = db.Tbl_Announcement.Where(t => t.Announcement_status == null).ToList();
-        //var viewModel = new ToursViewModel
-        //{
-        //    SelectedVenueTours = selectedVenueTours,
-        //    MostPopularTours = mostPopularTours,
-        //    TrendingTours = trendingTours,
-        //    SelectedVenueName = selectedVenue?.Venue_name,
-        //    SelectedVenueDescription = selectedVenue?.Venue_Description,
-        //    Announcement = announcements
-        //};
-        //    return View(viewModel);
-        //}
-
         public ActionResult Destinations(int id, decimal? minPrice, decimal? maxPrice, string country, string language, string duration)
         {
             var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
             var selectedVenueTours = db.Tbl_Destination.Where(t => t.FK_Venue_Id == id && t.TourStatus == true).ToList();
 
-            // Apply filters based on the provided parameters
             if (minPrice != null)
             {
                 selectedVenueTours = selectedVenueTours.Where(tour => tour.Price >= minPrice).ToList();
@@ -190,7 +141,7 @@ namespace ExploreLocal.Controllers
                 Country = country,
                 Language = language,
                 Duration = duration,
-                NoToursFound = !selectedVenueTours.Any() // Set the flag
+                NoToursFound = !selectedVenueTours.Any() 
             };
 
             return View(viewModel);
@@ -268,7 +219,7 @@ namespace ExploreLocal.Controllers
             {
                 try
                 {
-                    using (var db = new ExploreLocalEntities())
+                    using (var db = new ExploreLocalEntities1())
                     {
                         var booking = new Tbl_Bookings
                         {
@@ -307,7 +258,7 @@ namespace ExploreLocal.Controllers
             {
                 return RedirectToAction("Error");
             }
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities1())
             {
                 var booking = db.Tbl_Bookings.Find(id);
                 if (booking != null)
@@ -340,7 +291,7 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
             int bookingIdValue = bookingId.Value;
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities1())
             {
                 var booking = db.Tbl_Bookings.Find(bookingIdValue);
                 if (booking == null)
@@ -405,7 +356,7 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
 
-            using (var db = new ExploreLocalEntities())
+            using (var db = new ExploreLocalEntities1())
             {
                 var booking = db.Tbl_Bookings.Find(bookingId);
                 if (booking != null)
@@ -561,7 +512,7 @@ namespace ExploreLocal.Controllers
                     ExpertStatus = Convert.ToBoolean(0)
                 };
 
-                using (var db = new ExploreLocalEntities())
+                using (var db = new ExploreLocalEntities1())
                 {
                     db.Tbl_Expert.Add(expert);
                     db.SaveChanges();

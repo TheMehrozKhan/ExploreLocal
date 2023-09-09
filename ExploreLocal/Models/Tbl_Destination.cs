@@ -30,23 +30,20 @@ namespace ExploreLocal.Models
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<int> FK_Venue_Id { get; set; }
         [AllowHtml]
-
         public string GoogleStreetViewURL { get; set; }
         public string MeetingPoint { get; set; }
         public string Language { get; set; }
         public Nullable<int> FK_Expert_Id { get; set; }
         public string Destination_Duration { get; set; }
-        [AllowHtml]
+                [AllowHtml]
 
         public string Destination_Highlights { get; set; }
         [AllowHtml]
 
         public string Description { get; set; }
         public Nullable<bool> TourStatus { get; set; }
-
         public Tbl_Expert Expert { get; set; }
-
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Bookings> Tbl_Bookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

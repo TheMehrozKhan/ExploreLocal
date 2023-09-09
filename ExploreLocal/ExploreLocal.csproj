@@ -258,6 +258,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SearchViewModel.cs" />
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tbl_Admin.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
