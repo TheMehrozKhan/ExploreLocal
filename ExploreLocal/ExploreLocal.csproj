@@ -937,6 +937,7 @@
     <Content Include="Views\Admin\Comments.cshtml" />
     <Content Include="Views\Admin\Replies.cshtml" />
     <Content Include="Views\Admin\ExpertTours.cshtml" />
+    <Content Include="Views\Admin\AddAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

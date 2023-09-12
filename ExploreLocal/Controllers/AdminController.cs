@@ -35,6 +35,7 @@ namespace ExploreLocal.Controllers
             {
                 Session["ad_id"] = ad.Admin_Id.ToString();
                 Session["ad_name"] = ad.Admmin_Username;
+                Session["ad_pass"] = ad.Admin_Password;
                 TempData["ToastMessage"] = "Hi, " + ad.Admmin_Username + " You Successfully Logged In!";
                 return RedirectToAction("Admin_Panel");
             }
@@ -44,6 +45,52 @@ namespace ExploreLocal.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public ActionResult AddAdmin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddAdmin(Tbl_Admin newAdmin, string Current_Admin_Password)
+        {
+            // Check if the current admin is authenticated to add a new admin
+            string currentAdminId = Session["ad_id"] as string;
+            string currentAdminPassword = Session["ad_pass"] as string;
+
+            if (string.IsNullOrEmpty(currentAdminId) || string.IsNullOrEmpty(currentAdminPassword))
+            {
+                return RedirectToAction("Login"); // Redirect to login if not authenticated
+            }
+
+            if (currentAdminPassword != Current_Admin_Password)
+            {
+                // Display an error SweetAlert
+                TempData["ErrorAlert"] = "Authentication Failed. You are not authorized to add a new admin.";
+                return View();
+            }
+
+            // Now you can add a new admin
+            if (ModelState.IsValid)
+            {
+                // Assuming you have a method to add a new admin
+                db.Tbl_Admin.Add(newAdmin);
+                db.SaveChanges();
+
+                // Display a success SweetAlert
+                TempData["SuccessAlert"] = "New admin added successfully.";
+
+                return RedirectToAction("AddAdmin");
+            }
+
+            ViewBag.Error = "Invalid input. Please check the data and try again.";
+            return View();
+        }
+
+
+
+
         public ActionResult Admin_Panel()
         {
             if (Session["ad_id"] == null)
