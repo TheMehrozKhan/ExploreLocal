@@ -9,8 +9,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-
 </head>
+<style>
+    .password-input {
+        position: relative;
+    }
+
+    #toggle-password {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size:23px;
+        color:dodgerblue;
+    }
+</style>
 <body>
     @Html.Partial("Layout")
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
@@ -25,29 +41,30 @@
                         <br />
                         @using (Html.BeginForm("AddAdmin", "Admin", FormMethod.Post))
                         {
-                            <form>
-                                @Html.AntiForgeryToken()
-                                <div class="form-floating mb-3">
-                                    @Html.Password("Current_Admin_Password", null, new { @class = "form-control", @placeholder = "Enter Current Admin Password" })
-                                    <label><i class="ti ti-key me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Current Admin Password</span></label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    @Html.TextBoxFor(model => model.Admmin_Username, new { @class = "form-control", @placeholder = "Enter New Admin Username" })
-                                    @Html.ValidationMessageFor(model => model.Admmin_Username, "", new { @class = "text-danger" })
-                                    <label><i class="ti ti-user me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Enter New Admin Username</span></label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    @Html.PasswordFor(model => model.Admin_Password, new { @class = "form-control", @placeholder = "Enter New Admin Password" })
-                                    @Html.ValidationMessageFor(model => model.Admin_Password, "", new { @class = "text-danger" })
-                                    <label><i class="ti ti-key me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">New Admin Password</span></label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    @Html.TextBoxFor(model => model.Admin_Email, new { @class = "form-control", @placeholder = "Enter New Admin Email" })
-                                    @Html.ValidationMessageFor(model => model.Admin_Email, "", new { @class = "text-danger" })
-                                    <label><i class="ti ti-mail me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">New Admin Email</span></label>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Add Admin</button>
-                            </form>
+                    <form>
+                        @Html.AntiForgeryToken()
+                        <div class="form-floating mb-3">
+                            @Html.Password("Current_Admin_Password", null, new { @class = "form-control", @placeholder = "Enter Current Admin Password" })
+                            <label><i class="ti ti-key me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Current Admin Password</span></label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            @Html.TextBoxFor(model => model.Admmin_Username, new { @class = "form-control", @placeholder = "Enter New Admin Username" })
+                            @Html.ValidationMessageFor(model => model.Admmin_Username, "", new { @class = "text-danger" })
+                            <label><i class="ti ti-user me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Enter New Admin Username</span></label>
+                        </div>
+                        <div class="form-floating mb-3 password-input">
+                            @Html.PasswordFor(model => model.Admin_Password, new { @class = "form-control", @placeholder = "Enter New Admin Password", id = "password-input" })
+                            <label><i class="ti ti-key me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">New Admin Password</span></label>
+                            <button type="button" id="toggle-password"><i class="ti ti-eye"></i></button>
+                            @Html.ValidationMessageFor(model => model.Admin_Password, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-floating mb-3">
+                            @Html.TextBoxFor(model => model.Admin_Email, new { @class = "form-control", @placeholder = "Enter New Admin Email" })
+                            @Html.ValidationMessageFor(model => model.Admin_Email, "", new { @class = "text-danger" })
+                            <label><i class="ti ti-mail me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">New Admin Email</span></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Add Admin</button>
+                    </form>
                         }
                     </div>
                 </div>
@@ -81,5 +98,21 @@
         });
         </text>
     }
+
+        function togglePassword() {
+            var passwordInput = document.getElementById("password-input");
+            var toggleButton = document.getElementById("toggle-password");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleButton.innerHTML = '<i class="ti ti-eye-closed"></i>';
+            } else {
+                passwordInput.type = "password";
+                toggleButton.innerHTML = '<i class="ti ti-eye"></i>';
+            }
+        }
+
+        // Add click event listener to the toggle button
+        document.getElementById("toggle-password").addEventListener("click", togglePassword);
     </script>
 </body>
