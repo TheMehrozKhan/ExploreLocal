@@ -63,38 +63,42 @@
                     </div>
                 </div>
                 <script>
-                    var revenueData = @Html.Raw(Json.Encode(ViewBag.RevenueData));
-                    var expenseData = @Html.Raw(Json.Encode(ViewBag.ExpenseData));
-                    var ctx = document.getElementById('revenueExpenseChart').getContext('2d');
-                    var chart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Booking 1', 'Booking 2', 'Booking 3',],
-                            datasets: [
-                                {
-                                    label: 'Revenue',
-                                    data: revenueData,
-                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                    borderColor: 'rgba(75, 192, 192, 1)',
-                                    borderWidth: 1
-                                },
-                                {
-                                    label: 'Expense in PKR',
-                                    data: expenseData,
-                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                    borderColor: 'rgba(255, 99, 132, 1)',
-                                    borderWidth: 1
-                                }
-                            ]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
+    var revenueData = @Html.Raw(Json.Encode(ViewBag.RevenueData));
+    var expenseData = @Html.Raw(Json.Encode(ViewBag.ExpenseData));
+
+    // Dynamically generate labels based on the number of bookings
+    var bookingLabels = Array.from({ length: revenueData.length }, (_, i) => 'Booking ' + (i + 1));
+
+    var ctx = document.getElementById('revenueExpenseChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: bookingLabels,
+            datasets: [
+                {
+                    label: 'Revenue',
+                    data: revenueData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Expense in PKR',
+                    data: expenseData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
                 </script>
                 <div class="col-lg-4">
                     <div class="row">
