@@ -1,0 +1,158 @@
+﻿@{
+    Layout = null;
+    @model IEnumerable<ExploreLocal.Models.Tbl_Destination>
+}
+<head>
+    <title> Expert Bookings - AdminPanel</title>
+    <link rel="stylesheet" href="~/Content/css/AdminPanel.css?v=@DateTime.Now.Ticks" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .table-wrapper::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        /* Track */
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: dodgerblue;
+            border-radius: 4px;
+        }
+
+            /* Handle on hover */
+            .table-wrapper::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .center-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin-bottom: 50px;
+        }
+
+        .circle-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 10%;
+            object-fit: cover;
+        }
+
+        .center-heading {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #wrapper {
+            overflow-x: hidden;
+        }
+
+        #sidebar-wrapper {
+            min-height: 100vh;
+            width: 100vh;
+            margin-left: -15rem;
+            -webkit-transition: margin 0.25s ease-out;
+            -moz-transition: margin 0.25s ease-out;
+            -o-transition: margin 0.25s ease-out;
+            transition: margin 0.25s ease-out;
+            box-shadow: rgba(100, 100, 111, 0.1) 0px 7px 29px 0px;
+            border: 0.5px solid dodgerblue;
+        }
+
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: 0;
+        }
+
+        #page-content-wrapper {
+            min-width: 100vw;
+        }
+    </style>
+</head>
+<body>
+    @Html.Partial("Layout")
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+        <div class="body-wrapper">
+            <div class="container-fluid">
+                <div class="center-card" style="border: none;">
+                    <div class="card container center-table bg-white" style="box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;">
+                        <div class="container center-heading">
+                            <h3 style="font-weight:600;">Our All Experts Bookings</h3>
+                        </div>
+                        <hr style="color:black;" />
+                        <div class="table-responsive table-wrapper" style="overflow-Y: hidden;">
+                            <table class="table table-borderless bg-white text-black customtable">
+                                <thead>
+                                    <tr>
+                                        <td>Destination Id</td>
+                                        <td>Destination Name</td>
+                                        <td>Country</td>
+                                        <td>Featured Image</td>
+                                        <td>Price</td>
+                                        <td>Start Date</td>
+                                        <td>End Date</td>
+                                        <td>Venue Id</td>
+                                        <td>Meeting Point</td>
+                                        <td>Duration</td>
+                                        <td>Destnation Highlights</td>
+                                        <td>Description</td>
+                                        <td>Delete</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                    <tr>
+                                        <td>@item.DestinationID</td>
+                                        <td>@item.DestinationName</td>
+                                        <td>@item.Country</td>
+                                        <td><img src="@Url.Content(item.Image)" height="250" width="250" class="circle-img" /></td>
+                                        <td>@item.Price</td>
+                                        <td>@item.StartDate</td>
+                                        <td>@item.EndDate</td>
+                                        <td>@item.FK_Venue_Id</td>
+                                        <td>@item.MeetingPoint</td>
+                                        <td>@item.Destination_Duration</td>
+                                        <td>@Html.Raw(item.Destination_Highlights)</td>
+                                        <td>@Html.Raw(item.Description)</td>
+                                        <td>
+                                            <form method="post" action="@Url.Action("DeleteTour", "Admin")">
+                                                @Html.Hidden("destinationId", item.DestinationID)
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+</body>

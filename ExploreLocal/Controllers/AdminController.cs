@@ -452,6 +452,55 @@ namespace ExploreLocal.Controllers
             return View(ExpertBookings);
         }
 
+        public ActionResult ExpertTours()
+        {
+            List<Tbl_Destination> ExpertTours = db.Tbl_Destination.ToList();
+            return View(ExpertTours);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTour(int destinationId)
+        {
+            using (var dbContextTransaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    var tour = db.Tbl_Destination.Find(destinationId);
+
+                    if (tour != null)
+                    {
+                        // Delete related bookings
+                        var bookingsToDelete = db.Tbl_Bookings.Where(b => b.DestinationId == destinationId);
+                        db.Tbl_Bookings.RemoveRange(bookingsToDelete);
+
+                        // Delete related comments
+                        var commentsToDelete = db.Tbl_Comments.Where(c => c.DestinationId == destinationId);
+                        db.Tbl_Comments.RemoveRange(commentsToDelete);
+
+                        // Now, delete the tour
+                        db.Tbl_Destination.Remove(tour);
+                        db.SaveChanges();
+
+                        dbContextTransaction.Commit();
+
+                        TempData["ToastMessage"] = "Tour deleted successfully.";
+                    }
+                    else
+                    {
+                        TempData["ToastMessage"] = "Tour not found.";
+                    }
+                }
+                catch (Exception)
+                {
+                    dbContextTransaction.Rollback();
+                    TempData["ToastMessage"] = "An error occurred while deleting the tour.";
+                }
+            }
+
+            return RedirectToAction("ExpertTours");
+        }
+
+
         [HttpGet]
         public ActionResult Add_Venue()
         {
