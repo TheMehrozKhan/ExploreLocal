@@ -75,36 +75,35 @@
                             <h3 style="font-weight:600;">All Comments</h3>
                         </div>
                         <hr style="color:black;" />
-                        <div class="table-responsive" style="overflow-y: scroll;">
-                            <div class="table-responsive">
-                                <table class="table table-borderless bg-white text-black customtable">
-                                    <thead>
-                                        <tr>
-                                            <td>Tour ID</td>
-                                            <td>Comment ID</td>
-                                            <td>Comment Text</td>
-                                            <td>Comment Date</td>
-                                            <td>User ID</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if (Model != null)
+                        <div class="table-responsive" style="max-height: 400px; overflow-y: scroll;">
+                            <table class="table table-borderless bg-white text-black customtable">
+                                <thead>
+                                    <tr>
+                                        <td>Tour ID</td>
+                                        <td>Comment ID</td>
+                                        <td>Comment Text</td>
+                                        <td>Comment Date</td>
+                                        <td>User ID</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var item in Model)
                                         {
-                                            foreach (var item in Model)
-                                            {
-                                        <tr>
-                                            <td>@item.DestinationId</td>
-                                            <td>@item.CommentId</td>
-                                            <td>@item.CommentText</td>
-                                            <td>@item.CommentDate</td>
-                                            <td>@item.UserId</td>
-                                        </tr>
-                                            }
+                                            <tr>
+                                                <td>@item.DestinationId</td>
+                                                <td>@item.CommentId</td>
+                                                <td>@item.CommentText</td>
+                                                <td>@item.CommentDate</td>
+                                                <td>@item.UserId</td>
+                                            </tr>
                                         }
-                                    </tbody>
-                                </table>
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
+
                     </div>
                 </div>
             </div>

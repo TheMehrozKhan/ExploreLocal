@@ -10,9 +10,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <style>
-        .table-responsive::-webkit-scrollbar {
-            display: none;
+        .table-wrapper::-webkit-scrollbar {
+            height: 4px;
         }
+
+        /* Track */
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: dodgerblue;
+            border-radius: 4px;
+        }
+
+            /* Handle on hover */
+            .table-wrapper::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -74,54 +90,49 @@
                             <h3 style="font-weight:600;">Our All Experts Bookings</h3>
                         </div>
                         <hr style="color:black;" />
-                        <div class="table-responsive" style="overflow-y: scroll;">
-                            <div class="table-responsive">
-                                <div class="table-responsive table-wrapper" style="overflow-y: hidden; overflow-x: auto; max-height: 300px;">
-                                    <table class="table table-borderless bg-white text-black customtable">
-                                        <thead>
+                        <div class="table-responsive table-wrapper" style="overflow-Y: hidden;">
+                            <table class="table table-borderless bg-white text-black customtable">
+                                <thead>
+                                    <tr>
+                                        <td>Booking Id</td>
+                                        <td>User Id</td>
+                                        <td>Tour Id</td>
+                                        <td>Expert Id</td>
+                                        <td>Numbers of Adults</td>
+                                        <td>Numbers of Children</td>
+                                        <td>Booking Date</td>
+                                        <td>Credit Card Number</td>
+                                        <td>PIN</td>
+                                        <td>CVV</td>
+                                        <td>Card Holder Name</td>
+                                        <td>User Contact Number</td>
+                                        <td>User Email</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        foreach (var item in Model)
+                                        {
                                             <tr>
-                                                <td>Booking Id</td>
-                                                <td>User Id</td>
-                                                <td>Tour Id</td>
-                                                <td>Expert Id</td>
-                                                <td>Numbers of Adults</td>
-                                                <td>Numbers of Childern</td>
-                                                <td>Booking Date</td>
-                                                <td>Credit Card Number</td>
-                                                <td>PIN</td>
-                                                <td>CVV</td>
-                                                <td>Card Holder Name</td>
-                                                <td>User Contact Number</td>
-                                                <td>User Email</td>
+                                                <td>@item.BookingId</td>
+                                                <td>@item.UserId</td>
+                                                <td>@item.DestinationId</td>
+                                                <td>@item.ExpertID</td>
+                                                <td>@item.NumberOfAdults</td>
+                                                <td>@item.NumberOfChildren</td>
+                                                <td>@item.BookingDate</td>
+                                                <td>@item.CreditCardNumber</td>
+                                                <td>@item.PIN</td>
+                                                <td>@item.CVV</td>
+                                                <td>@item.CardHolderName</td>
+                                                <td>@item.ContactNumber</td>
+                                                <td>@item.Email</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (Model != null)
-                                            {
-                                                foreach (var item in Model)
-                                                {
-                                                    <tr>
-                                                        <td>@item.BookingId</td>
-                                                        <td>@item.UserId</td>
-                                                        <td>@item.DestinationId</td>
-                                                        <td>@item.ExpertID</td>
-                                                        <td>@item.NumberOfAdults</td>
-                                                        <td>@item.NumberOfChildren</td>
-                                                        <td>@item.BookingDate</td>
-                                                        <td>@item.CreditCardNumber</td>
-                                                        <td>@item.PIN</td>
-                                                        <td>@item.CVV</td>
-                                                        <td>@item.CardHolderName</td>
-                                                        <td>@item.ContactNumber</td>
-                                                        <td>@item.Email</td>
-
-                                                    </tr>
-                                                }
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
