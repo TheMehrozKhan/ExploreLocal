@@ -59,7 +59,7 @@
                             @Html.ValidationMessageFor(model => model.Admin_Password, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-floating mb-3">
-                            @Html.TextBoxFor(model => model.Admin_Email, new { @class = "form-control", @placeholder = "Enter New Admin Email" })
+                            @Html.TextBoxFor(model => model.Admin_Email, new { @class = "form-control", @placeholder = "Enter New Admin Email", @type = "email" })
                             @Html.ValidationMessageFor(model => model.Admin_Email, "", new { @class = "text-danger" })
                             <label><i class="ti ti-mail me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">New Admin Email</span></label>
                         </div>
