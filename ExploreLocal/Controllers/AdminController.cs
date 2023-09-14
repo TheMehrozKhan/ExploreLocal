@@ -365,7 +365,7 @@ namespace ExploreLocal.Controllers
         public void SendExpertApprovalEmail(string recipientEmail)
         {
             string senderEmail = "khanmehroz245@gmail.com";
-            string apiKey = "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";
+            string apiKey = System.Configuration.ConfigurationManager.AppSettings["SendGridApiKey"];
             string subject = "Congratulations! You're Now an ExploreLocal Expert";
             string body = "Dear expert, congratulations! Your request to become an ExploreLocal expert has been approved. You can now add your services at ExploreLocal.";
 
