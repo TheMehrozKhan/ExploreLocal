@@ -97,43 +97,70 @@
                                         <td>Destination Id</td>
                                         <td>Destination Name</td>
                                         <td>Country</td>
-                                        <td>Featured Image</td>
+                                        <td>Featured&nbsp;Image</td>
                                         <td>Price</td>
-                                        <td>Start Date</td>
-                                        <td>End Date</td>
-                                        <td>Venue Id</td>
-                                        <td>Meeting Point</td>
+                                        <td>Start&nbsp;Date</td>
+                                        <td>End&nbsp;Date</td>
+                                        <td>Venue&nbsp;Id</td>
+                                        <td>Meeting&nbsp;Point</td>
                                         <td>Duration</td>
-                                        <td>Destnation Highlights</td>
+                                        <td>Destination&nbsp;Highlights</td>
                                         <td>Description</td>
                                         <td>Delete</td>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                     @if (Model != null)
                                     {
                                         foreach (var item in Model)
                                         {
-                                    <tr>
-                                        <td>@item.DestinationID</td>
-                                        <td>@item.DestinationName</td>
-                                        <td>@item.Country</td>
-                                        <td><img src="@Url.Content(item.Image)" height="250" width="250" class="circle-img" /></td>
-                                        <td>@item.Price</td>
-                                        <td>@item.StartDate</td>
-                                        <td>@item.EndDate</td>
-                                        <td>@item.FK_Venue_Id</td>
-                                        <td>@item.MeetingPoint</td>
-                                        <td>@item.Destination_Duration</td>
-                                        <td>@Html.Raw(item.Destination_Highlights)</td>
-                                        <td>@Html.Raw(item.Description)</td>
-                                        <td>
-                                            <form method="post" action="@Url.Action("DeleteTour", "Admin")">
-                                                @Html.Hidden("destinationId", item.DestinationID)
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                            <tr>
+                                                <td>@item.DestinationID</td>
+                                                <td>@item.DestinationName</td>
+                                                <td>@item.Country</td>
+                                                @if (!string.IsNullOrEmpty(item.Image))
+                                                {
+                                                    var imagePaths = item.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                                    var firstImagePath = Url.Content(imagePaths[0]);
+                                                    <td><img src="@firstImagePath" height="250" width="250" class="circle-img" /></td>
+                                                }
+                                                <td>@item.Price</td>
+                                                <td>@item.StartDate</td>
+                                                <td>@item.EndDate</td>
+                                                <td>@item.FK_Venue_Id</td>
+                                                <td>@item.MeetingPoint</td>
+                                                <td>@item.Destination_Duration</td>
+                                                <td>
+                                                    @{
+                                                        string destinationHighlights = item.Destination_Highlights;
+                                                        if (destinationHighlights.Length > 50)
+                                                        {
+                                                            destinationHighlights = destinationHighlights.Substring(0, 80) + "...";
+                                                        }
+                                                    }
+                                                    @Html.Raw(destinationHighlights)
+                                                </td>
+
+
+
+                                                <td>
+                                                    @if (item.Description.Length > 150)
+                                                    {
+                                                        @Html.Raw(item.Description.Substring(0, 50) + "...")
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.Raw(item.Description)
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <form method="post" action="@Url.Action("DeleteTour", "Admin")">
+                                                        @Html.Hidden("destinationId", item.DestinationID)
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         }
                                     }
                                 </tbody>
