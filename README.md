@@ -36,9 +36,9 @@
    public Tbl_Expert Expert { get; set; }
    ```
 10. Open the Tbl_Bookings class and add the following line within the class to include a TourState property:
-   ```csharp
-   public string TourState { get; set; }
-   ```
+      ```csharp
+      public string TourState { get; set; }
+      ```
 
 ## Project Precautions Before Running:   
 1. Click on the "Build" menu at the top of Visual Studio.
