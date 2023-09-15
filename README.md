@@ -2,35 +2,61 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ExploreLocal Project README</title>
+    <title>ExploreLocal Project Setup Guide</title>
 </head>
 <body>
-    <h1>ExploreLocal Project README</h1>
+    <h1>ExploreLocal Project Setup Guide</h1>
 
-    <h2>Installation</h2>
+    <h2>Prerequisites</h2>
+    <ul>
+        <li>Database: Download the project database from <a href="https://cutt.ly/OwjPXR0Y">this link</a>.</li>
+        <li>Project Files: Download the ExploreLocal project files from GitHub using <a href="https://cutt.ly/mwkhMEb2">this link</a>.</li>
+        <li>Visual Studio: Ensure you have Visual Studio 2019 or a later version installed on your system.</li>
+    </ul>
+
+    <h2>Database Setup</h2>
     <ol>
-        <li>Download the database from this link: <a href="https://cutt.ly/OwjPXR0Y">Database Download</a>.</li>
-        <li>Download the project files from this link: <a href="https://cutt.ly/mwkhMEb2">Project Download</a>.</li>
-        <li>Import the downloaded database into your database management system.</li>
-        <li>Add one admin record with the specified username and password to gain access to the admin panel.</li>
-        <li>Open the project in Visual Studio and configure the database connection and models.</li>
-        <li>Make the specified modifications to the models as mentioned in the guide.</li>
-        <li>Build and run the project to complete the installation.</li>
+        <li>Download the database file from the provided link.</li>
+        <li>Open SQL Server Management Studio (SSMS).</li>
+        <li>Connect to your SQL Server instance.</li>
+        <li>In SSMS, right-click on "Databases" in the Object Explorer, and select "Restore Database."</li>
+        <li>Choose "Device" and browse for the downloaded database file.</li>
+        <li>Click "OK" to restore the database.</li>
+    </ol>
+
+    <h2>Project Setup</h2>
+    <ol>
+        <li>Open Visual Studio.</li>
+        <li>Open the ExploreLocal project that you downloaded from GitHub.</li>
+        <li>Make sure to configure your connection string in the Web.config file to match your database setup.</li>
+        <li>Open the "Models" folder and create your model. Ensure you've configured your entities and database connections according to your needs.</li>
+        <li>In the model class Tbl_Destination, add the following line at the top:</li>
+    </ol>
+    <pre><code>using System.Web.Mvc;</code></pre>
+    <p>Add the [AllowHtml] attribute just above the GoogleStreetViewURL, Destination_Highlights, or Description property, like this:</p>
+    <pre><code>[AllowHtml]
+public string GoogleStreetViewURL { get; set; }</code></pre>
+    <p>Also, add the following line within the Tbl_Destination class to establish a relationship with the Tbl_Expert entity:</p>
+    <pre><code>public Tbl_Expert Expert { get; set; }</code></pre>
+    <p>Open the Tbl_Bookings class and add the following line within the class to include a TourState property:</p>
+    <pre><code>public string TourState { get; set; }</code></pre>
+    <ol start="6">
+        <li>Click on the "Build" menu at the top of Visual Studio.</li>
+        <li>Select "Clean ExploreLocal."</li>
+        <li>Click on "Build ExploreLocal."</li>
+        <li>After building successfully, click on "Clean Solution."</li>
+        <li>Finally, click on "Build ExploreLocal Solution."</li>
+        <li>Run the project by clicking the "Start" button (green arrow) in Visual Studio.</li>
     </ol>
 
     <h2>Usage</h2>
-    <p>Provide information on how to use your ExploreLocal project here.</p>
+    <p>You can now access the ExploreLocal project by opening a web browser and navigating to the appropriate URL (usually http://localhost:port/).</p>
 
-    <h2>Contributing</h2>
-    <p>Explain how others can contribute to your project or provide guidelines for contributions.</p>
+    <h2>Admin Access</h2>
+    <p>To access the admin panel, use the following credentials:</p>
+    <p>Username: [Insert Username Here]</p>
+    <p>Password: [Insert Password Here]</p>
 
-    <h2>License</h2>
-    <p>Specify the license under which your project is distributed.</p>
-
-    <h2>Contact</h2>
-    <p>If you have questions or need further assistance, you can reach out to us at example@email.com.</p>
-
-    <h2>Acknowledgments</h2>
-    <p>Give credit to any resources, libraries, or individuals who have contributed to your project.</p>
+    <p>That's it! You've successfully installed and set up the ExploreLocal project. If you have any questions or encounter any issues, please don't hesitate to reach out for assistance.</p>
 </body>
 </html>
