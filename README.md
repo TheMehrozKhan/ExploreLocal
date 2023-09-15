@@ -3,7 +3,7 @@
 ## Prerequisites:
 
 - **Database**: Download the project database from [this link](https://cutt.ly/OwjPXR0Y).
-- **Database BAK File**: Download the project database bak file from [this link] for importing the data in the database(https://cutt.ly/DwxXCg3k).
+- **Database BAK File**: Download the project database bak file from [this link](https://cutt.ly/DwxXCg3k) for importing the data in the database.
 - **Project Files**: Download the ExploreLocal project files from GitHub using [this link](https://cutt.ly/mwkhMEb2).
 - **Visual Studio**: Ensure you have Visual Studio 2019 or a later version installed on your system.
 
