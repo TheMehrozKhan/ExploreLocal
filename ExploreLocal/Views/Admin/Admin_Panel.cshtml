@@ -144,43 +144,53 @@
             </div>
             <div class="row">
                 <div class="col-lg-4 d-flex align-items-strech">
-                    <div class="card w-100">
+                    <div class="card w-100" style="height:550px;">
                         <div class="card-body">
-                            <div>
-                                <h5 class="card-title fw-semibold mb-1">Best Going Tours</h5>
-                                <p class="card-subtitle mb-0">Every month</p>
-                                <canvas id="bestGoingToursChart" width="150" height="190"></canvas>
-                            </div>
+                            <h5 class="card-title fw-semibold mb-1">Best Going Tours</h5>
+                            <p class="card-subtitle mb-0">Every month</p>
+                            <canvas id="bestGoingToursChart" width="150" height="190"></canvas>
                         </div>
                         <script>
-                            var bestGoingToursData = @Html.Raw(Json.Encode(ViewBag.BestGoingToursData));
-                            var labels = bestGoingToursData.map(function(item) {
-                                return item.DestinationName;
-                            });
-                            var data = bestGoingToursData.map(function(item) {
-                                return item.BookingsCount;
-                            });
-                            var ctx = document.getElementById('bestGoingToursChart').getContext('2d');
-                            var chart = new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: labels,
-                                    datasets: [{
-                                        label: 'Bookings Count',
-                                        data: data,
-                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                        borderColor: 'rgba(75, 192, 192, 1)',
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
-                                    }
-                                }
-                            });
+    var bestGoingToursData = @Html.Raw(Json.Encode(ViewBag.BestGoingToursData));
+
+    // Find the highest booking count
+    var highestBookingCount = bestGoingToursData[0].BookingsCount;
+
+    // Select all tours with the highest booking count
+    var bestTours = bestGoingToursData.filter(function (item) {
+        return item.BookingsCount === highestBookingCount;
+    });
+
+    var labels = bestTours.map(function (item) {
+        return item.DestinationName;
+    });
+
+    var data = bestTours.map(function (item) {
+        return item.BookingsCount;
+    });
+
+    var ctx = document.getElementById('bestGoingToursChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Bookings Count',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
                         </script>
                     </div>
                 </div>

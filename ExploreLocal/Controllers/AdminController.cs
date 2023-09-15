@@ -210,18 +210,37 @@ namespace ExploreLocal.Controllers
         private List<BestGoingTourData> FetchBestGoingToursData()
         {
             var bestGoingTours = db.Tbl_Destination
-                .GroupBy(t => t.DestinationName)
-                .Select(g => new BestGoingTourData
-                {
-                    DestinationName = g.Key,
-                    BookingsCount = g.Count()
-                })
+                .GroupJoin(
+                    db.Tbl_Bookings,
+                    destination => destination.DestinationID, // Replace with the actual identifier column
+                    booking => booking.DestinationId,         // Replace with the actual identifier column
+                    (destination, bookings) => new
+                    {
+                        DestinationName = destination.DestinationName, // Replace with the actual column name
+                BookingsCount = bookings.Count()
+                    }
+                )
                 .OrderByDescending(x => x.BookingsCount)
-                .Take(5)
                 .ToList();
 
-            return bestGoingTours;
+            // Find the highest booking count
+            var highestBookingCount = bestGoingTours.First().BookingsCount;
+
+            // Select all tours with the highest booking count
+            var bestTours = bestGoingTours
+                .Where(x => x.BookingsCount == highestBookingCount)
+                .Select(x => new BestGoingTourData
+                {
+                    DestinationName = x.DestinationName,
+                    BookingsCount = x.BookingsCount
+                })
+                .ToList();
+
+            return bestTours;
         }
+
+
+
 
         private List<BestCommentedTourViewModel> FetchBestCommentedToursData()
         {
