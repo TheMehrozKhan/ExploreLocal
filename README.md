@@ -38,3 +38,7 @@
 2. Select "Clean ExploreLocal."
 3. Click on "Build ExploreLocal."
 4. After building successfully, click on "Clean Solution."
+5. Finally, click on "Build ExploreLocal Solution."
+6. Run the project by clicking the "Start" button (green arrow) in Visual Studio.
+
+That's it! You've successfully installed and set up the ExploreLocal project. If you have any questions or encounter any issues, please don't hesitate to reach out for assistance.
