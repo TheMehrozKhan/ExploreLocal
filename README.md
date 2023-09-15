@@ -3,6 +3,7 @@
 ## Prerequisites:
 
 - **Database**: Download the project database from [this link](https://cutt.ly/OwjPXR0Y).
+- **Database BAK File**: Download the project database bak file from [this link] for importing the data in the database(https://cutt.ly/DwxXCg3k).
 - **Project Files**: Download the ExploreLocal project files from GitHub using [this link](https://cutt.ly/mwkhMEb2).
 - **Visual Studio**: Ensure you have Visual Studio 2019 or a later version installed on your system.
 
@@ -15,16 +16,7 @@
 5. Choose "Device" and browse for the downloaded database file.
 6. Click "OK" to restore the database.
 
-## Importing Data into Database:
-
-1. Download this .bak file into your computer.
-2. Open SQL Server Management Studio (SSMS) on your computer.
-3. Connect your SQL Server instance.
-4. In the Object Explorer, right-click on "Databases" and select "Restore Database...".
-5. In the "Source" section, choose "Device" and click the "..." button to browse for the .bak file you provided.
-6. In the "Destination" section, you can specify the name for the restored database.
-7. Click the "OK" button to start the restore process.
-8. Once the restore is complete, you will see the restored database with all the data.
+Once the restore is complete, you will see the restored database with all the data.
 
 ## Project Setup:
 
