@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>ExploreLocal Project Setup Guide</title>
-</head>
-<body>
+
     <h1>ExploreLocal Project Setup Guide</h1>
 
     <h2>Prerequisites</h2>
@@ -58,5 +52,3 @@ public string GoogleStreetViewURL { get; set; }</code></pre>
     <p>Password: [Insert Password Here]</p>
 
     <p>That's it! You've successfully installed and set up the ExploreLocal project. If you have any questions or encounter any issues, please don't hesitate to reach out for assistance.</p>
-</body>
-</html>
