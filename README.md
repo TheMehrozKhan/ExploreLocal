@@ -1,12 +1,12 @@
 # ExploreLocal Project Setup Guide
 
-## Prerequisites
+## Prerequisites:
 
 - **Database**: Download the project database from [this link](https://cutt.ly/OwjPXR0Y).
 - **Project Files**: Download the ExploreLocal project files from GitHub using [this link](https://cutt.ly/mwkhMEb2).
 - **Visual Studio**: Ensure you have Visual Studio 2019 or a later version installed on your system.
 
-## Database Setup
+## Database Setup:
 
 1. Download the database file from the provided link.
 2. Open SQL Server Management Studio (SSMS).
@@ -15,7 +15,7 @@
 5. Choose "Device" and browse for the downloaded database file.
 6. Click "OK" to restore the database.
 
-## Project Setup
+## Project Setup:
 
 1. Open Visual Studio.
 2. Open the ExploreLocal project that you downloaded from GitHub.
@@ -25,3 +25,16 @@
 
    ```csharp
    using System.Web.Mvc;
+6. Add the [AllowHtml] attribute just above the GoogleStreetViewURL, Destination_Highlights, or Description property, like this:
+   [AllowHtml]
+   public string GoogleStreetViewURL { get; set; }
+7. Also, add the following line within the Tbl_Destination class to establish a relationship with the Tbl_Expert entity:
+   public Tbl_Expert Expert { get; set; }
+8. Open the Tbl_Bookings class and add the following line within the class to include a TourState property:
+   public string TourState { get; set; }
+
+## Project Precautions Before Running:   
+1. Click on the "Build" menu at the top of Visual Studio.
+2. Select "Clean ExploreLocal."
+3. Click on "Build ExploreLocal."
+4. After building successfully, click on "Clean Solution."
