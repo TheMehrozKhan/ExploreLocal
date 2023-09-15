@@ -1,13 +1,10 @@
-
     <h1>ExploreLocal Project Setup Guide</h1>
-
     <h2>Prerequisites</h2>
     <ul>
         <li>Database: Download the project database from <a href="https://cutt.ly/OwjPXR0Y">this link</a>.</li>
         <li>Project Files: Download the ExploreLocal project files from GitHub using <a href="https://cutt.ly/mwkhMEb2">this link</a>.</li>
         <li>Visual Studio: Ensure you have Visual Studio 2019 or a later version installed on your system.</li>
     </ul>
-
     <h2>Database Setup</h2>
     <ol>
         <li>Download the database file from the provided link.</li>
@@ -17,7 +14,6 @@
         <li>Choose "Device" and browse for the downloaded database file.</li>
         <li>Click "OK" to restore the database.</li>
     </ol>
-
     <h2>Project Setup</h2>
     <ol>
         <li>Open Visual Studio.</li>
@@ -42,13 +38,10 @@ public string GoogleStreetViewURL { get; set; }</code></pre>
         <li>Finally, click on "Build ExploreLocal Solution."</li>
         <li>Run the project by clicking the "Start" button (green arrow) in Visual Studio.</li>
     </ol>
-
     <h2>Usage</h2>
     <p>You can now access the ExploreLocal project by opening a web browser and navigating to the appropriate URL (usually http://localhost:port/).</p>
-
     <h2>Admin Access</h2>
     <p>To access the admin panel, use the following credentials:</p>
     <p>Username: [Insert Username Here]</p>
     <p>Password: [Insert Password Here]</p>
-
     <p>That's it! You've successfully installed and set up the ExploreLocal project. If you have any questions or encounter any issues, please don't hesitate to reach out for assistance.</p>
