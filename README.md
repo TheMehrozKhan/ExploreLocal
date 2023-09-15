@@ -26,11 +26,14 @@
    ```csharp
    using System.Web.Mvc;
 6. Add the [AllowHtml] attribute just above the GoogleStreetViewURL, Destination_Highlights, or Description property, like this:
+   ```csharp
    [AllowHtml]
    public string GoogleStreetViewURL { get; set; }
-7. Also, add the following line within the Tbl_Destination class to establish a relationship with the Tbl_Expert entity:
+8. Also, add the following line within the Tbl_Destination class to establish a relationship with the Tbl_Expert entity:
+   ```csharp
    public Tbl_Expert Expert { get; set; }
-8. Open the Tbl_Bookings class and add the following line within the class to include a TourState property:
+10. Open the Tbl_Bookings class and add the following line within the class to include a TourState property:
+   ```csharp
    public string TourState { get; set; }
 
 ## Project Precautions Before Running:   
