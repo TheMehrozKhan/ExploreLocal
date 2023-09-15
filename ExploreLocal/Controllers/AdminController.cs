@@ -433,7 +433,7 @@ namespace ExploreLocal.Controllers
         public void SendExpertTourApprovalEmail(string recipientEmail)
         {
             string senderEmail = "khanmehroz245@gmail.com";
-            string apiKey = "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";
+            string apiKey = System.Configuration.ConfigurationManager.AppSettings["SendGridApiKey"];
             string subject = "Congratulations! To Our ExploreLocal Expert";
             string body = "Dear expert, congratulations! Your uploaded tour on ExploreLocal has been approved.";
 
