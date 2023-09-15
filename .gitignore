@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-# Ignore Web.config file
+# Ignore The Web.config file
 *.Web.config
 
 # User-specific files
