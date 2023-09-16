@@ -10,8 +10,7 @@
 ## Demo Video
 
 ![ExploreLocal Demo](https://img.youtube.com/vi/gUahAt5D2Ek/maxresdefault.jpg)
-[<span style="background-color: #333; padding: 10px; border-radius: 5px; color: #fff;">Watch Demo</span>](https://www.youtube.com/watch?v=gUahAt5D2Ek&ab_channel=MehrozKhan)
-
+### -[Watch Demo](https://www.youtube.com/watch?v=gUahAt5D2Ek&ab_channel=MehrozKhan)
 
 
 ## Database Setup:
