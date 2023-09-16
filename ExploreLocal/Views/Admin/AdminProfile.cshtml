@@ -1,5 +1,5 @@
-﻿@model ExploreLocal.Models.Tbl_Admin
-@{
+﻿@{
+    @model ExploreLocal.Models.Tbl_Admin
     Layout = null;
 }
 <title> @Session["ad_name"] Admin Profile - ExploreLocal</title>
@@ -225,10 +225,10 @@
                         </div>
                     </div>
                     <div class="profile-actions">
-                            <div style="margin-top:20px;">
-                                <a href="@Url.Action("EditAdminProfile", "Admin", new { id = Model.Admin_Id })" class="button-5">Edit</a>
-                                <a href="@Url.Action("Logout", "Admin", new { id = Model.Admin_Id })" class="button-5" style="background-color:darkorange">Logout</a>
-                            </div>
+                        <div style="margin-top:20px;">
+                            <a href="@Url.Action("EditAdminProfile", "Admin", new { id = Model.Admin_Id })" class="button-5">Edit</a>
+                            <a href="@Url.Action("Logout", "Admin", new { id = Model.Admin_Id })" class="button-5" style="background-color:darkorange">Logout</a>
+                        </div>
                     </div>
                 </div>
             </div>
