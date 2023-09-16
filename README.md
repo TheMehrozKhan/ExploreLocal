@@ -46,8 +46,8 @@ Once the restore is complete, you will see the restored database with all the da
 ## Project Precautions How To Run The Project:   
 1. After Applying All The Steps Mention in Project Setup Then Follow This Steps.
 2. Press CTRL + F5 for Running the Project Without Dibugging.
-3. Then Go Back on Visual Studio And Click on Build & Click on Clean Solution.
-4. After Cleaning Successfully, Click Again on Build Solution.
+3. Then Go Back on Visual Studio And Click on Build & Click on "Clean Solution".
+4. After Cleaning Successfully, Click Again on Build And Click on "Build Solution".
 5. Finally, Now The Project is Ready to Go And Press CTRL + F5 And Run The Project Successfully.
 
 That's it! You've successfully installed and set up the project. If you have any questions or encounter any issues, please don't hesitate to reach out for assistance.
