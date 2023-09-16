@@ -7,6 +7,12 @@
 - **Project Files**: Download the ExploreLocal project files from GitHub using [this link](https://cutt.ly/mwkhMEb2).
 - **Visual Studio**: Ensure you have Visual Studio 2019 or a later version installed on your system.
 
+## Demo Video
+
+![ExploreLocal Demo](https://img.youtube.com/vi/gUahAt5D2Ek/maxresdefault.jpg)](https://www.youtube.com/watch?v=gUahAt5D2Ek&ab_channel=MehrozKhan)
+[Watch Demo](https://www.youtube.com/watch?v=gUahAt5D2Ek&ab_channel=MehrozKhan)
+
+
 ## Database Setup:
 
 1. Download the database file from the provided link.
