@@ -9,7 +9,7 @@
 
 ## Demo Video
 
-![ExploreLocal Demo](https://img.youtube.com/vi/gUahAt5D2Ek/maxresdefault.jpg)](https://www.youtube.com/watch?v=gUahAt5D2Ek&ab_channel=MehrozKhan)
+![ExploreLocal Demo](https://img.youtube.com/vi/gUahAt5D2Ek/maxresdefault.jpg)
 [Watch Demo](https://www.youtube.com/watch?v=gUahAt5D2Ek&ab_channel=MehrozKhan)
 
 
