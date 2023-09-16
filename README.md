@@ -1,4 +1,4 @@
-# ExploreLocal Project Setup Guide
+﻿# ExploreLocal Project Setup Guide
 
 ## Prerequisites:
 
@@ -10,7 +10,7 @@
 ## Demo Video
 
 ![ExploreLocal Demo](https://img.youtube.com/vi/gUahAt5D2Ek/maxresdefault.jpg)
-- **[Watch Demo](https://www.youtube.com/watch?v=gUahAt5D2Ek&ab_channel=MehrozKhan)**
+- **[Watch Project Walkthrough 😃](https://www.youtube.com/watch?v=gUahAt5D2Ek&ab_channel=MehrozKhan)**
 
 
 ## Database Setup:
