@@ -43,12 +43,11 @@ Once the restore is complete, you will see the restored database with all the da
       public string TourState { get; set; }
       ```
 
-## Project Precautions Before Running:   
-1. Click on the "Build" menu at the top of Visual Studio.
-2. Select "Clean ExploreLocal."
-3. Click on "Build ExploreLocal."
-4. After building successfully, click on "Clean Solution."
-5. Finally, click on "Build ExploreLocal Solution."
-6. Run the project by clicking the "Start" button (green arrow) in Visual Studio.
+## Project Precautions How To Run The Project:   
+1. After Applying All The Steps Mention in Project Setup Then Follow This Steps.
+2. Press CTRL + F5 for Running the Project Without Dibugging.
+3. Then Go on Visual Studio And Click on Build & Click on Clean ExploreLocal Solution.
+4. After Cleaning Successfully, Click Again on Build Solution.
+5. Finally, Now The Project is Ready to Go And Press CTRL + F5 And Run The Project Successfully.
 
-That's it! You've successfully installed and set up the ExploreLocal project. If you have any questions or encounter any issues, please don't hesitate to reach out for assistance.
+That's it! You've successfully installed and set up the project. If you have any questions or encounter any issues, please don't hesitate to reach out for assistance.
