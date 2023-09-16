@@ -1,0 +1,237 @@
+﻿@model ExploreLocal.Models.Tbl_Admin
+@{
+    Layout = null;
+}
+<title> @Session["ad_name"] Admin Profile - ExploreLocal</title>
+<style>
+    .circle-img {
+        width: 70px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .center-card {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .profile-card {
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 40px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .left-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 20px;
+    }
+
+    .right-section {
+        flex-grow: 1;
+    }
+
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-left: 30px;
+        padding-right: 20px;
+        border-right: 1px solid #ddd;
+    }
+
+    .profile-picture {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .profile-username {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .profile-details {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .profile-details-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .profile-details-label {
+        font-size: 14px;
+    }
+
+    .profile-details-value {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .profile-input {
+        width: 100%;
+        padding: 5px;
+        border: none;
+        background-color: transparent;
+    }
+
+    .profile-actions {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    #thecontainer {
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+        padding: 25px;
+    }
+
+    #thefirsta {
+        color: black;
+    }
+
+        #thefirsta:hover {
+            color: #F76B6A;
+        }
+
+
+    .button-5 {
+        align-items: center;
+        background-clip: padding-box;
+        background-color: darkblue;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+        box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 16px;
+        font-weight: 500;
+        justify-content: center;
+        line-height: 1.25;
+        margin: 0;
+        min-height: 3rem;
+        padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+        position: relative;
+        text-decoration: none;
+        transition: all 250ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: baseline;
+        width: auto;
+    }
+
+        .button-5:hover,
+        .button-5:focus {
+            color: white;
+            background-color: darkblue;
+            box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+        }
+
+        .button-5:hover {
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .button-5:active {
+            color: white;
+            background-color: darkblue;
+            box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+            transform: translateY(0);
+        }
+
+    .table-responsive {
+        overflow-y: hidden; /* Hide the vertical scrollbar */
+        overflow-x: auto; /* Enable horizontal scrollbar */
+    }
+
+        .table-responsive table {
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        .table-responsive td,
+        .table-responsive th {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .table-responsive::-webkit-scrollbar {
+            overflow-y: hidden;
+            overflow-x: auto;
+            height: 5px; /* Adjust the width of the scrollbar as needed */
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb {
+            background-color: deepskyblue; /* Scrollbar thumb color */
+            border-radius: 8px; /* Adjust the radius to make the thumb rounded */
+        }
+
+            .table-responsive::-webkit-scrollbar-thumb:hover {
+                background-color: #888; /* Scrollbar thumb color on hover */
+            }
+
+        .table-responsive::-webkit-scrollbar-track {
+            background-color: white; /* Background color of the scrollbar track */
+        }
+</style>
+@Html.Partial("Layout")
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+    <div class="body-wrapper">
+        <div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px;border-radius:15px;margin-top:180px;margin-bottom:50px;margin-left:-115px;">
+            <div class="profile-card">
+                <div class="left-section">
+                    <div class="profile-info">
+                        <img class="profile-picture" src="~/Content/img/Default.png" alt="Profile Picture" />
+                        <div class="profile-username">@Model.Admmin_Username</div>
+                    </div>
+                </div>
+                <div class="right-section">
+                    <div class="profile-details">
+                        <div class="profile-details-item">
+                            <div class="profile-details-label">Password:</div>
+                            <div class="profile-details-value">
+                                <input type="password" class="profile-input" value="@Model.Admin_Password" readonly style="text-align:right;" />
+                            </div>
+                        </div>
+                        <div class="profile-details-item">
+                            <div class="profile-details-label">Email:</div>
+                            <div class="profile-details-value">
+                                <input type="email" class="profile-input" value="@Model.Admin_Email" readonly style="text-align:right;" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                            <div style="margin-top:20px;">
+                                <a href="@Url.Action("EditAdminProfile", "Admin", new { id = Model.Admin_Id })" class="button-5">Edit</a>
+                                <a href="@Url.Action("Logout", "Admin", new { id = Model.Admin_Id })" class="button-5" style="background-color:darkorange">Logout</a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

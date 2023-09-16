@@ -46,6 +46,56 @@ namespace ExploreLocal.Controllers
             return View();
         }
 
+        public ActionResult AdminProfile(int? id)
+        {
+            int adminId = Convert.ToInt32(Session["ad_id"]);
+
+            if (id == null)
+            {
+                id = adminId;
+            }
+
+            Tbl_Admin profileUser = db.Tbl_Admin.FirstOrDefault(u => u.Admin_Id == id);
+
+            if (profileUser == null)
+            {
+                ViewBag.ProfileNotFound = true;
+                return View();
+            }
+
+            return View(profileUser);
+        }
+
+        [HttpGet]
+        public ActionResult EditAdminProfile(int id)
+        {
+            Tbl_Admin admin = db.Tbl_Admin.Find(id);
+            if (admin == null)
+            {
+                return HttpNotFound();
+            }
+            return View(admin);
+        }
+
+        [HttpPost]
+        public ActionResult SaveAdminEdit(Tbl_Admin admin)
+        {
+            Tbl_Admin us = db.Tbl_Admin.Find(admin.Admin_Id);
+            if (us != null)
+            {
+                us.Admmin_Username = admin.Admmin_Username;
+                us.Admin_Password = admin.Admin_Password;
+                us.Admin_Email = admin.Admin_Email;
+                db.SaveChanges();
+                return RedirectToAction("AdminProfile", new { us.Admin_Id });
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+            return View(admin);
+        }
+
         [HttpGet]
         public ActionResult AddAdmin()
         {
@@ -55,40 +105,31 @@ namespace ExploreLocal.Controllers
         [HttpPost]
         public ActionResult AddAdmin(Tbl_Admin newAdmin, string Current_Admin_Password)
         {
-            // Check if the current admin is authenticated to add a new admin
             string currentAdminId = Session["ad_id"] as string;
             string currentAdminPassword = Session["ad_pass"] as string;
 
             if (string.IsNullOrEmpty(currentAdminId) || string.IsNullOrEmpty(currentAdminPassword))
             {
-                return RedirectToAction("Login"); // Redirect to login if not authenticated
+                return RedirectToAction("Login"); 
             }
 
             if (currentAdminPassword != Current_Admin_Password)
             {
-                // Display an error SweetAlert
                 TempData["ErrorAlert"] = "Authentication Failed. You are not authorized to add a new admin.";
                 return View();
             }
 
-            // Now you can add a new admin
             if (ModelState.IsValid)
             {
-                // Assuming you have a method to add a new admin
                 db.Tbl_Admin.Add(newAdmin);
                 db.SaveChanges();
-
-                // Display a success SweetAlert
                 TempData["SuccessAlert"] = "New admin added successfully.";
-
                 return RedirectToAction("AddAdmin");
             }
 
             ViewBag.Error = "Invalid input. Please check the data and try again.";
             return View();
         }
-
-
 
 
         public ActionResult Admin_Panel()
@@ -166,7 +207,7 @@ namespace ExploreLocal.Controllers
         private List<LatestUserViewModel> FetchOlderUsers()
         {
             var olderUsers = db.Tbl_User
-                .OrderBy(u => u.UserID) 
+                .OrderBy(u => u.UserID)
                 .Take(4)
                 .ToList();
 
@@ -178,7 +219,7 @@ namespace ExploreLocal.Controllers
                 {
                     UserId = user.UserID,
                     UserName = user.FirstName + user.LastName,
-                    ProfileImageUrl = user.ProfileImage 
+                    ProfileImageUrl = user.ProfileImage
                 });
             }
 
@@ -189,7 +230,7 @@ namespace ExploreLocal.Controllers
         {
             var latestUsers = db.Tbl_User
          .OrderByDescending(u => u.UserID)
-         .Take(5) 
+         .Take(5)
          .ToList();
 
             var latestUserViewModels = new List<LatestUserViewModel>();
@@ -200,7 +241,7 @@ namespace ExploreLocal.Controllers
                 {
                     UserId = user.UserID,
                     UserName = user.FirstName + user.LastName,
-                    ProfileImageUrl = user.ProfileImage 
+                    ProfileImageUrl = user.ProfileImage
                 });
             }
 
@@ -212,21 +253,18 @@ namespace ExploreLocal.Controllers
             var bestGoingTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_Bookings,
-                    destination => destination.DestinationID, // Replace with the actual identifier column
-                    booking => booking.DestinationId,         // Replace with the actual identifier column
+                    destination => destination.DestinationID, 
+                    booking => booking.DestinationId,         
                     (destination, bookings) => new
                     {
-                        DestinationName = destination.DestinationName, // Replace with the actual column name
-                BookingsCount = bookings.Count()
+                        DestinationName = destination.DestinationName, 
+                        BookingsCount = bookings.Count()
                     }
                 )
                 .OrderByDescending(x => x.BookingsCount)
                 .ToList();
 
-            // Find the highest booking count
             var highestBookingCount = bestGoingTours.First().BookingsCount;
-
-            // Select all tours with the highest booking count
             var bestTours = bestGoingTours
                 .Where(x => x.BookingsCount == highestBookingCount)
                 .Select(x => new BestGoingTourData
@@ -251,7 +289,7 @@ namespace ExploreLocal.Controllers
                     CommentCount = t.Tbl_Comments.Count()
                 })
                 .OrderByDescending(t => t.CommentCount)
-                .Take(5) 
+                .Take(5)
                 .ToList();
 
             var bestCommentedTours = new List<BestCommentedTourViewModel>();
@@ -349,7 +387,7 @@ namespace ExploreLocal.Controllers
             List<double> expenseData = new List<double>();
 
 
-            double fixedExpenseRate = 10.0; 
+            double fixedExpenseRate = 10.0;
 
             foreach (var booking in bookings)
             {
@@ -491,7 +529,7 @@ namespace ExploreLocal.Controllers
             Tbl_Destination tour = db.Tbl_Destination.Find(tourId);
             if (tour != null)
             {
-                db.Tbl_Destination.Remove(tour); 
+                db.Tbl_Destination.Remove(tour);
                 db.SaveChanges();
             }
 
@@ -535,15 +573,12 @@ namespace ExploreLocal.Controllers
 
                     if (tour != null)
                     {
-                        // Delete related bookings
                         var bookingsToDelete = db.Tbl_Bookings.Where(b => b.DestinationId == destinationId);
                         db.Tbl_Bookings.RemoveRange(bookingsToDelete);
 
-                        // Delete related comments
                         var commentsToDelete = db.Tbl_Comments.Where(c => c.DestinationId == destinationId);
                         db.Tbl_Comments.RemoveRange(commentsToDelete);
 
-                        // Now, delete the tour
                         db.Tbl_Destination.Remove(tour);
                         db.SaveChanges();
 

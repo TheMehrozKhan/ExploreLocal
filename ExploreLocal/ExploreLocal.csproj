@@ -938,6 +938,8 @@
     <Content Include="Views\Admin\Replies.cshtml" />
     <Content Include="Views\Admin\ExpertTours.cshtml" />
     <Content Include="Views\Admin\AddAdmin.cshtml" />
+    <Content Include="Views\Admin\AdminProfile.cshtml" />
+    <Content Include="Views\Admin\EditAdminProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

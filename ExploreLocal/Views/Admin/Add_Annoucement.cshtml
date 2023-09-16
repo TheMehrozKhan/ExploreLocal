@@ -20,35 +20,35 @@
                         <br />
                         @using (Html.BeginForm("Add_Annoucement", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "signupform" }))
                         {
-                    <form>
-                        <div class="form-floating mb-3">
-                            @Html.TextBoxFor(x => x.Announcement_headline, new { @class = "form-control border border-primary", placeholder = "Headline" })
-                            <label><i class="ti ti-user me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Announcement Headline</span></label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            @Html.TextBoxFor(x => x.Announcement_description, new { @class = "form-control border border-primary", placeholder = "Headline" })
-                            <label><i class="ti ti-mail me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Announcement Description</span></label>
-                        </div>
-                        <label for="formFile" class="form-label">Announcement Image</label>
-                        <input class="form-control" type="file" name="imgfile" id="imgfile" required  />
-                        <br />
-                        <div class="d-md-flex align-items-center">
-                            <div class="mt-3 mt-md-0 ms-auto">
-                                <button type="submit" class="btn btn-primary font-medium rounded-pill px-4">
-                                    <div class="d-flex align-items-center">
-                                        <i class="ti ti-plus me-2 fs-4"></i>
-                                        Add
+                            <form>
+                                <div class="form-floating mb-3">
+                                    @Html.TextBoxFor(x => x.Announcement_headline, new { @class = "form-control border border-primary", placeholder = "Headline" })
+                                    <label><i class="ti ti-user me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Announcement Headline</span></label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    @Html.TextBoxFor(x => x.Announcement_description, new { @class = "form-control border border-primary", placeholder = "Headline" })
+                                    <label><i class="ti ti-mail me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Announcement Description</span></label>
+                                </div>
+                                <label for="formFile" class="form-label">Announcement Image</label>
+                                <input class="form-control" type="file" name="imgfile" id="imgfile" required />
+                                <br />
+                                <div class="d-md-flex align-items-center">
+                                    <div class="mt-3 mt-md-0 ms-auto">
+                                        <button type="submit" class="btn btn-primary font-medium rounded-pill px-4">
+                                            <div class="d-flex align-items-center">
+                                                <i class="ti ti-plus me-2 fs-4"></i>
+                                                Add
+                                            </div>
+                                        </button>
                                     </div>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                                </div>
+                            </form>
                         }
                     </div>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>

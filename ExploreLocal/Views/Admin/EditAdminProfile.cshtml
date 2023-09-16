@@ -1,0 +1,69 @@
+﻿﻿@model ExploreLocal.Models.Tbl_Admin
+<title>@Session["ad_name"] Edit Your Profile - ExploreLocal</title>
+@{
+    Layout = null;
+}
+@Html.Partial("Layout")
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+    <div class="body-wrapper">
+        <div class="container-fluid">
+            <div class="card" style="margin-right:150px;">
+                <div class="card-body">
+                    <h5>Edit Your Admin Profile</h5>
+                    <p class="card-subtitle mb-3">
+                        Edit The Data You Want And Click on Submit for Profile Update
+                    </p>
+                    <br />
+                    @using (Html.BeginForm("SaveAdminEdit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "signupform" }))
+                    {
+                        @Html.HiddenFor(model => model.Admin_Id)
+
+                        <form>
+                            <div class="form-floating mb-3">
+                                @Html.TextBoxFor(x => x.Admmin_Username, new { @class = "form-control border border-primary", placeholder = "Headline" })
+                                <label><i class="ti ti-user me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Username</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                @Html.TextBoxFor(x => x.Admin_Password, new { @class = "form-control border border-primary", placeholder = "Headline" })
+                                <label><i class="ti ti-mail me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Password</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                @Html.TextBoxFor(x => x.Admin_Email, new { @class = "form-control border border-primary", placeholder = "Headline" })
+                                <label><i class="ti ti-mail me-2 fs-4 text-primary"></i><span class="border-start border-primary ps-3">Email</span></label>
+                            </div>
+                            <br />
+                            <div class="d-md-flex align-items-center">
+                                <div class="mt-3 mt-md-0 ms-auto">
+                                    <button type="submit" class="btn btn-primary font-medium rounded-pill px-4">
+                                        <div class="d-flex align-items-center">
+                                            <i class="ti ti-refresh me-2 fs-4"></i>
+                                            Update
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            <a href="@Url.Action("AdminProfile" , new { id = Convert.ToInt32(Session["ad_id"]) }))" id="thesecondbtn">Cancel</a>
+
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+        document.getElementById('signupform').addEventListener('submit', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'success',
+                title: 'Congrats!',
+                text: 'Your Profile Has Been Updated!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("AdminProfile", "Admin")';
+                    this.submit();
+                }
+            });
+        });
+</script>
