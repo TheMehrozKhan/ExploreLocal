@@ -10,11 +10,11 @@
 ## Database Setup:
 
 1. Download the database file from the provided link.
-2. Open SQL Server Management Studio (SSMS).
-3. Connect to your SQL Server instance.
-4. In SSMS, right-click on "Databases" in the Object Explorer, and select "Restore Database."
-5. Choose "Device" and browse for the downloaded database file.
-6. Click "OK" to restore the database.
+2. Open **SQL Server Management Studio (SSMS)**.
+3. Connect to your **SQL Server instance**.
+4. In SSMS, right-click on *"Databases"* in the Object Explorer, and select *"Restore Database."*
+5. Choose *"Device"* and browse for the downloaded database file.
+6. Click *"OK"* to restore the database.
 
 Once the restore is complete, you will see the restored database with all the data.
 
