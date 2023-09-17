@@ -735,7 +735,6 @@
     <Content Include="AdminTemplate\dist\libs\bootstrap-duallistbox\dist\jquery.bootstrap-duallistbox.min.js" />
     <Content Include="AdminTemplate\dist\libs\bootstrap-material-datetimepicker\css\bootstrap-material-datetimepicker.css" />
     <Content Include="AdminTemplate\dist\libs\bootstrap-material-datetimepicker\js\bootstrap-material-datetimepicker.js" />
-    <Content Include="AdminTemplate\dist\libs\bootstrap-material-datetimepicker\node_modules\moment\moment.js" />
     <Content Include="AdminTemplate\dist\libs\bootstrap-switch\dist\css\bootstrap3\bootstrap-switch.min.css" />
     <Content Include="AdminTemplate\dist\libs\bootstrap-switch\dist\js\bootstrap-switch.min.js" />
     <Content Include="AdminTemplate\dist\libs\bootstrap-table\dist\bootstrap-table.min.css" />

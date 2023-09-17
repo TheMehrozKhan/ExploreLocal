@@ -33,7 +33,6 @@ namespace ExploreLocal.Controllers
                 return View(viewModel);
             }
         }
-
         public ActionResult SearchDestinations(int? selectedVenueId, string searchQuery)
         {
             if (selectedVenueId == null)
@@ -63,7 +62,6 @@ namespace ExploreLocal.Controllers
 
             return View("SearchResults", viewModel);
         }
-
         public ActionResult Destinations(int id, decimal? minPrice, decimal? maxPrice, string country, string language, string duration)
         {
             var selectedVenue = db.Tbl_Venue.FirstOrDefault(v => v.Venue_id == id);
@@ -146,10 +144,6 @@ namespace ExploreLocal.Controllers
 
             return View(viewModel);
         }
-
-
-
-
         public ActionResult DestinationDetails(int? id)
         {
             Tbl_Destination p = db.Tbl_Destination.Where(x => x.DestinationID == id).SingleOrDefault();
@@ -195,7 +189,6 @@ namespace ExploreLocal.Controllers
             ViewBag.RandomTours = randomTours;
             return View(destinationDetailsViewModel);
         }
-
         [HttpGet]
         public ActionResult BookingForm(int destinationId, int expertId, int userId)
         {
@@ -211,7 +204,6 @@ namespace ExploreLocal.Controllers
             };
             return View(viewModel);
         }
-
         [HttpPost]
         public ActionResult SubmitBooking(BookingViewModel viewModel)
         {
@@ -251,7 +243,6 @@ namespace ExploreLocal.Controllers
             }
             return View("BookingForm", viewModel);
         }
-
         public ActionResult BookingSuccess(int? id)
         {
             if (id == null)
@@ -283,7 +274,6 @@ namespace ExploreLocal.Controllers
             }
             return View();
         }
-
         public ActionResult DownloadInvoice(int? bookingId)
         {
             if (bookingId == null)
@@ -320,7 +310,6 @@ namespace ExploreLocal.Controllers
             }
             return RedirectToAction("Error"); 
         }
-
         private byte[] GenerateInvoicePdf(string htmlContent)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -334,8 +323,6 @@ namespace ExploreLocal.Controllers
                 return ms.ToArray();
             }
         }
-
-
         private string RenderViewToString(string viewName)
         {
             ViewData.Model = this.ViewData.Model;
@@ -348,7 +335,6 @@ namespace ExploreLocal.Controllers
                 return sw.GetStringBuilder().ToString();
             }
         }
-
         public ActionResult InvoiceTemplate(int? bookingId)
         {
             if (bookingId == null)
@@ -380,29 +366,23 @@ namespace ExploreLocal.Controllers
 
             return View();
         }
-
-
         public ActionResult About()
         {
             return View();
         }
-
         public ActionResult Expert()
         {
             return View();
         }
-
         public ActionResult HelpCenter()
         {
             return View();
         }
-
         [HttpGet]
         public ActionResult Login()
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult Login(Tbl_User uvm)
         {
@@ -424,13 +404,11 @@ namespace ExploreLocal.Controllers
 
             return View(uvm);
         }
-
         [HttpGet]
         public ActionResult ExpertLogin()
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult ExpertLogin(Tbl_Expert adm)
         {
@@ -459,13 +437,11 @@ namespace ExploreLocal.Controllers
 
             return View();
         }
-
         [HttpGet]
         public ActionResult Register()
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult Register(Tbl_User us, HttpPostedFileBase imgfile)
         {
@@ -490,13 +466,11 @@ namespace ExploreLocal.Controllers
 
             return View();
         }
-
         [HttpGet]
         public ActionResult ExpertRegistration()
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult ExpertRegistration(ExpertViewModel model)
         {
@@ -523,12 +497,10 @@ namespace ExploreLocal.Controllers
 
             return View(model);
         }
-
         public ActionResult ExpertRegistrationSuccess()
         {
             return View();
         }
-
         [HttpGet]
         public ActionResult Create_Tour()
         {
@@ -541,7 +513,6 @@ namespace ExploreLocal.Controllers
             ViewBag.categorylist = new SelectList(li, "Venue_id", "Venue_name");
             return View();
         }
-
         [HttpPost]
         public ActionResult Create_Tour(Tbl_Destination pr, HttpPostedFileBase[] imgfiles)
         {
@@ -593,7 +564,6 @@ namespace ExploreLocal.Controllers
 
             return View();
         }
-
         public ActionResult Venues(int? page)
         {
             int pageSize = 8;
@@ -606,7 +576,6 @@ namespace ExploreLocal.Controllers
 
             return View(cateList);
         }
-
         public ActionResult Logout()
         {
             Session.Clear();
@@ -644,7 +613,6 @@ namespace ExploreLocal.Controllers
             ViewBag.UserBookings = userBookings;
             return View(profileUser);
         }
-
         private string GetTourState(DateTime? startDate, DateTime? endDate)
         {
             if (startDate == null || endDate == null)
@@ -667,7 +635,6 @@ namespace ExploreLocal.Controllers
                 return "Completed";
             }
         }
-
         [HttpGet]
         public ActionResult Edit_Profile(int id)
         {
@@ -678,7 +645,6 @@ namespace ExploreLocal.Controllers
             }
             return View(user);
         }
-
         [HttpPost]
         public ActionResult Save_Edit(Tbl_User user, HttpPostedFileBase imgfile)
         {
@@ -710,7 +676,6 @@ namespace ExploreLocal.Controllers
             }
             return View(user);
         }
-
         public ActionResult ExpertDashboard(int? id)
         {
             int expertId;
@@ -758,8 +723,6 @@ namespace ExploreLocal.Controllers
 
             return View(profileUser);
         }
-
-
         public ActionResult DeleteTour(int id)
         {
             var tourToDelete = db.Tbl_Destination.FirstOrDefault(t => t.DestinationID == id);
@@ -783,8 +746,6 @@ namespace ExploreLocal.Controllers
             TempData["SuccessMessage"] = "Tour successfully deleted.";
             return RedirectToAction("ExpertDashboard");
         }
-
-
         [HttpGet]
         public ActionResult Edit_Expert(int id)
         {
@@ -795,7 +756,6 @@ namespace ExploreLocal.Controllers
             }
             return View(user);
         }
-
         [HttpPost]
         public ActionResult Save_Expert(Tbl_Expert user, HttpPostedFileBase imgfile)
         {
@@ -882,7 +842,6 @@ namespace ExploreLocal.Controllers
 
             return Redirect(Request.UrlReferrer.ToString());
         }
-
         public ActionResult View_Wishlist()
         {
             if (Session["u_id"] == null)
@@ -901,7 +860,6 @@ namespace ExploreLocal.Controllers
 
             return View(userItems);
         }
-
         public ActionResult RemoveFromWishlist(int? id)
         {
             if (Session["u_id"] == null)
@@ -929,7 +887,6 @@ namespace ExploreLocal.Controllers
 
             return RedirectToAction("View_Wishlist");
         }
-
         [HttpPost]
         public ActionResult AddComment(int recipeId, string commentText)
         {
@@ -953,7 +910,6 @@ namespace ExploreLocal.Controllers
 
             return RedirectToAction("DestinationDetails", new { id = recipeId });
         }
-
         [HttpPost]
         public ActionResult AddReply(int commentId, string replyText)
         {
@@ -983,8 +939,6 @@ namespace ExploreLocal.Controllers
 
             return RedirectToAction("Index");
         }
-
-
         [HttpGet]
         public ActionResult Delete(int? id)
         {
@@ -1007,14 +961,12 @@ namespace ExploreLocal.Controllers
 
             return RedirectToAction("Index");
         }
-
         [HttpGet]
         public ActionResult DeleteReply(int? id)
         {
             Tbl_Replies ca = db.Tbl_Replies.Where(x => x.ReplyId == id).SingleOrDefault();
             return View(ca);
         }
-
         [HttpPost]
         public ActionResult DeleteReply(int? id, Tbl_Venue cat)
         {
@@ -1025,7 +977,6 @@ namespace ExploreLocal.Controllers
 
             return RedirectToAction("Index");
         }
-
         public string uploadimage(HttpPostedFileBase file)
         {
             Random r = new Random();
@@ -1060,7 +1011,6 @@ namespace ExploreLocal.Controllers
             }
             return path;
         }
-
         public ActionResult Terms()
         {
             return View();

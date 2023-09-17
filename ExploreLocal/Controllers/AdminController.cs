@@ -20,13 +20,11 @@ namespace ExploreLocal.Controllers
         {
             return View();
         }
-
         [HttpGet]
         public ActionResult Login()
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult Login(Tbl_Admin adm)
         {
@@ -45,7 +43,6 @@ namespace ExploreLocal.Controllers
             }
             return View();
         }
-
         public ActionResult AdminProfile(int? id)
         {
             int adminId = Convert.ToInt32(Session["ad_id"]);
@@ -65,7 +62,6 @@ namespace ExploreLocal.Controllers
 
             return View(profileUser);
         }
-
         [HttpGet]
         public ActionResult EditAdminProfile(int id)
         {
@@ -76,7 +72,6 @@ namespace ExploreLocal.Controllers
             }
             return View(admin);
         }
-
         [HttpPost]
         public ActionResult SaveAdminEdit(Tbl_Admin admin)
         {
@@ -95,13 +90,11 @@ namespace ExploreLocal.Controllers
             }
             return View(admin);
         }
-
         [HttpGet]
         public ActionResult AddAdmin()
         {
             return View();
         }
-
         [HttpPost]
         public ActionResult AddAdmin(Tbl_Admin newAdmin, string Current_Admin_Password)
         {
@@ -130,8 +123,6 @@ namespace ExploreLocal.Controllers
             ViewBag.Error = "Invalid input. Please check the data and try again.";
             return View();
         }
-
-
         public ActionResult Admin_Panel()
         {
             if (Session["ad_id"] == null)
@@ -173,7 +164,6 @@ namespace ExploreLocal.Controllers
             List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
             return View(ExpertList);
         }
-
         private List<UserModel> FetchUserData()
         {
             var userList = db.Tbl_User.Select(u => new UserModel
@@ -188,7 +178,6 @@ namespace ExploreLocal.Controllers
 
             return userList;
         }
-
         private List<ExpertModel> FetchExpertData()
         {
             var expertList = db.Tbl_Expert.Select(e => new ExpertModel
@@ -203,7 +192,6 @@ namespace ExploreLocal.Controllers
 
             return expertList;
         }
-
         private List<LatestUserViewModel> FetchOlderUsers()
         {
             var olderUsers = db.Tbl_User
@@ -225,7 +213,6 @@ namespace ExploreLocal.Controllers
 
             return olderUserViewModels;
         }
-
         private List<LatestUserViewModel> FetchLatestUsers()
         {
             var latestUsers = db.Tbl_User
@@ -247,7 +234,6 @@ namespace ExploreLocal.Controllers
 
             return latestUserViewModels;
         }
-
         private List<BestGoingTourData> FetchBestGoingToursData()
         {
             var bestGoingTours = db.Tbl_Destination
@@ -276,10 +262,6 @@ namespace ExploreLocal.Controllers
 
             return bestTours;
         }
-
-
-
-
         private List<BestCommentedTourViewModel> FetchBestCommentedToursData()
         {
             var commentedTours = db.Tbl_Destination
@@ -310,16 +292,12 @@ namespace ExploreLocal.Controllers
 
             return bestCommentedTours;
         }
-
-
         private double CalculateTotalYearlyBookings(List<Tbl_Bookings> bookings, int targetYear)
         {
             var yearlyBookings = bookings.Where(booking => booking.BookingDate.HasValue && booking.BookingDate.Value.Year == targetYear).ToList();
             double totalYearlyBookings = CalculateTotalEarnings(yearlyBookings);
             return totalYearlyBookings;
         }
-
-
         private double CalculateTotalEarnings(List<Tbl_Bookings> bookings)
         {
             var totalEarnings = bookings.Sum(booking =>
@@ -334,7 +312,6 @@ namespace ExploreLocal.Controllers
 
             return Convert.ToDouble(totalEarnings);
         }
-
         private double CalculateEarningsThisMonth(List<Tbl_Bookings> bookings)
         {
             DateTime currentDate = DateTime.Now;
@@ -364,8 +341,6 @@ namespace ExploreLocal.Controllers
 
             return expenseThisMonth;
         }
-
-
 
         private List<double> CalculateRevenueData(List<Tbl_Bookings> bookings)
         {
