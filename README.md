@@ -13,7 +13,7 @@
 - **[Watch Project Walkthrough](https://www.youtube.com/watch?v=gUahAt5D2Ek&ab_channel=MehrozKhan)**
 
 ## Website Live Demo:
-- There is The *Project Live Link* Checkitout For More in Depth Knowledge of Project:[Website Live Demo](http://explorelocal-001-site1.ftempurl.com/) 
+- There is The *Project Live Link* Checkitout For More in Depth Knowledge of Project: [Website Live Demo](http://explorelocal-001-site1.ftempurl.com/) 
 
 ## Database Setup:
 
