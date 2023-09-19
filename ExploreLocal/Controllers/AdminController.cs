@@ -138,32 +138,53 @@ namespace ExploreLocal.Controllers
             ViewBag.ExpenseData = expenseData;
             CultureInfo pkCulture = new CultureInfo("en-PK");
             ViewBag.Culture = pkCulture;
+
             double totalEarnings = CalculateTotalEarnings(bookings);
             ViewBag.TotalEarnings = totalEarnings.ToString("C", pkCulture);
+
             double earningsThisMonth = CalculateEarningsThisMonth(bookings);
             ViewBag.EarningsThisMonth = earningsThisMonth.ToString("C", pkCulture);
+
             double expenseThisMonth = CalculateExpenseThisMonth(bookings);
             ViewBag.ExpenseThisMonth = expenseThisMonth.ToString("C", pkCulture);
+
             int currentYear = DateTime.Now.Year;
+
             double totalYearlyBookings = CalculateTotalYearlyBookings(bookings, currentYear);
             ViewBag.TotalYearlyBookings = totalYearlyBookings.ToString("C", pkCulture);
+
             var bestGoingTours = FetchBestGoingToursData();
-            ViewBag.BestGoingToursData = bestGoingTours;
+
+            if (bestGoingTours.Any())
+            {
+                ViewBag.BestGoingToursData = bestGoingTours;
+            }
+            else
+            {
+                ViewBag.BestGoingToursData = new List<BestGoingTourData>();
+            }
+
             int totalUsers = db.Tbl_User.Count();
             ViewBag.TotalUsers = totalUsers;
             int totalTours = db.Tbl_Destination.Count();
             ViewBag.TotalTours = totalTours;
+
             var bestCommentedTours = FetchBestCommentedToursData();
             ViewBag.BestCommentedToursData = bestCommentedTours;
-            var latestUsers = FetchLatestUsers().Take(1);
+
+            var latestUsers = FetchLatestUsers()?.Take(1);
             ViewBag.LatestUsers = latestUsers;
-            var olderUsers = FetchOlderUsers().Take(3);
+
+            var olderUsers = FetchOlderUsers()?.Take(3);
             ViewBag.OlderUsers = olderUsers;
+
             List<UserModel> userList = FetchUserData();
             ViewBag.UserList = userList;
             List<Tbl_Expert> ExpertList = db.Tbl_Expert.ToList();
+
             return View(ExpertList);
         }
+
         private List<UserModel> FetchUserData()
         {
             var userList = db.Tbl_User.Select(u => new UserModel
@@ -234,33 +255,41 @@ namespace ExploreLocal.Controllers
 
             return latestUserViewModels;
         }
+
         private List<BestGoingTourData> FetchBestGoingToursData()
         {
             var bestGoingTours = db.Tbl_Destination
                 .GroupJoin(
                     db.Tbl_Bookings,
-                    destination => destination.DestinationID, 
-                    booking => booking.DestinationId,         
+                    destination => destination.DestinationID,
+                    booking => booking.DestinationId,
                     (destination, bookings) => new
                     {
-                        DestinationName = destination.DestinationName, 
+                        DestinationName = destination.DestinationName,
                         BookingsCount = bookings.Count()
                     }
                 )
                 .OrderByDescending(x => x.BookingsCount)
                 .ToList();
 
-            var highestBookingCount = bestGoingTours.First().BookingsCount;
-            var bestTours = bestGoingTours
-                .Where(x => x.BookingsCount == highestBookingCount)
-                .Select(x => new BestGoingTourData
-                {
-                    DestinationName = x.DestinationName,
-                    BookingsCount = x.BookingsCount
-                })
-                .ToList();
+            if (bestGoingTours.Any())
+            {
+                var highestBookingCount = bestGoingTours.First().BookingsCount;
+                var bestTours = bestGoingTours
+                    .Where(x => x.BookingsCount == highestBookingCount)
+                    .Select(x => new BestGoingTourData
+                    {
+                        DestinationName = x.DestinationName,
+                        BookingsCount = x.BookingsCount
+                    })
+                    .ToList();
 
-            return bestTours;
+                return bestTours;
+            }
+            else
+            {
+                return new List<BestGoingTourData>();
+            }
         }
         private List<BestCommentedTourViewModel> FetchBestCommentedToursData()
         {
