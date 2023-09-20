@@ -181,19 +181,19 @@
                                 </style>
                                 @if (Session["u_id"] != null)
                                 {
-                            <a href="@Url.Action("View_Wishlist","ExploreLocal")" style="text-decoration: none; margin: 15px;">
-                                <i class="icon-heart" style="font-size: 17px;margin-right:6px;"></i>
-                                @{
-                                    if (Session["u_id"] != null)
-                                    {
-                                        var userItems = Session["Wishlist"] as List<Wishlist>;
-                                        var userCountValue = userItems?.Count ?? 0;
-                                        <span class="cart-count" style="width: 20px; height: 20px; border-radius: 50%; color: white; text-decoration: none; position: relative; bottom: 8px; color:dodgerblue;">
-                                            @userCountValue
-                                        </span>
-                                    }
-                                }
-                            </a>
+                                    <a href="@Url.Action("View_Wishlist","ExploreLocal")" style="text-decoration: none; margin: 15px;">
+                                        <i class="icon-heart" style="font-size: 17px;margin-right:6px;"></i>
+                                        @{
+                                            if (Session["u_id"] != null)
+                                            {
+                                                var userItems = Session["Wishlist"] as List<Wishlist>;
+                                                var userCountValue = userItems?.Count ?? 0;
+                                                <span class="cart-count" style="width: 20px; height: 20px; border-radius: 50%; color: white; text-decoration: none; position: relative; bottom: 8px; color:dodgerblue;">
+                                                    @userCountValue
+                                                </span>
+                                            }
+                                        }
+                                    </a>
                                     var userId = Convert.ToInt32(Session["u_id"]);
                                     var userProfileImage = Session["u_image"]?.ToString();
                                     <a href="@Url.Action("UserProfile","ExploreLocal", new { id = userId } )" class="theendlink">
@@ -1773,5 +1773,17 @@
     <script src="../../../unpkg.com/%40googlemaps/markerclusterer%402.3.1/dist/index.min.js"></script>
     <script src="/Template/js/vendors.js"></script>
     <script src="/Template/js/main.js"></script>
+
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/6509ab090f2b18434fd96135/1hams880u';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
 </body>
 </html>
