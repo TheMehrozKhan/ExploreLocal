@@ -799,6 +799,7 @@ namespace ExploreLocal.Controllers
             }
             return View(user);
         }
+
         [HttpPost]
         public ActionResult Save_Expert_Tour(Tbl_Destination editedTour, HttpPostedFileBase[] imgfiles)
         {
@@ -818,16 +819,20 @@ namespace ExploreLocal.Controllers
                 foreach (HttpPostedFileBase imgfile in imgfiles)
                 {
                     string path = uploadimage(imgfile);
-                    if (path.Equals(-1))
-                    {
-                        ViewBag.Error = "Image Couldn't be Uploaded. Please try again.";
-                    }
-                    else
+                    if (!path.Equals("-1")) // Check for a valid path
                     {
                         imagePaths.Add(path);
                     }
                 }
             }
+
+            // Update the Image property with the new image paths if images were uploaded
+            if (imagePaths.Count > 0)
+            {
+                existingTour.Image = string.Join(",", imagePaths);
+            }
+            // No need to handle the case where no new images were selected,
+            // as the existing images should be retained by not updating the Image property.
 
             // Update other properties of the existing tour
             existingTour.Country = editedTour.Country;
@@ -843,18 +848,14 @@ namespace ExploreLocal.Controllers
             existingTour.EndDate = editedTour.EndDate;
             // Update other properties similarly...
 
-            // Update the Image property with the new image paths
-            if (imagePaths.Count > 0)
-            {
-                existingTour.Image = string.Join(",", imagePaths);
-            }
-
             // Save changes to the database
             db.SaveChanges();
 
             // Redirect to the expert's dashboard or tour list
             return RedirectToAction("ExpertDashboard");
         }
+
+
 
         public ActionResult Add_Wishlist(int? id)
         {

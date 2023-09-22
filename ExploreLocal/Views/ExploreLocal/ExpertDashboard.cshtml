@@ -263,6 +263,15 @@
                 margin-left: 15px;
                 padding: 5px;
             }
+
+        .icon-with-glow {
+            font-size: 21px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 50px;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <div class="row" style="margin-top: 80px;display:flex;justify-content:center;align-items:center;">
@@ -403,23 +412,23 @@
                     <tbody>
                         @foreach (var booking in ViewBag.ExpertBookings)
                         {
-                        <tr>
-                            <td>@booking.BookingId</td>
-                            <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.DestinationName : "N/A")</td>
-                            <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
-                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_User.FirstName + booking.Tbl_User.LastName : "N/A")</td>
-                            <td>@(booking.Tbl_Expert != null ? booking.ContactNumber : "N/A")</td>
-                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_User.Email : "N/A")</td>
-                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.StartDate : "N/A")</td>
-                            <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.EndDate : "N/A")</td>
-                            <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Destination_Duration : "N/A")</td>
-                            <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Price : "N/A")</td>
-                            <td>
-                                <p style="background-color: @GetTourStateColor(booking.TourState);color:white;border-radius:12px;height:35px;width:120px;display:flex;justify-content:center;align-items:center;box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
-                                    @booking.TourState
-                                </p>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>@booking.BookingId</td>
+                                <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.DestinationName : "N/A")</td>
+                                <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
+                                <td>@(booking.Tbl_Expert != null ? booking.Tbl_User.FirstName + booking.Tbl_User.LastName : "N/A")</td>
+                                <td>@(booking.Tbl_Expert != null ? booking.ContactNumber : "N/A")</td>
+                                <td>@(booking.Tbl_Expert != null ? booking.Tbl_User.Email : "N/A")</td>
+                                <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.StartDate : "N/A")</td>
+                                <td>@(booking.Tbl_Expert != null ? booking.Tbl_Destination.EndDate : "N/A")</td>
+                                <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Destination_Duration : "N/A")</td>
+                                <td>@(booking.Tbl_Destination != null ? booking.Tbl_Destination.Price : "N/A")</td>
+                                <td>
+                                    <p style="background-color: @GetTourStateColor(booking.TourState);color:white;border-radius:12px;height:35px;width:120px;display:flex;justify-content:center;align-items:center;box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                                        @booking.TourState
+                                    </p>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -460,7 +469,6 @@
 
     </div>
 </div>
-
 <div class="container" style="background-color: white; box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; border-radius: 15px; margin-top: 100px; margin-bottom: 50px;">
     <div class="user-bookings" style="padding: 20px;">
         <h2 style="text-align: center; margin-bottom: 30px; margin-top: 20px;">Your Uploaded Tours</h2>
@@ -482,19 +490,23 @@
                     <tbody>
                         @foreach (var tour in ViewBag.ExpertUploadedTours)
                         {
-                        <tr>
-                            <td>@tour.DestinationName</td>
-                            <td>@tour.StartDate.ToShortDateString()</td>
-                            <td>@tour.EndDate.ToShortDateString()</td>
-                            <td>@tour.Destination_Duration</td>
-                            <td>@tour.Price</td>
-                            <td>
-                                <a href="@Url.Action("Edit_Expert_Tour", "ExploreLocal", new { id = tour.DestinationID })"><i class="ri-edit-box-line" style="color: dodgerblue; font-size: 21px; display: flex; justify-content: center; align-items: center; margin-right: 50px; margin-left: 5px; "></i></a>
-                            </td>
-                            <td>
-                                <a href="@Url.Action("DeleteTour", "ExploreLocal", new { id = tour.DestinationID })"><i class="ri-delete-bin-line" style="color: #db0016; font-size: 21px; display:flex;justify-content:center;align-items:center;margin-right:50px;margin-left:15px;"></i></a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>@(tour?.DestinationName ?? "N/A")</td>
+                                <td>@(tour?.StartDate?.ToShortDateString() ?? "N/A")</td>
+                                <td>@(tour?.EndDate?.ToShortDateString() ?? "N/A")</td>
+                                <td>@(tour?.Destination_Duration ?? "N/A")</td>
+                                <td>@(tour?.Price ?? "N/A")</td>
+                                <td>
+                                    <a href="@Url.Action("Edit_Expert_Tour", "ExploreLocal", new { id = tour?.DestinationID })">
+                                        <i class="ri-edit-box-line icon-with-glow" style="color: dodgerblue;"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("DeleteTour", "ExploreLocal", new { id = tour?.DestinationID })">
+                                        <i class="ri-delete-bin-line icon-with-glow" style="color: #db0016;"></i>
+                                    </a>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
