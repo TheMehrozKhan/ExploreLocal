@@ -475,6 +475,7 @@
                             <th>End Date</th>
                             <th>Duration</th>
                             <th>Price</th>
+                            <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -488,7 +489,10 @@
                             <td>@tour.Destination_Duration</td>
                             <td>@tour.Price</td>
                             <td>
-                                <a href="@Url.Action("DeleteTour", "ExploreLocal", new { id = tour.DestinationID })"><i class="fa-solid fa-trash-can" style="color: #db0016; font-size: 18px; display:flex;justify-content:center;align-items:center;margin-right:50px;"></i></a>
+                                <a href="@Url.Action("Edit_Expert_Tour", "ExploreLocal", new { id = tour.DestinationID })"><i class="ri-edit-box-line" style="color: dodgerblue; font-size: 21px; display: flex; justify-content: center; align-items: center; margin-right: 50px; margin-left: 5px; "></i></a>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("DeleteTour", "ExploreLocal", new { id = tour.DestinationID })"><i class="ri-delete-bin-line" style="color: #db0016; font-size: 21px; display:flex;justify-content:center;align-items:center;margin-right:50px;margin-left:15px;"></i></a>
                             </td>
                         </tr>
                         }

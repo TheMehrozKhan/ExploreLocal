@@ -13,13 +13,13 @@ namespace ExploreLocal.Controllers
 {
     public class ExploreLocalController : Controller
     {
-        ExploreLocalEntities1 db = new ExploreLocalEntities1();
+        ExploreLocalEntities3 db = new ExploreLocalEntities3();
         public ActionResult Index(Tbl_User user)
         {
             TempData["ToastMessage"] = "Hi, " + user.FirstName + " " + user.LastName + " You Successfully Logged In!";
             ViewBag.ToastMessage = TempData["ToastMessage"];
 
-            using (var db = new ExploreLocalEntities1())
+            using (var db = new ExploreLocalEntities3())
             {
                 List<Tbl_Venue> venues = db.Tbl_Venue.ToList();
                 List<Tbl_Destination> destinations = db.Tbl_Destination.Where(t => t.TourStatus == true).ToList(); 
@@ -211,7 +211,7 @@ namespace ExploreLocal.Controllers
             {
                 try
                 {
-                    using (var db = new ExploreLocalEntities1())
+                    using (var db = new ExploreLocalEntities3())
                     {
                         var booking = new Tbl_Bookings
                         {
@@ -249,7 +249,7 @@ namespace ExploreLocal.Controllers
             {
                 return RedirectToAction("Error");
             }
-            using (var db = new ExploreLocalEntities1())
+            using (var db = new ExploreLocalEntities3())
             {
                 var booking = db.Tbl_Bookings.Find(id);
                 if (booking != null)
@@ -281,7 +281,7 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
             int bookingIdValue = bookingId.Value;
-            using (var db = new ExploreLocalEntities1())
+            using (var db = new ExploreLocalEntities3())
             {
                 var booking = db.Tbl_Bookings.Find(bookingIdValue);
                 if (booking == null)
@@ -342,7 +342,7 @@ namespace ExploreLocal.Controllers
                 return RedirectToAction("Error");
             }
 
-            using (var db = new ExploreLocalEntities1())
+            using (var db = new ExploreLocalEntities3())
             {
                 var booking = db.Tbl_Bookings.Find(bookingId);
                 if (booking != null)
@@ -486,7 +486,7 @@ namespace ExploreLocal.Controllers
                     ExpertStatus = Convert.ToBoolean(0)
                 };
 
-                using (var db = new ExploreLocalEntities1())
+                using (var db = new ExploreLocalEntities3())
                 {
                     db.Tbl_Expert.Add(expert);
                     db.SaveChanges();
@@ -788,6 +788,74 @@ namespace ExploreLocal.Controllers
             }
             return View(user);
         }
+
+        [HttpGet]
+        public ActionResult Edit_Expert_Tour(int id)
+        {
+            Tbl_Destination user = db.Tbl_Destination.Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult Save_Expert_Tour(Tbl_Destination editedTour, HttpPostedFileBase[] imgfiles)
+        {
+            // Fetch the existing tour by its ID from the database
+            Tbl_Destination existingTour = db.Tbl_Destination.Find(editedTour.DestinationID);
+
+            if (existingTour == null)
+            {
+                // Handle the case where the tour is not found
+                return HttpNotFound();
+            }
+
+            // Process uploaded images and update the Image property
+            List<string> imagePaths = new List<string>();
+            if (imgfiles != null && imgfiles.Length > 0)
+            {
+                foreach (HttpPostedFileBase imgfile in imgfiles)
+                {
+                    string path = uploadimage(imgfile);
+                    if (path.Equals(-1))
+                    {
+                        ViewBag.Error = "Image Couldn't be Uploaded. Please try again.";
+                    }
+                    else
+                    {
+                        imagePaths.Add(path);
+                    }
+                }
+            }
+
+            // Update other properties of the existing tour
+            existingTour.Country = editedTour.Country;
+            existingTour.Language = editedTour.Language;
+            existingTour.DestinationName = editedTour.DestinationName;
+            existingTour.GoogleStreetViewURL = editedTour.GoogleStreetViewURL;
+            existingTour.Price = editedTour.Price;
+            existingTour.MeetingPoint = editedTour.MeetingPoint;
+            existingTour.Description = editedTour.Description;
+            existingTour.Destination_Duration = editedTour.Destination_Duration;
+            existingTour.Destination_Highlights = editedTour.Destination_Highlights;
+            existingTour.StartDate = editedTour.StartDate;
+            existingTour.EndDate = editedTour.EndDate;
+            // Update other properties similarly...
+
+            // Update the Image property with the new image paths
+            if (imagePaths.Count > 0)
+            {
+                existingTour.Image = string.Join(",", imagePaths);
+            }
+
+            // Save changes to the database
+            db.SaveChanges();
+
+            // Redirect to the expert's dashboard or tour list
+            return RedirectToAction("ExpertDashboard");
+        }
+
         public ActionResult Add_Wishlist(int? id)
         {
             if (Session["u_id"] == null)

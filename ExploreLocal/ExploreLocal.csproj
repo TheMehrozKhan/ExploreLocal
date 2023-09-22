@@ -258,9 +258,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SearchViewModel.cs" />
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Tbl_Admin.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -1311,6 +1308,7 @@
     <Content Include="Template\fonts\icomoonf78a.eot" />
     <Content Include="Template\fonts\icomoonf78a.ttf" />
     <Content Include="Template\fonts\icomoonf78a.woff" />
+    <Content Include="Views\ExploreLocal\Edit_Expert_Tour.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

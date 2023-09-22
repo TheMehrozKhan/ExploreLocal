@@ -35,7 +35,7 @@ namespace ExploreLocal.Models
         public string Language { get; set; }
         public Nullable<int> FK_Expert_Id { get; set; }
         public string Destination_Duration { get; set; }
-                [AllowHtml]
+        [AllowHtml]
 
         public string Destination_Highlights { get; set; }
         [AllowHtml]

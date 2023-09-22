@@ -13,10 +13,10 @@ namespace ExploreLocal.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ExploreLocalEntities1 : DbContext
+    public partial class ExploreLocalEntities3 : DbContext
     {
-        public ExploreLocalEntities1()
-            : base("name=ExploreLocalEntities1")
+        public ExploreLocalEntities3()
+            : base("name=ExploreLocalEntities3")
         {
         }
     
@@ -25,7 +25,6 @@ namespace ExploreLocal.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Tbl_Admin> Tbl_Admin { get; set; }
         public virtual DbSet<Tbl_Announcement> Tbl_Announcement { get; set; }
         public virtual DbSet<Tbl_Bookings> Tbl_Bookings { get; set; }

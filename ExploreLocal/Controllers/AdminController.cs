@@ -15,7 +15,7 @@ namespace ExploreLocal.Controllers
 {
     public class AdminController : Controller
     {
-        ExploreLocalEntities1 db = new ExploreLocalEntities1();
+        ExploreLocalEntities3 db = new ExploreLocalEntities3();
         public ActionResult Layout()
         {
             return View();
@@ -416,7 +416,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertRequests()
         {
-            using (var db = new ExploreLocalEntities1())
+            using (var db = new ExploreLocalEntities3())
             {
                 var pendingExperts = db.Tbl_Expert.Where(e => e.ExpertStatus == false).ToList();
                 return View(pendingExperts);
@@ -461,7 +461,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult RejectExpert(int expertId)
         {
-            using (var db = new ExploreLocalEntities1())
+            using (var db = new ExploreLocalEntities3())
             {
                 var expert = db.Tbl_Expert.Find(expertId);
                 if (expert != null)
@@ -476,7 +476,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertTourRequests()
         {
-            using (var db = new ExploreLocalEntities1())
+            using (var db = new ExploreLocalEntities3())
             {
                 var pendingTourExperts = db.Tbl_Destination
                     .Where(e => e.TourStatus == false)
@@ -542,7 +542,7 @@ namespace ExploreLocal.Controllers
 
         public ActionResult ExpertDelete(int expertId)
         {
-            using (var db = new ExploreLocalEntities1())
+            using (var db = new ExploreLocalEntities3())
             {
                 var expert = db.Tbl_Expert.Find(expertId);
                 if (expert != null)

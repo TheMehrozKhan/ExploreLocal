@@ -1,0 +1,226 @@
+﻿﻿@model ExploreLocal.Models.Tbl_Destination
+<title>@Session["u_name"] Edit Your Profile - ExploreLocal</title>
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
+    <script src="https://cdn.tiny.cloud/1/jnktx2v6142bcrf6cymwo599cgled9z9v20mlgcvi0a9ua1q/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <title>@Session["expert_name"] Edit Your Tour - ExploreLocal</title>
+</head>
+<style>
+    .existing-image {
+        display:inline-block;
+        width: 100px; /* Adjust the width as needed */
+        height: 100px; /* Adjust the height as needed */
+        border-radius: 50%; /* Make the images circular */
+        margin-right: 3px; /* Add spacing between images */
+    }
+</style>
+<section class="layout-pt-lg layout-pb-lg bg-blue-2">
+    <div class="container">
+        <div class="row justify-center">
+            <div class="col-xl-6 col-lg-7 col-md-9">
+                <div class="px-50 py-50 sm:px-20 sm:py-20 bg-white shadow-4 rounded-4">
+                    <div class="row y-gap-20">
+                        <div class="col-12">
+                            <h1 class="text-22 fw-500">@Session["expert_name"] Edit Your Tour's</h1>
+                            <p class="mt-10" style="font-size:14px;">After Submitting This Form All Changes That You Made Was <br /> Updated And Live on The ExploreLocal </p>
+                        </div>
+
+                        <div class="col-12">
+                            @using (Html.BeginForm("Save_Expert_Tour", "ExploreLocal", FormMethod.Post, new { enctype = "multipart/form-data", id = "signupform" }))
+                            {
+                                @Html.HiddenFor(model => model.FK_Expert_Id)
+
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.DestinationName, new { @class = "form-control", required = "required" })
+                                    <label class="lh-1 text-14 text-light-1">Enter Your Tour Name</label>
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.Price, new { @class = "form-control", @type = "number", required = "required" })
+                                    <label class="lh-1 text-14 text-light-1">Tour Price</label>
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.Country, new { @class = "form-control", required = "required" })
+                                    <label class="lh-1 text-14 text-light-1">Tour Country</label>
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <label for="Description">Tour Description:</label>
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @id = "Description", @name = "Description" })
+                                </div>
+                                <br />
+
+                                <div class="form-input" style="position: relative;">
+                                    <a href="https://snipboard.io/cSVgJ7.jpg" target="_blank" style="position: absolute; top: 0; right: 0;">
+                                        <img src="~/Content/img/TheQuestionMark.png" alt="Question Mark" class="question-mark-icon" height="40" width="40" />
+                                    </a>
+                                    @Html.TextBoxFor(x => x.GoogleStreetViewURL, new { @class = "form-control", required = "required" })
+                                    <span style="color: red">@Html.ValidationMessageFor(x => x.GoogleStreetViewURL)</span>
+                                    <label class="lh-1 text-14 text-light-1">Google Street View URL</label>
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.MeetingPoint, new { @class = "form-control", required = "required" })
+                                    <span style="color: red">@Html.ValidationMessageFor(x => x.MeetingPoint)</span>
+                                    <label class="lh-1 text-14 text-light-1">Meeting Point Address</label>
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.Language, new { @class = "form-control", required = "required" })
+                                    <span style="color: red">@Html.ValidationMessageFor(x => x.Language)</span>
+                                    <label class="lh-1 text-14 text-light-1">Enter Your Language</label>
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <label for="datepicker">Start Date:</label>
+                                    @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control datepicker", required = "required", id = "datepicker", name = "StartDate", style = " box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; padding:15px;" })
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <label for="datepicker">End Date:</label>
+                                    @Html.TextBoxFor(x => x.EndDate, new { @class = "form-control datepicker", required = "required", id = "datepicker", name = "EndDate", style = " box-shadow: rgba(17, 12, 46, 0.05) 0px 48px 100px 0px; padding:15px;" })
+                                </div>
+                                <br />
+
+                                <div class="form-input">
+                                    @Html.TextBoxFor(x => x.Destination_Duration, new { @class = "form-control", required = "required" })
+                                    <label class="lh-1 text-14 text-light-1">Tour Duration</label>
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <label for="Description">Tour Highlights:</label>
+                                    @Html.TextAreaFor(model => model.Destination_Highlights, new { @class = "form-control", @id = "Destination_Highlights", @name = "Destination_Highlights" })
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <label>Current Destination Images:</label>
+                                    <div class="relative d-flex justify-center overflow-hidden js-section-slider swiper-initialized swiper-horizontal swiper-pointer-events swiper-autoheight swiper-watch-progress swiper-backface-hidden" data-slider-cols="base-1" data-nav-prev="js-img-prev" data-nav-next="js-img-next" style="height:180px;margin-top:12px;object-fit:cover;object-position:center;">
+                                        <div class="swiper-wrapper" id="swiper-wrapper-104221f61051fab688" aria-live="polite" style="height: 430px;">
+                                            @if (!string.IsNullOrEmpty(Model.Image))
+                                            {
+                                                var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                                foreach (var imagePath in imagePaths)
+                                                {
+                                                    var imageUrl = Url.Content(imagePath);
+                                                    <div class="swiper-slide">
+                                                        <a href="@Url.Action("ExpertDashboard","ExploreLocal", new { Model.Tbl_Expert.ExpertId } )">
+                                                            <img class="rounded-4 col-12 h-full object-cover" src="@imageUrl" style="box-shadow: rgba(17, 12, 46, 0.08) 0px 48px 100px 0px; border-radius: 8px;" />
+                                                        </a>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="absolute h-full col-11">
+                                            <button class="section-slider-nav -prev flex-center button -blue-1 bg-white shadow-1 size-40 rounded-full sm:d-none js-img-prev swiper-button-disabled" disabled="" tabindex="-1" aria-label="Previous slide" aria-controls="swiper-wrapper-104221f61051fab688" aria-disabled="true">
+                                                <i class="icon icon-chevron-left text-12"></i>
+                                            </button>
+                                            <button class="section-slider-nav -next flex-center button -blue-1 bg-white shadow-1 size-40 rounded-full sm:d-none js-img-next" tabindex="0" aria-label="Next slide" aria-controls="swiper-wrapper-104221f61051fab688" aria-disabled="false">
+                                                <i class="icon icon-chevron-right text-12"></i>
+                                            </button>
+                                        </div>
+                                        <div class="absolute h-full col-12 z-2 px-20 py-20 d-flex justify-end items-end">
+                                            <div class="absolute min-vh-100 col-12 z-2 px-20 py-20 d-flex justify-end items-end" style="position:relative;top:30px;left:35px;">
+                                                @if (!string.IsNullOrEmpty(Model.Image))
+                                                {
+                                                    var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                                    var imageUrl = Url.Content(imagePaths[0]);
+                                                    <a href="@imageUrl" class="button -blue-1 px-24 py-15 bg-white text-dark-1 js-gallery" data-gallery="gallery2">
+                                                        See All @imagePaths.Length
+                                                    </a>
+                                                }
+                                            </div>
+                                            @if (!string.IsNullOrEmpty(Model.Image))
+                                            {
+                                                var imagePaths = Model.Image.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                                                foreach (var imagePath in imagePaths)
+                                                {
+                                                    var imageUrl = Url.Content(imagePath);
+                                                    <a href="@imageUrl" class="js-gallery" data-gallery="gallery2"></a>
+                                                }
+                                            }
+                                        </div>
+                                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                                    </div>
+                                </div>
+
+                                <br />
+
+                                <label style="margin-bottom:10px;">Upload New Destination Images:</label>
+                                <div class="form-input">
+                                    <input type="file" name="imgfiles" id="imgfiles" class="form-control-file" multiple />
+                                </div>
+
+                                <br />
+                                <button type="submit" class="button py-20 -dark-1 bg-blue-1 text-white" style="width:100%;">
+                                    Add Tour
+                                </button>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row y-gap-20 pt-30">
+                        <div class="col-12">
+                            <div class="text-center px-30">I Agree To Terms of Use And Privacy Policy.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-QlVXO1++HQhCPtg63LOHm12RrLcRgtvP+/uFEC5G89bKmBCG02FDU1gJb+NKbxZX" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+            flatpickr(".datepicker", {
+                dateFormat: "Y-m-d",
+                enableTime: false,
+            });
+
+            tinymce.init({
+                selector: '#Description',
+                height: 300,
+                width: 520,
+                plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen',
+                toolbar: 'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | link image | code'
+            });
+
+    tinymce.init({
+        selector: '#Destination_Highlights',
+        height: 300,
+        width: 520,
+        plugins: 'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen',
+        toolbar: 'undo redo | formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | link image | code'
+    });
+
+            document.getElementById('signupform').addEventListener('submit', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                icon: 'success',
+                title: 'Congrats!',
+                text: 'Your Tour Has Been Updated!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("ExpertDashboard", "ExploreLocal")';
+                    this.submit();
+                }
+            });
+        });
+</script>
